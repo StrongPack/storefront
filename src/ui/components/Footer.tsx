@@ -92,6 +92,31 @@ export async function Footer({ channel }: { channel: string }) {
 							<Image alt="Saleor github repository" height={20} width={20} src={"/github-mark.svg"} />
 						</Link>
 					</p> */}
+
+					{/* <a referrerpolicy='origin' 
+						target='_blank' 
+						href='https://trustseal.enamad.ir/?id=656873&Code=Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh'>
+							<img referrerpolicy='origin' 
+								src='https://trustseal.enamad.ir/logo.aspx?id=656873&Code=Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh' 
+								alt='' 
+								style='cursor:pointer' 
+								code='Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh'>
+
+					</a> */}
+
+					<a
+						referrerPolicy="origin"
+						target="_blank"
+						href="https://trustseal.enamad.ir/?id=656873&Code=Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh"
+						rel="noopener noreferrer"
+					>
+						<img
+							referrerPolicy="origin"
+							src="https://trustseal.enamad.ir/logo.aspx?id=656873&Code=Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh"
+							alt="نماد اعتماد الکترونیکی"
+							style={{ cursor: "pointer" }}
+						/>
+					</a>
 				</div>
 			</div>
 		</footer>
