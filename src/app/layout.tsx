@@ -97,7 +97,6 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
 	// Dynamic import امن برای config
 	const configModule: NextI18NextConfig = await import("../../next-i18next.config.cjs");
 	const i18nConfig = configModule;
-
 	const defaultLocale = i18nConfig.i18n?.defaultLocale ?? "fa";
 
 	// const defaultLocale = "fa";
