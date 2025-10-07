@@ -4,6 +4,7 @@ import { LinkWithChannel } from "../atoms/LinkWithChannel";
 import { ChannelSelect } from "./ChannelSelect";
 import { ChannelsListDocument, MenuGetBySlugDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
+// import { useTranslation } from "next-i18next";
 
 export async function Footer({ channel }: { channel: string }) {
 	const footerLinks = await executeGraphQL(MenuGetBySlugDocument, {
@@ -20,7 +21,7 @@ export async function Footer({ channel }: { channel: string }) {
 			})
 		: null;
 	// const currentYear = new Date().getFullYear();
-
+	// const { t } = useTranslation("common");
 	return (
 		<footer className="border-neutral-300 bg-neutral-50">
 			<div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -76,7 +77,9 @@ export async function Footer({ channel }: { channel: string }) {
 				{channels?.channels && (
 					<div className="mb-4 text-neutral-500">
 						<label>
-							<span className="text-sm">Change currency:</span> <ChannelSelect channels={channels.channels} />
+							<span className="text-sm">Change currency:</span>
+							{/* <span className="text-sm">{t("change_currency")}</span> */}
+							<ChannelSelect channels={channels.channels} />
 						</label>
 					</div>
 				)}
@@ -113,6 +116,7 @@ export async function Footer({ channel }: { channel: string }) {
 						<img
 							referrerPolicy="origin"
 							src="https://trustseal.enamad.ir/logo.aspx?id=656873&Code=Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh"
+							// alt={t("enamad_alt")}
 							alt="نماد اعتماد الکترونیکی"
 							style={{ cursor: "pointer" }}
 						/>
