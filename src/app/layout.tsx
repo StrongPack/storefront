@@ -1,8 +1,9 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Suspense ,type  ReactNode } from "react";
-
+import { Suspense } from "react";
+// import type { ReactNode } from "react";
 import type { Metadata } from "next";
+
 // import { appWithTranslation } from "next-i18next";
 // import { dir } from "i18next";
 // import { languages } from "@/i18n/settings";
@@ -39,6 +40,20 @@ interface NextI18NextConfig {
 	};
 }
 
+// type AppRouterLayoutProps = {
+// 	children: React.ReactNode;
+// 	params?: Promise<any>;
+// };
+
+type LayoutParams = {
+	locale?: string;
+};
+
+type RootLayoutProps = {
+	children: React.ReactNode;
+	params?: Promise<LayoutParams>;
+};
+
 // export const RootLayout = async ({
 // 	children,
 // 	params,
@@ -56,13 +71,10 @@ interface NextI18NextConfig {
 // 	params: { locale: string };
 // }) {
 
-export default async function RootLayout(props: {
-	children: ReactNode;
-	params: Promise<{ locale: string }> | { locale: string };
-}) {
-	const resolvedParams = props.params instanceof Promise ? await props.params : props.params;
-
-	const locale = resolvedParams.locale || "fa";
+export default async function RootLayout({ children, params }: RootLayoutProps) {
+	// همیشه یا await promise یا مقدار خالی
+	const resolvedParams = (await params) ?? {};
+	const locale = resolvedParams.locale ?? "fa";
 	const isRTL = locale === "fa";
 
 	// export default async function RootLayout(props: { children: ReactNode }) {
@@ -71,7 +83,6 @@ export default async function RootLayout(props: {
 	// 	const locale = "fa"; // get from parameters.
 	// 	const isRTL = locale === "fa";
 
-	const i18nInstance = createInstance();
 	// Dynamic import for the config to handle CommonJS/ESM export properly
 	// const i18nConfigModule = await import("../../next-i18next.config");
 	// const i18nextConfig = require("../../next-i18next.config.cjs");
@@ -84,12 +95,13 @@ export default async function RootLayout(props: {
 	// const defaultLocale = i18nConfig.i18n.defaultLocale || "fa";
 
 	// Dynamic import امن برای config
-	const configModule: unknown = await import("../../next-i18next.config.cjs");
-	const i18nConfig = configModule as NextI18NextConfig;
+	const configModule: NextI18NextConfig = await import("../../next-i18next.config.cjs");
+	const i18nConfig = configModule;
 
 	const defaultLocale = i18nConfig.i18n?.defaultLocale ?? "fa";
 
 	// const defaultLocale = "fa";
+	const i18nInstance = createInstance();
 
 	await i18nInstance
 		// .use(initReactI18next)
@@ -120,8 +132,7 @@ export default async function RootLayout(props: {
 
 				{/* <DirContext.Provider value={{ isRTL }}> */}
 				<ClientI18nProvider initialResources={resources} lng={locale} defaultLocale={defaultLocale}>
-					{/* {children} */}
-					{props.children}
+					{children}
 				</ClientI18nProvider>
 				{/* </DirContext.Provider> */}
 
