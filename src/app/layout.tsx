@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Suspense, type ReactNode } from "react";
+import { Suspense } from "react";
 import { type Metadata } from "next";
 // import { appWithTranslation } from "next-i18next";
 // import { dir } from "i18next";
@@ -38,13 +38,22 @@ interface NextI18NextConfig {
 	};
 }
 
-export const RootLayout = async ({
+// export const RootLayout = async ({
+// 	children,
+// 	params,
+// }: {
+// 	children: ReactNode;
+// 	params: { locale: string };
+// }) => {
+
+/* eslint-disable import/no-default-export */
+export default async function RootLayout({
 	children,
 	params,
 }: {
-	children: ReactNode;
+	children: React.ReactNode;
 	params: { locale: string };
-}) => {
+}) {
 	const locale = params.locale || "fa";
 	const isRTL = locale === "fa";
 
@@ -113,4 +122,4 @@ export const RootLayout = async ({
 			</body>
 		</html>
 	);
-};
+}
