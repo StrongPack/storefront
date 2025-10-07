@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Suspense } from "react";
-import { type Metadata } from "next";
+import { Suspense ,type  ReactNode } from "react";
+
+import type { Metadata } from "next";
 // import { appWithTranslation } from "next-i18next";
 // import { dir } from "i18next";
 // import { languages } from "@/i18n/settings";
@@ -47,14 +48,21 @@ interface NextI18NextConfig {
 // }) => {
 
 /* eslint-disable import/no-default-export */
-export default async function RootLayout({
-	children,
-	params,
-}: {
-	children: React.ReactNode;
-	params: { locale: string };
+// export default async function RootLayout({
+// 	children,
+// 	params,
+// }: {
+// 	children: React.ReactNode;
+// 	params: { locale: string };
+// }) {
+
+export default async function RootLayout(props: {
+	children: ReactNode;
+	params: Promise<{ locale: string }> | { locale: string };
 }) {
-	const locale = params.locale || "fa";
+	const resolvedParams = props.params instanceof Promise ? await props.params : props.params;
+
+	const locale = resolvedParams.locale || "fa";
 	const isRTL = locale === "fa";
 
 	// export default async function RootLayout(props: { children: ReactNode }) {
@@ -112,7 +120,8 @@ export default async function RootLayout({
 
 				{/* <DirContext.Provider value={{ isRTL }}> */}
 				<ClientI18nProvider initialResources={resources} lng={locale} defaultLocale={defaultLocale}>
-					{children}
+					{/* {children} */}
+					{props.children}
 				</ClientI18nProvider>
 				{/* </DirContext.Provider> */}
 

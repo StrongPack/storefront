@@ -21,7 +21,6 @@
 
 		"import/no-cycle": "error",
 		"import/no-default-export": "error",
-
 		"import/no-unresolved": "off",
 
 		// allow {} even though it's unsafe but comes handy
