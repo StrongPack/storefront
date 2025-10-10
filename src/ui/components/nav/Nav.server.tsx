@@ -13,8 +13,8 @@
 
 // 	return <NavClient channel={channel} locale={locale} />;
 // }
-
-import { cookies } from "next/headers";
+// import { useLocale } from "next-intl";
+// import { cookies } from "next/headers";
 // import * as Checkout from "@/lib/checkout"; // Add this import
 // import { getCheckout } from "@/lib/checkout"; // Remove if unused
 // import { getCurrentUser } from "@/lib/auth";
@@ -23,12 +23,12 @@ import NavLinksServer from "./components/NavLinks.server";
 import { CartNavItem } from "./components/CartNavItem.server";
 import UserMenuContainer from "./components/UserMenu/UserMenuContainer";
 
-export default async function NavServer({ channel }: { channel: string }) {
-	const cookieStore = await cookies();
+export default async function NavServer({ channel, locale }: { channel: string; locale: string }) {
+	// const cookieStore = await cookies();
 	// const checkout = await getCheckout(channel, cookieStore); // Remove if unused
 	// const user = await getCurrentUser(); // Remove if unused
-	const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
-
+	// const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
+	// const locale = useLocale();
 	// // Move cart logic here (server-side)
 	// const checkoutId = await Checkout.getIdFromCookies(channel);
 	// const checkout = checkoutId ? await Checkout.find(checkoutId) : null;

@@ -24,7 +24,6 @@ export const FooterClient = ({ footerLinks, channels, locale }: FooterClientProp
 	// const { dir } = useDir();
 	// const isRTL = dir === "rtl";
 	const isRTL = locale === "fa";
-
 	const t = useTranslations("common");
 
 	return (

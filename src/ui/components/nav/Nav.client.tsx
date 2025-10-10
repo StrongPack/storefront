@@ -29,7 +29,7 @@ export default function NavClient({
 	UserMenu: React.ReactNode;
 }) {
 	// Add lineCount prop
-	const isRTL = locale === "fa";
+	// const isRTL = locale === "fa";
 
 	// return (
 	// 	<nav dir={isRTL ? "rtl" : "ltr"} className={`flex w-full items-center justify-between gap-4 lg:gap-6`}>
@@ -72,40 +72,50 @@ export default function NavClient({
 	// );
 
 	return (
-		<nav dir={isRTL ? "rtl" : "ltr"} className="flex w-full items-center justify-between gap-4 lg:gap-6">
-			{/* بخش لینک‌ها (NavLinks) */}
-			<div
-				className={`flex items-center gap-4 ${
-					isRTL
-						? "order-2 flex-row-reverse" // در RTL سمت راست
-						: "order-1 flex-row" // در LTR سمت چپ
-				}`}
-			>
-				{NavLinks}
-			</div>
+		<nav className="flex w-full items-center justify-between gap-4 lg:gap-6">
+			<div className={`flex items-center gap-4`}>{NavLinks}</div>
 
-			{/* بخش جستجو، کاربر، زبان، سبد */}
-			<div
-				className={`flex items-center gap-4 whitespace-nowrap lg:gap-8 ${
-					isRTL
-						? "order-1 ml-auto flex-row-reverse" // در RTL سمت چپ
-						: "order-2 mr-auto flex-row" // در LTR سمت راست
-				}`}
-			>
+			{/* <div className={`flex items-center gap-4 whitespace-nowrap lg:gap-8`}> */}
+			<div className="hidden items-center gap-4 whitespace-nowrap lg:flex lg:gap-8">
 				<div className="hidden lg:flex">
-					<SearchBar channel={channel} />
+					<SearchBar channel={channel} locale={locale} />
 				</div>
-
-				<Suspense fallback={<div className="w-8" />}>{UserMenu}</Suspense>
 				<LanguageSwitcherSPA />
 				<Suspense fallback={<div className="w-6" />}>{CartNavItem}</Suspense>
+				<Suspense fallback={<div className="w-8" />}>{UserMenu}</Suspense>
 			</div>
 
 			{/* منوی موبایل */}
 			<Suspense>
-				<MobileMenu>
-					<SearchBar channel={channel} />
-					{NavLinks}
+				<MobileMenu locale={locale}>
+					{/* <SearchBar channel={channel} locale={locale} />
+					{NavLinks} */}
+
+					{/* <div className="flex flex-col gap-4 p-4">
+						<SearchBar channel={channel} locale={locale} />
+						<div className="border-t border-gray-200 pt-4">{NavLinks}</div>
+						<div className="flex flex-col gap-3 border-t border-gray-200 pt-4">
+							<LanguageSwitcherSPA />
+							{CartNavItem}
+							{UserMenu}
+						</div>
+					</div> */}
+
+					<div className="flex flex-col gap-4 p-4">
+						<SearchBar channel={channel} locale={locale} />
+
+						<div className="space-y-2 border-t border-gray-200 pt-4">
+							<button className="w-full rounded-md px-2 py-2 text-start hover:bg-neutral-100">
+								<LanguageSwitcherSPA />
+							</button>
+							<button className="w-full rounded-md px-2 py-2 text-start hover:bg-neutral-100">
+								{CartNavItem}
+							</button>
+							<button className="w-full rounded-md px-2 py-2 text-start hover:bg-neutral-100">
+								{UserMenu}
+							</button>
+						</div>
+					</div>
 				</MobileMenu>
 			</Suspense>
 		</nav>

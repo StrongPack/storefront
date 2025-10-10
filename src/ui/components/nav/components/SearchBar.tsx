@@ -44,7 +44,7 @@
 import { SearchIcon } from "lucide-react";
 import { searchAction } from "./actions/search";
 
-export const SearchBar = ({ channel }: { channel: string }) => {
+export const SearchBar = ({ channel, locale }: { channel: string; locale: string }) => {
 	return (
 		<form
 			action={async (formData: FormData) => searchAction(formData, channel)}
@@ -55,13 +55,20 @@ export const SearchBar = ({ channel }: { channel: string }) => {
 				<input
 					type="text"
 					name="search"
-					placeholder="Search for products..."
+					// placeholder="Search for products..."
+					placeholder={locale === "fa" ? "جستجو در محصولات..." : "Search for products..."}
 					autoComplete="on"
 					required
-					className="h-10 w-full rounded-md border border-neutral-300 bg-transparent bg-white px-4 py-2 pr-10 text-sm text-black placeholder:text-neutral-500 focus:border-black focus:ring-black"
+					dir={locale === "fa" ? "rtl" : "ltr"}
+					className={`h-10 w-full rounded-md border border-neutral-300 bg-transparent bg-white  text-sm text-black placeholder:text-neutral-500 focus:border-black focus:ring-black ${
+						locale === "fa" ? "text-right" : "text-left"
+					}`}
 				/>
 			</label>
-			<div className="absolute inset-y-0 right-0">
+			<div
+				// className="absolute inset-y-0 right-0"
+				className={`absolute inset-y-0 ${locale === "fa" ? "left-0 pl-1" : "right-0 pr-1"}`}
+			>
 				<button
 					type="submit"
 					className="inline-flex aspect-square w-10 items-center justify-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 group-invalid:pointer-events-none group-invalid:opacity-80"

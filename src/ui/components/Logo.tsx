@@ -12,14 +12,24 @@ export const Logo = () => {
 
 	if (pathname === "/") {
 		return (
-			<h1 className="flex items-center font-bold" aria-label="homepage">
+			// <h1 className="flex items-center font-bold" aria-label="homepage">
+			// 	{companyName}
+			// </h1>
+
+			<h1 className="flex items-center whitespace-nowrap font-bold" aria-label="homepage">
 				{companyName}
 			</h1>
 		);
 	}
 	return (
-		<div className="flex items-center font-bold">
-			<LinkWithChannel aria-label="homepage" href="/">
+		// <div className="flex items-center font-bold">
+		// 	<LinkWithChannel aria-label="homepage" href="/">
+		// 		{companyName}
+		// 	</LinkWithChannel>
+		// </div>
+
+		<div className="flex items-center whitespace-nowrap font-bold">
+			<LinkWithChannel aria-label="homepage" href="/" className="truncate">
 				{companyName}
 			</LinkWithChannel>
 		</div>

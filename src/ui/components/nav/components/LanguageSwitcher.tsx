@@ -102,6 +102,7 @@ export function LanguageSwitcherSPA() {
 	const router = useRouter();
 	const pathname = usePathname();
 	const locale = useLocale();
+
 	// const changeLang = (lang: string) => {
 	// 	const newPath = pathname.replace(/^\/(fa|en)/, `/${lang}`);
 	// 	router.push(newPath);
@@ -124,7 +125,7 @@ export function LanguageSwitcherSPA() {
 	};
 
 	return (
-		// <div className="mt-3 flex gap-2">
+		// <div className="flex gap-2">
 		// 	{/* <button className="rounded bg-gray-200 px-3 py-1 hover:bg-gray-300" onClick={() => changeLang("fa")}>
 		// 		فارسی
 		// 	</button>
@@ -143,7 +144,7 @@ export function LanguageSwitcherSPA() {
 		// 	))}
 		// </div>
 
-		// <div className="mt-3 flex gap-2">
+		// <div className="flex gap-2">
 		// 	{routing.locales.map((locale) => (
 		// 		<button
 		// 			key={locale}
@@ -157,18 +158,73 @@ export function LanguageSwitcherSPA() {
 		// 	))}
 		// </div>
 
-		<div className="mt-3 flex gap-2">
-			{routing.locales.map((l) => (
-				<button
-					key={l}
-					onClick={() => changeLang(l)}
-					className={`rounded px-3 py-1 transition-colors ${
-						l === locale ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
-					}`}
-				>
-					{l === "fa" ? "فارسی" : "English"}
-				</button>
-			))}
+		// <div className="flex gap-2">
+		// 	{routing.locales.map((l) => (
+		// 		<button
+		// 			key={l}
+		// 			onClick={() => changeLang(l)}
+		// 			className={`rounded px-3 py-1 transition-colors ${
+		// 				l === locale ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
+		// 			}`}
+		// 		>
+		// 			{l === "fa" ? "فارسی" : "English"}
+		// 		</button>
+		// 	))}
+		// </div>
+
+		// <div className="inline-flex overflow-hidden rounded-full border border-gray-300 bg-gray-100 text-sm font-medium">
+		// 	{routing.locales.map((l) => {
+		// 		const isActive = l === locale;
+		// 		return (
+		// 			<button
+		// 				key={l}
+		// 				onClick={() => changeLang(l)}
+		// 				className={`px-4 py-1.5 transition-all ${
+		// 					isActive ? "bg-blue-600 text-white shadow" : "bg-transparent text-gray-700 hover:bg-gray-200"
+		// 				}`}
+		// 			>
+		// 				{l === "fa" ? "فارسی" : "English"}
+		// 			</button>
+		// 		);
+		// 	})}
+		// </div>
+
+		// 	<div className="flex gap-2">
+		// 		{routing.locales.map((l) => {
+		// 			const isActive = l === locale;
+		// 			const label = l === "fa" ? "فارسی" : "English";
+		// 			const flag = l === "fa" ? "🇮🇷" : "🇬🇧";
+
+		// 			return (
+		// 				<button
+		// 					key={l}
+		// 					onClick={() => changeLang(l)}
+		// 					className={`flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm font-medium transition-all ${
+		// 						isActive
+		// 							? "border-blue-600 bg-blue-50 text-blue-700"
+		// 							: "border-gray-300 text-gray-600 hover:bg-gray-100"
+		// 					}`}
+		// 				>
+		// 					<span>{flag}</span>
+		// 					{label}
+		// 				</button>
+		// 			);
+		// 		})}
+		// 	</div>
+
+		<div className="relative">
+			<select
+				value={locale}
+				onChange={(e) => changeLang(e.target.value)}
+				className="rounded-md border border-gray-300 bg-white px-3 py-1 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+			>
+				{routing.locales.map((l) => (
+					<option key={l} value={l}>
+						{/* {l === "fa" ? "🇮🇷 فارسی" : "🇬🇧 English"} */}
+						{l === "fa" ? "🇮🇷 " : "🇬🇧 "}
+					</option>
+				))}
+			</select>
 		</div>
 	);
 }
