@@ -1,12 +1,14 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { LinkWithChannel } from "../atoms/LinkWithChannel";
-
-const companyName = "20pack";
 
 export const Logo = () => {
 	const pathname = usePathname();
+
+	const t = useTranslations("common");
+	const companyName = t("site_name");
 
 	if (pathname === "/") {
 		return (

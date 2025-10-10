@@ -20,9 +20,9 @@
 		"import/no-mutable-exports": "error",
 
 		"import/no-cycle": "error",
-		"import/no-default-export": "error",
+		"import/no-default-export": "off",
+		"import/prefer-default-export": "off",
 		"import/no-unresolved": "off",
-
 		// allow {} even though it's unsafe but comes handy
 		"@typescript-eslint/ban-types": [
 			"error",

@@ -1,3 +1,5 @@
+// "use client";
+
 import Link from "next/link";
 import { invariant } from "ts-invariant";
 import { RootWrapper } from "./pageWrapper";
@@ -21,6 +23,7 @@ export default async function CheckoutPage(props: {
 			<section className="mx-auto flex min-h-dvh max-w-7xl flex-col p-8">
 				<div className="flex items-center font-bold">
 					<Link aria-label="homepage" href="/">
+						{/* {t("site_name")} */}
 						20pack
 					</Link>
 				</div>

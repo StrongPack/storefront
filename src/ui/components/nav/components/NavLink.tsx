@@ -7,7 +7,11 @@ import useSelectedPathname from "@/hooks/useSelectedPathname";
 
 export function NavLink({ href, children }: { href: string; children: ReactElement | string }) {
 	const pathname = useSelectedPathname();
-	const isActive = pathname === href;
+
+	// const isActive = pathname === href;
+
+	// اگر بخوای مسیر فعال در همه‌ی زیردامنه‌ها هم فعال بشه:
+	const isActive = pathname === href || pathname.startsWith(href + "/");
 
 	return (
 		<li className="inline-flex">

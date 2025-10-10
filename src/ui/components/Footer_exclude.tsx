@@ -1,9 +1,10 @@
 // import Link from "next/link";
-// import Image from "next/image";
+import Image from "next/image";
 import { LinkWithChannel } from "../atoms/LinkWithChannel";
 import { ChannelSelect } from "./ChannelSelect";
 import { ChannelsListDocument, MenuGetBySlugDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
+
 // import { useTranslation } from "next-i18next";
 
 export async function Footer({ channel }: { channel: string }) {
@@ -113,7 +114,15 @@ export async function Footer({ channel }: { channel: string }) {
 						href="https://trustseal.enamad.ir/?id=656873&Code=Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh"
 						rel="noopener noreferrer"
 					>
-						<img
+						{/* <img
+							referrerPolicy="origin"
+							src="https://trustseal.enamad.ir/logo.aspx?id=656873&Code=Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh"
+							// alt={t("enamad_alt")}
+							alt="نماد اعتماد الکترونیکی"
+							style={{ cursor: "pointer" }}
+						/> */}
+
+						<Image
 							referrerPolicy="origin"
 							src="https://trustseal.enamad.ir/logo.aspx?id=656873&Code=Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh"
 							// alt={t("enamad_alt")}

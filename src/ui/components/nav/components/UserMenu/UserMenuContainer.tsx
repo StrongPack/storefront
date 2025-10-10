@@ -1,10 +1,12 @@
 import { UserIcon } from "lucide-react";
 import { UserMenu } from "./UserMenu";
+// import { UserMenu } from "./UserMenu.client";
 import { CurrentUserDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { LinkWithChannel } from "@/ui/atoms/LinkWithChannel";
 
-export async function UserMenuContainer() {
+export default async function UserMenuContainer() {
+	// export async function UserMenuContainer() {
 	const { me: user } = await executeGraphQL(CurrentUserDocument, {
 		cache: "no-cache",
 	});
