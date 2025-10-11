@@ -15,6 +15,12 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
 	title: "20Pack",
 	description: "Multilingual storefront with RTL/LTR",
+
+	manifest: "/site.webmanifest",
+	icons: {
+		icon: "/favicon.ico",
+		apple: "/apple-touch-icon.webp",
+	},
 	metadataBase: process.env.NEXT_PUBLIC_STOREFRONT_URL
 		? new URL(process.env.NEXT_PUBLIC_STOREFRONT_URL)
 		: undefined,

@@ -101,19 +101,17 @@ export default function NavClient({
 						</div>
 					</div> */}
 
-					<div className="flex flex-col gap-4 p-4">
-						<SearchBar channel={channel} locale={locale} />
+					<div className="flex h-full flex-col">
+						{/* 🔹 بخش بالا - سرچ بار */}
+						<div className="p-4">
+							<SearchBar channel={channel} locale={locale} />
+						</div>
 
-						<div className="space-y-2 border-t border-gray-200 pt-4">
-							<button className="w-full rounded-md px-2 py-2 text-start hover:bg-neutral-100">
-								<LanguageSwitcherSPA />
-							</button>
-							<button className="w-full rounded-md px-2 py-2 text-start hover:bg-neutral-100">
-								{CartNavItem}
-							</button>
-							<button className="w-full rounded-md px-2 py-2 text-start hover:bg-neutral-100">
-								{UserMenu}
-							</button>
+						{/* 🔹 بخش پایین - دکمه‌های تمام‌صفحه‌ای */}
+						<div className="flex flex-1 flex-col justify-center gap-3 border-t border-gray-200 p-4">
+							<LanguageSwitcherSPA />
+							{CartNavItem}
+							{UserMenu}
 						</div>
 					</div>
 				</MobileMenu>

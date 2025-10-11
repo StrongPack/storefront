@@ -29,5 +29,6 @@ export default async function NavLinksServer({ channel }: { channel: string }) {
 			})
 			.filter(Boolean) ?? [];
 
-	return <NavLinksClient items={[{ id: "all", href: "/products", label: "All" }, ...items]} />;
+	// return <NavLinksClient items={[{ id: "all", href: "/products", label: "All" }, ...items]} />;
+	return <NavLinksClient items={items} />;
 }

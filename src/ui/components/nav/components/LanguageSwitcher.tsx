@@ -212,16 +212,64 @@ export function LanguageSwitcherSPA() {
 		// 		})}
 		// 	</div>
 
-		<div className="relative">
+		// <div className="relative">
+		// 	<select
+		// 		value={locale}
+		// 		onChange={(e) => changeLang(e.target.value)}
+		// 		className="rounded-md border border-gray-300 bg-white px-3 py-1 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+		// 	>
+		// 		{routing.locales.map((l) => (
+		// 			<option key={l} value={l}>
+		// 				{/* {l === "fa" ? "🇮🇷 فارسی" : "🇬🇧 English"} */}
+		// 				{l === "fa" ? "🇮🇷 " : "🇬🇧 "}
+		// 			</option>
+		// 		))}
+		// 	</select>
+		// </div>
+
+		// <div className="relative w-full">
+		// 	<select
+		// 		value={locale}
+		// 		onChange={(e) => changeLang(e.target.value)}
+		// 		className="
+		// 			w-full rounded-md border
+		// 			border-gray-300
+		// 			bg-white px-3 py-1 text-sm shadow-sm transition-all focus:border-blue-500 focus:ring-blue-500
+		// 			sm:text-base
+		// 			md:w-auto md:text-sm
+		// 			"
+		// 	>
+		// 		{routing.locales.map((l) => (
+		// 			<option key={l} value={l}>
+		// 				{l === "fa" ? "🇮🇷 فارسی" : "🇬🇧 English"}
+		// 			</option>
+		// 		))}
+		// 	</select>
+		// </div>
+
+		<div className="relative w-full">
+			{/* نسخه‌ی دسکتاپ: فقط پرچم */}
 			<select
 				value={locale}
 				onChange={(e) => changeLang(e.target.value)}
-				className="rounded-md border border-gray-300 bg-white px-3 py-1 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+				className="hidden rounded-md border border-gray-300 bg-white px-3 py-1 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500 md:block"
 			>
 				{routing.locales.map((l) => (
 					<option key={l} value={l}>
-						{/* {l === "fa" ? "🇮🇷 فارسی" : "🇬🇧 English"} */}
-						{l === "fa" ? "🇮🇷 " : "🇬🇧 "}
+						{l === "fa" ? "🇮🇷" : "🇬🇧"}
+					</option>
+				))}
+			</select>
+
+			{/* نسخه‌ی موبایل: پرچم + نام زبان */}
+			<select
+				value={locale}
+				onChange={(e) => changeLang(e.target.value)}
+				className="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-base shadow-sm focus:border-blue-500 focus:ring-blue-500 md:hidden"
+			>
+				{routing.locales.map((l) => (
+					<option key={l} value={l} dir={l === "fa" ? "rtl" : "ltr"}>
+						{l === "fa" ? "🇮🇷 فارسی" : "🇬🇧 English"}
 					</option>
 				))}
 			</select>
