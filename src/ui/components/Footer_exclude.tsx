@@ -108,22 +108,15 @@ export async function Footer({ channel }: { channel: string }) {
 					<a
 						referrerPolicy="origin"
 						target="_blank"
-						href="https://trustseal.enamad.ir/?id=656873&Code=Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh"
-						rel="noopener noreferrer"
+						href="https://trustseal.enamad.ir/?id=661390&Code=5QN0OwVVQQJYlfLwNdZW4aJUBHZi71X9"
+						// rel="noopener noreferrer"
 					>
-						{/* <img
-							referrerPolicy="origin"
-							src="https://trustseal.enamad.ir/logo.aspx?id=656873&Code=Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh"
-							// alt={t("enamad_alt")}
-							alt="نماد اعتماد الکترونیکی"
-							style={{ cursor: "pointer" }}
-						/> */}
-
 						<Image
+							src="https://trustseal.enamad.ir/logo.aspx?id=661390&Code=5QN0OwVVQQJYlfLwNdZW4aJUBHZi71X9"
+							alt="اینماد"
+							width={86}
+							height={86}
 							referrerPolicy="origin"
-							src="https://trustseal.enamad.ir/logo.aspx?id=656873&Code=Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh"
-							// alt={t("enamad_alt")}
-							alt="نماد اعتماد الکترونیکی"
 							style={{ cursor: "pointer" }}
 						/>
 					</a>

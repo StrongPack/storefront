@@ -89,14 +89,15 @@ export const FooterClient = ({ footerLinks, channels, locale }: FooterClientProp
 					<a
 						referrerPolicy="origin"
 						target="_blank"
-						href="https://trustseal.enamad.ir/?id=656873&Code=Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh"
-						rel="noopener noreferrer"
+						href="https://trustseal.enamad.ir/?id=661390&Code=5QN0OwVVQQJYlfLwNdZW4aJUBHZi71X9"
+						// rel="noopener noreferrer"
 					>
 						<Image
-							src="https://trustseal.enamad.ir/logo.aspx?id=656873&Code=Dc3ffq6gJLoOncmD6PabrEbGFhDxbcDh"
+							src="https://trustseal.enamad.ir/logo.aspx?id=661390&Code=5QN0OwVVQQJYlfLwNdZW4aJUBHZi71X9"
 							alt={t("enamad_alt")}
 							width={86}
 							height={86}
+							referrerPolicy="origin"
 							style={{ cursor: "pointer" }}
 						/>
 					</a>
