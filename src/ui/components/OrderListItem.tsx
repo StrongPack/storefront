@@ -6,9 +6,10 @@ import { PaymentStatus } from "@/ui/components/PaymentStatus";
 
 type Props = {
 	order: OrderDetailsFragment;
+	locale: string;
 };
 
-export const OrderListItem = ({ order }: Props) => {
+export const OrderListItem = ({ order, locale }: Props) => {
 	return (
 		<li className="bg-white">
 			<div className="flex flex-col gap-2 border bg-neutral-200/20 px-6 py-4 md:grid md:grid-cols-4 md:gap-8">
@@ -80,6 +81,7 @@ export const OrderListItem = ({ order }: Props) => {
 															href={getHrefForVariant({
 																productSlug: product.slug,
 																variantId: item.variant.id,
+																locale,
 															})}
 															className="font-medium text-neutral-900"
 														>

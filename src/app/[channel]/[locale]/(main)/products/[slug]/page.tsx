@@ -74,7 +74,7 @@ export async function generateStaticParams({ params }: { params: { channel: stri
 const parser = edjsHTML();
 
 export default async function Page(props: {
-	params: Promise<{ slug: string; channel: string }>;
+	params: Promise<{ slug: string; channel: string; locale: string }>;
 	searchParams: Promise<{ variant?: string }>;
 }) {
 	const [searchParams, params] = await Promise.all([props.searchParams, props.params]);
@@ -203,6 +203,7 @@ export default async function Page(props: {
 								variants={variants}
 								product={product}
 								channel={params.channel}
+								locale={params.locale}
 							/>
 						)}
 						<AvailabilityMessage isAvailable={isAvailable} />

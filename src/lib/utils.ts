@@ -25,19 +25,46 @@ export const formatMoneyRange = (
 	return `${startMoney} - ${stopMoney}`;
 };
 
+// export function getHrefForVariant({
+// 	productSlug,
+// 	variantId,
+// }: {
+// 	productSlug: string;
+// 	variantId?: string;
+// }): string {
+// 	const pathname = `/products/${encodeURIComponent(productSlug)}`;
+
+// 	if (!variantId) {
+// 		return pathname;
+// 	}
+
+// 	const query = new URLSearchParams({ variant: variantId });
+// 	return `${pathname}?${query.toString()}`;
+// }
+
+/**
+ * Generate product variant URL preserving channel and locale if present.
+ */
 export function getHrefForVariant({
 	productSlug,
 	variantId,
+	locale,
 }: {
 	productSlug: string;
 	variantId?: string;
+	locale?: string;
 }): string {
-	const pathname = `/products/${encodeURIComponent(productSlug)}`;
+	const encodedSlug = encodeURIComponent(productSlug);
+	let pathname = `/products/${encodedSlug}`;
+	const query = variantId ? `?variant=${encodeURIComponent(variantId)}` : "";
 
-	if (!variantId) {
-		return pathname;
+	// if (channel && locale) {
+	// 	pathname = `/${encodeURIComponent(channel)}/${encodeURIComponent(locale)}${pathname}`;
+	// }
+
+	if (locale) {
+		pathname = `/${encodeURIComponent(locale)}${pathname}`;
 	}
 
-	const query = new URLSearchParams({ variant: variantId });
-	return `${pathname}?${query.toString()}`;
+	return `${pathname}${query}`;
 }

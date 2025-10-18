@@ -9,14 +9,18 @@ export function VariantSelector({
 	product,
 	selectedVariant,
 	channel,
+	locale,
 }: {
 	variants: readonly VariantDetailsFragment[];
 	product: ProductListItemFragment;
 	selectedVariant?: VariantDetailsFragment;
 	channel: string;
+	locale: string;
 }) {
 	if (!selectedVariant && variants.length === 1 && variants[0]?.quantityAvailable) {
-		redirect("/" + channel + getHrefForVariant({ productSlug: product.slug, variantId: variants[0].id }));
+		redirect(
+			"/" + channel + getHrefForVariant({ productSlug: product.slug, variantId: variants[0].id, locale }),
+		);
 	}
 
 	return (
@@ -33,7 +37,9 @@ export function VariantSelector({
 								prefetch={true}
 								scroll={false}
 								href={
-									isDisabled ? "#" : getHrefForVariant({ productSlug: product.slug, variantId: variant.id })
+									isDisabled
+										? "#"
+										: getHrefForVariant({ productSlug: product.slug, variantId: variant.id, locale })
 								}
 								className={clsx(
 									isCurrentVariant

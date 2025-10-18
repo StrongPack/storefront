@@ -9,7 +9,7 @@ export const LinkWithChannel = ({
 }: Omit<ComponentProps<typeof Link>, "href"> & { href: string }) => {
 	// const { channel } = useParams<{ channel?: string }>();
 
-	const { channel, locale } = useParams<{ channel?: string; locale?: string }>(); // ✅ اضافه شد
+	const { channel, locale } = useParams<{ channel?: string; locale?: string }>();
 
 	if (!href.startsWith("/")) {
 		return <Link {...props} href={href} />;
