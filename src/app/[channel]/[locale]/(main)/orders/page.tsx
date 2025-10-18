@@ -3,7 +3,14 @@ import { executeGraphQL } from "@/lib/graphql";
 import { LoginForm } from "@/ui/components/LoginForm";
 import { OrderListItem } from "@/ui/components/OrderListItem";
 
-export default async function OrderPage() {
+export default async function OrderPage({
+	params,
+}: {
+	params: Promise<{ channel: string; locale: string }>;
+}) {
+	// چون layout اصلی params را به‌صورت Promise صادر کرده
+	const { locale } = await params; // ✅ همین خط رفع خطای TypeScript است
+
 	const { me: user } = await executeGraphQL(CurrentUserOrderListDocument, {
 		cache: "no-cache",
 	});
@@ -27,10 +34,16 @@ export default async function OrderPage() {
 					</div>
 				</div>
 			) : (
+				// <ul className="mt-8 space-y-6">
+				// 	{orders.map(({ node: order }) => {
+				// 		return <OrderListItem order={order} locale={locale} key={order.id} />;
+				// 	})}
+				// </ul>
+
 				<ul className="mt-8 space-y-6">
-					{orders.map(({ node: order }) => {
-						return <OrderListItem order={order} key={order.id} />;
-					})}
+					{orders.map(({ node: order }) => (
+						<OrderListItem key={order.id} order={order} locale={locale} />
+					))}
 				</ul>
 			)}
 		</div>
