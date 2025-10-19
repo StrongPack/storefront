@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { ProductListByCollectionDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { ProductList } from "@/ui/components/ProductList";
@@ -9,6 +10,7 @@ export const metadata = {
 
 export default async function Page(props: { params: Promise<{ channel: string }> }) {
 	const params = await props.params;
+	const t = await getTranslations("common");
 	const data = await executeGraphQL(ProductListByCollectionDocument, {
 		variables: {
 			slug: "featured-products",
@@ -25,7 +27,7 @@ export default async function Page(props: { params: Promise<{ channel: string }>
 
 	return (
 		<section className="mx-auto max-w-7xl p-8 pb-16">
-			<h2 className="sr-only">Product list</h2>
+			<h2 className="sr-only">{t("featured_products")}</h2>
 			<ProductList products={products} />
 		</section>
 	);

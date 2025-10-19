@@ -3,6 +3,7 @@
 
 import { Fragment } from "react";
 import clsx from "clsx";
+import { useTranslations } from "next-intl";
 import { Menu, Transition } from "@headlessui/react";
 import { UserInfo } from "./components/UserInfo";
 import { UserAvatar } from "./components/UserAvatar";
@@ -15,10 +16,11 @@ type Props = {
 };
 
 export function UserMenu({ user }: Props) {
+	const t = useTranslations("auth");
 	return (
 		<Menu as="div" className="relative">
 			<Menu.Button className="relative flex rounded-full bg-neutral-200 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-neutral-800">
-				<span className="sr-only">Open user menu</span>
+				<span className="sr-only">{t("open_menu")}</span>
 				<UserAvatar user={user} />
 			</Menu.Button>
 
@@ -49,7 +51,7 @@ export function UserMenu({ user }: Props) {
 										"block px-4 py-2 text-sm font-medium text-neutral-500 hover:text-neutral-700",
 									)}
 								>
-									My orders
+									{t("my_orders")}
 								</LinkWithChannel>
 							)}
 						</Menu.Item>
@@ -67,7 +69,7 @@ export function UserMenu({ user }: Props) {
 											"block w-full px-4 py-2 text-start text-sm font-medium text-neutral-500 hover:text-neutral-700",
 										)}
 									>
-										Log out
+										{t("logout")}
 									</button>
 								</form>
 							)}

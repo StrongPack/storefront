@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { ProductListPaginatedDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { Pagination } from "@/ui/components/Pagination";
@@ -16,6 +17,7 @@ export default async function Page(props: {
 		cursor: string | string[] | undefined;
 	}>;
 }) {
+	const t = await getTranslations("common");
 	const searchParams = await props.searchParams;
 	const params = await props.params;
 	const cursor = typeof searchParams.cursor === "string" ? searchParams.cursor : null;
@@ -39,7 +41,7 @@ export default async function Page(props: {
 
 	return (
 		<section className="mx-auto max-w-7xl p-8 pb-16">
-			<h2 className="sr-only">Product list</h2>
+			<h2 className="sr-only">{t("featured_products")}</h2>
 			<ProductList products={products.edges.map((e) => e.node)} />
 			<Pagination
 				pageInfo={{

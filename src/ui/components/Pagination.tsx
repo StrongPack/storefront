@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { getTranslations } from "next-intl/server";
 import { LinkWithChannel } from "../atoms/LinkWithChannel";
 
 export async function Pagination({
@@ -10,6 +11,7 @@ export async function Pagination({
 		readonly urlSearchParams?: URLSearchParams;
 	};
 }) {
+	const t = await getTranslations("common");
 	return (
 		<nav className="flex items-center justify-center gap-x-4 border-neutral-200 px-4 pt-12">
 			<LinkWithChannel
@@ -21,7 +23,7 @@ export async function Pagination({
 				})}
 				aria-disabled={!pageInfo.hasNextPage}
 			>
-				Next page
+				{t("next_page")}
 			</LinkWithChannel>
 		</nav>
 	);

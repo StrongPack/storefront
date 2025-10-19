@@ -1,8 +1,9 @@
 import { getRequestConfig } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { routing } from "./routing";
+import { getMessages } from "@/lib/getMessages";
 
-type Messages = Record<string, unknown>;
+// type Messages = Record<string, unknown>;
 
 export default getRequestConfig(async ({ requestLocale }) => {
 	const requested = await requestLocale;
@@ -15,12 +16,19 @@ export default getRequestConfig(async ({ requestLocale }) => {
 	// };
 
 	// ← ترفند ایمن: قبل از دسترسی به .default کل import را cast کن
-	const msgsModule = (await import(`@/messages/${locale}/common.json`)) as {
-		readonly default: Messages;
-	};
+	// const msgsModule = (await import(`@/messages/${locale}/common.json`)) as {
+	// 	readonly default: Messages;
+	// };
+
+	// return {
+	// 	locale,
+	// 	messages: msgsModule.default,
+	// };
+
+	const messages = await getMessages(locale);
 
 	return {
 		locale,
-		messages: msgsModule.default,
+		messages: messages,
 	};
 });

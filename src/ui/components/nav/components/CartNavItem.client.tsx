@@ -3,6 +3,7 @@
 
 import { ShoppingBagIcon } from "lucide-react";
 import clsx from "clsx";
+import { useTranslations } from "next-intl";
 import { LinkWithChannel } from "@/ui/atoms/LinkWithChannel";
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function CartNavItemClient({ lineCount }: Props) {
+	const t = useTranslations("common");
 	// export default function CartNavItemClient({ lineCount }: Props) {
 	return (
 		<>
@@ -19,6 +21,7 @@ export default function CartNavItemClient({ lineCount }: Props) {
 				// className="relative flex items-center"
 				className="relative hidden items-center md:flex"
 				data-testid="CartNavItem"
+				aria-label={t("view_cart")}
 			>
 				<ShoppingBagIcon className="h-6 w-6 shrink-0" aria-hidden="true" />
 				{lineCount > 0 ? (
@@ -29,10 +32,10 @@ export default function CartNavItemClient({ lineCount }: Props) {
 						)}
 					>
 						{lineCount}
-						<span className="sr-only">item{lineCount > 1 ? "s" : ""} in cart, view bag</span>
+						<span className="sr-only">{t("items_in_cart", { count: lineCount })}</span>
 					</div>
 				) : (
-					<span className="sr-only">0 items in cart</span>
+					<span className="sr-only">{t("no_items_in_cart")}</span>
 				)}
 			</LinkWithChannel>
 
@@ -44,7 +47,7 @@ export default function CartNavItemClient({ lineCount }: Props) {
 			>
 				<ShoppingBagIcon className="h-6 w-6 shrink-0 text-gray-700" aria-hidden="true" />
 				<span className="flex gap-1">
-					<span>سبد خرید</span>
+					<span>{t("cart_label")}</span>
 					{lineCount > 0 && (
 						<span className="ml-1 rounded-full bg-neutral-900 px-2 py-0.5 text-xs text-white">
 							{lineCount}

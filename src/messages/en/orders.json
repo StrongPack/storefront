@@ -1,0 +1,18 @@
+{
+	"order_number": "Order number",
+	"date_placed": "Date placed",
+	"payment_status": "Payment status",
+	"variant_label": "Variant: {{name}}",
+	"total_including_delivery": "Total amount including delivery",
+	"payment_unpaid": "unpaid",
+	"payment_cancelled": "cancelled",
+	"payment_refused": "refused",
+	"payment_paid": "paid",
+	"payment_refunded": "refunded",
+	"payment_partially_paid": "partially paid",
+	"payment_partially_refunded": "partially refunded",
+	"payment_pending": "pending",
+	"quantity_price": "quantity and unit price",
+	"price": "price",
+	"product": "product"
+}

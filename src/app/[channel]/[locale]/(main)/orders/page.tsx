@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { CurrentUserOrderListDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { LoginForm } from "@/ui/components/LoginForm";
@@ -10,7 +11,7 @@ export default async function OrderPage({
 }) {
 	// چون layout اصلی params را به‌صورت Promise صادر کرده
 	const { locale } = await params; // ✅ همین خط رفع خطای TypeScript است
-
+	const t = await getTranslations("common");
 	const { me: user } = await executeGraphQL(CurrentUserOrderListDocument, {
 		cache: "no-cache",
 	});
@@ -24,13 +25,14 @@ export default async function OrderPage({
 	return (
 		<div className="mx-auto max-w-7xl p-8">
 			<h1 className="text-2xl font-bold tracking-tight text-neutral-900">
-				{user.firstName ? user.firstName : user.email}&rsquo;s orders
+				{user.firstName ? user.firstName : user.email}
+				{t("orders_title_suffix")}
 			</h1>
 
 			{orders.length === 0 ? (
 				<div className="mt-8">
 					<div className="rounded border border-neutral-100 bg-white p-4">
-						<div className="flex items-center">No orders found</div>
+						<div className="flex items-center">{t("no_orders")}</div>
 					</div>
 				</div>
 			) : (

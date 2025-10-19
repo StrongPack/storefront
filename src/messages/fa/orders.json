@@ -1,0 +1,18 @@
+{
+	"order_number": "شماره سفارش",
+	"date_placed": "تاریخ ثبت",
+	"payment_status": "وضعیت پرداخت",
+	"variant_label": "مدل: {{name}}",
+	"total_including_delivery": "مجموع مبلغ (با هزینه ارسال)",
+	"payment_unpaid": "عدم پرداخت",
+	"payment_cancelled": "لغو شد",
+	"payment_refused": "رد شد",
+	"payment_paid": "پرداخت شده",
+	"payment_refunded": "بازپرداخت کامل",
+	"payment_partially_paid": "پرداخت جزئی",
+	"payment_partially_refunded": "بازپرداخت جزئی",
+	"payment_pending": "در انتظار پرداخت",
+	"quantity_price": "مقدار و قیمت واحد",
+	"price": "قیمت",
+	"product": "محصول"
+}

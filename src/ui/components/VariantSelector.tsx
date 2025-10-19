@@ -1,10 +1,11 @@
 import { clsx } from "clsx";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { LinkWithChannel } from "../atoms/LinkWithChannel";
 import { type ProductListItemFragment, type VariantDetailsFragment } from "@/gql/graphql";
 import { getHrefForVariant } from "@/lib/utils";
 
-export function VariantSelector({
+export async function VariantSelector({
 	variants,
 	product,
 	selectedVariant,
@@ -17,6 +18,7 @@ export function VariantSelector({
 	channel: string;
 	locale: string;
 }) {
+	const t = await getTranslations("common");
 	if (!selectedVariant && variants.length === 1 && variants[0]?.quantityAvailable) {
 		redirect(
 			"/" + channel + getHrefForVariant({ productSlug: product.slug, variantId: variants[0].id, locale }),
@@ -26,7 +28,7 @@ export function VariantSelector({
 	return (
 		variants.length > 1 && (
 			<fieldset className="my-4" role="radiogroup" data-testid="VariantSelector">
-				<legend className="sr-only">Variants</legend>
+				<legend className="sr-only">{t("variants_legend")}</legend>
 				<div className="flex flex-wrap gap-3">
 					{variants.map((variant) => {
 						const isDisabled = !variant.quantityAvailable;

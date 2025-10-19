@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { LinkWithChannel } from "../atoms/LinkWithChannel";
 import { formatDate, formatMoney, getHrefForVariant } from "@/lib/utils";
 import { type OrderDetailsFragment } from "@/gql/graphql";
@@ -9,23 +10,24 @@ type Props = {
 	locale: string;
 };
 
-export const OrderListItem = ({ order, locale }: Props) => {
+export const OrderListItem = async ({ order, locale }: Props) => {
+	const t = await getTranslations("orders");
 	return (
 		<li className="bg-white">
 			<div className="flex flex-col gap-2 border bg-neutral-200/20 px-6 py-4 md:grid md:grid-cols-4 md:gap-8">
 				<dl className="flex flex-col divide-y divide-neutral-200 text-sm md:col-span-3 md:grid md:grid-cols-3 md:gap-6 md:divide-none lg:col-span-2">
 					<div className="flex flex-row items-center justify-between py-4 md:flex-col md:items-start md:gap-y-1">
-						<dt className="font-medium text-neutral-900">Order number</dt>
+						<dt className="font-medium text-neutral-900">{t("order_number")}</dt>
 						<dd className="text-neutral-600">{order.number}</dd>
 					</div>
 					<div className="flex flex-row items-center justify-between py-4 md:flex-col md:items-start md:gap-y-1">
-						<dt className="font-medium text-neutral-900">Date placed</dt>
+						<dt className="font-medium text-neutral-900">{t("date_placed")}</dt>
 						<dd className="text-neutral-600">
 							<time dateTime={order.created}>{formatDate(new Date(order.created))}</time>
 						</dd>
 					</div>
 					<div className="flex flex-row items-center justify-between py-4 md:flex-col md:items-start md:gap-y-1">
-						<dt className="font-medium text-neutral-900">Payment status</dt>
+						<dt className="font-medium text-neutral-900">{t("payment_status")}</dt>
 						<dd>
 							<PaymentStatus status={order.paymentStatus} />
 						</dd>
@@ -48,9 +50,9 @@ export const OrderListItem = ({ order, locale }: Props) => {
 						<table className="w-full text-sm text-neutral-500">
 							<thead className="sr-only">
 								<tr>
-									<td>product</td>
-									<td className="max-md:hidden">quantity and unit price</td>
-									<td>price</td>
+									<td>{t("product")}</td>
+									<td className="max-md:hidden">{t("quantity_price")}</td>
+									<td>{t("price")}</td>
 								</tr>
 							</thead>
 							<tbody className="md:divide-y">
@@ -88,7 +90,7 @@ export const OrderListItem = ({ order, locale }: Props) => {
 															{product.name}
 														</LinkWithChannel>
 														{item.variant.name !== item.variant.id && Boolean(item.variant.name) && (
-															<p className="mt-1">Variant: {item.variant.name}</p>
+															<p className="mt-1">{t("variant_label", { name: item.variant.name })}</p>
 														)}
 													</div>
 												</div>
@@ -127,7 +129,7 @@ export const OrderListItem = ({ order, locale }: Props) => {
 						</table>
 					</div>
 					<dl className="flex justify-between border-y py-6 text-sm font-medium text-neutral-900 md:border md:px-6">
-						<dt>Total amount including delivery</dt>
+						<dt>{t("total_including_delivery")}</dt>
 						<dd>{formatMoney(order.total.gross.amount, order.total.gross.currency)}</dd>
 					</dl>
 				</>

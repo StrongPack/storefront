@@ -5,7 +5,8 @@ import path from "node:path";
 export async function getMessages(locale: string) {
 	const basePath = path.resolve(process.cwd(), "src/messages");
 
-	const namespaces = ["common"];
+	// const namespaces = ["common"];
+	const namespaces = ["common", "auth", "checkout", "orders"];
 
 	const messages: Record<string, any> = {};
 

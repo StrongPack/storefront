@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { CheckoutLink } from "./CheckoutLink";
 import { DeleteLineButton } from "./DeleteLineButton";
 import * as Checkout from "@/lib/checkout";
@@ -11,6 +12,7 @@ export const metadata = {
 
 export default async function Page(props: { params: Promise<{ channel: string; locale: string }> }) {
 	const params = await props.params;
+	const t = await getTranslations("common");
 	const checkoutId = await Checkout.getIdFromCookies(params.channel);
 
 	const checkout = await Checkout.find(checkoutId);
@@ -18,15 +20,13 @@ export default async function Page(props: { params: Promise<{ channel: string; l
 	if (!checkout || checkout.lines.length < 1) {
 		return (
 			<section className="mx-auto max-w-7xl p-8">
-				<h1 className="mt-8 text-3xl font-bold text-neutral-900">Your Shopping Cart is empty</h1>
-				<p className="my-12 text-sm text-neutral-500">
-					Looks like you haven’t added any items to the cart yet.
-				</p>
+				<h1 className="mt-8 text-3xl font-bold text-neutral-900">{t("cart_empty_title")}</h1>
+				<p className="my-12 text-sm text-neutral-500">{t("cart_empty_description")}</p>
 				<LinkWithChannel
 					href="/products"
-					className="inline-block max-w-full rounded border border-transparent bg-neutral-900 px-6 py-3 text-center font-medium text-neutral-50 hover:bg-neutral-800 aria-disabled:cursor-not-allowed aria-disabled:bg-neutral-500 sm:px-16"
+					className="inline-block max-w-full rounded border border-transparent bg-neutral-900 px-6 py-3 text-center font-medium text-neutral-50 hover:bg-neutral-800"
 				>
-					Explore products
+					{t("cart_explore_products")}
 				</LinkWithChannel>
 			</section>
 		);
@@ -34,7 +34,7 @@ export default async function Page(props: { params: Promise<{ channel: string; l
 
 	return (
 		<section className="mx-auto max-w-7xl p-8">
-			<h1 className="mt-8 text-3xl font-bold text-neutral-900">Your Shopping Cart</h1>
+			<h1 className="mt-8 text-3xl font-bold text-neutral-900">{t("cart_title")}</h1>
 			<form className="mt-12">
 				<ul
 					data-testid="CartProductList"
@@ -68,7 +68,9 @@ export default async function Page(props: { params: Promise<{ channel: string; l
 										</LinkWithChannel>
 										<p className="mt-1 text-sm text-neutral-500">{item.variant?.product?.category?.name}</p>
 										{item.variant.name !== item.variant.id && Boolean(item.variant.name) && (
-											<p className="mt-1 text-sm text-neutral-500">Variant: {item.variant.name}</p>
+											<p className="mt-1 text-sm text-neutral-500">
+												{t("cart_variant_label")}: {item.variant.name}
+											</p>
 										)}
 									</div>
 									<p className="text-right font-semibold text-neutral-900">
@@ -76,7 +78,9 @@ export default async function Page(props: { params: Promise<{ channel: string; l
 									</p>
 								</div>
 								<div className="flex justify-between">
-									<div className="text-sm font-bold">Qty: {item.quantity}</div>
+									<div className="text-sm font-bold">
+										{t("cart_quantity_label")}: {item.quantity}
+									</div>
 									<DeleteLineButton checkoutId={checkoutId} lineId={item.id} />
 								</div>
 							</div>
@@ -88,8 +92,8 @@ export default async function Page(props: { params: Promise<{ channel: string; l
 					<div className="rounded border bg-neutral-50 px-4 py-2">
 						<div className="flex items-center justify-between gap-2 py-2">
 							<div>
-								<p className="font-semibold text-neutral-900">Your Total</p>
-								<p className="mt-1 text-sm text-neutral-500">Shipping will be calculated in the next step</p>
+								<p className="font-semibold text-neutral-900">{t("cart_total_label")}</p>
+								<p className="mt-1 text-sm text-neutral-500">{t("cart_shipping_info")}</p>
 							</div>
 							<div className="font-medium text-neutral-900">
 								{formatMoney(checkout.totalPrice.gross.amount, checkout.totalPrice.gross.currency)}

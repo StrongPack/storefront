@@ -1,23 +1,25 @@
+"use client";
+
 import { Suspense } from "react";
+import { useTranslations } from "next-intl";
 import { Summary, SummarySkeleton } from "@/checkout/sections/Summary";
 import { OrderInfo } from "@/checkout/sections/OrderInfo";
 import { useOrder } from "@/checkout/hooks/useOrder";
 
 export const OrderConfirmation = () => {
 	const { order } = useOrder();
+	const t = useTranslations("checkout");
 
 	return (
 		<main className="grid grid-cols-1 gap-x-16 lg:grid-cols-2">
 			<div>
 				<header>
-					<p className="mb-2 text-lg font-bold" data-testid="orderConfrmationTitle">
-						Order #{order.number} confirmed
+					<p className="mb-2 text-lg font-bold" data-testid="orderConfirmationTitle">
+						{t("order_confirmed_title", { number: order.number })}
 					</p>
-					<p className="text-base">
-						Thank you for placing your order. We&apos;ve received it and we will contact you as soon as your
-						package is shipped. A confirmation email has been sent to {order.userEmail}.
-					</p>
+					<p className="text-base">{t("order_confirmed_text", { email: order.userEmail || "" })}</p>
 				</header>
+
 				<OrderInfo />
 			</div>
 			<Suspense fallback={<SummarySkeleton />}>

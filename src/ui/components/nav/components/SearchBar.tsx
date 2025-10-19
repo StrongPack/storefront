@@ -42,21 +42,24 @@
 "use client";
 
 import { SearchIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { searchAction } from "./actions/search";
 
 export const SearchBar = ({ channel, locale }: { channel: string; locale: string }) => {
+	const t = useTranslations("common");
 	return (
 		<form
 			action={async (formData: FormData) => searchAction(formData, channel)}
 			className="group relative my-2 flex w-full items-center justify-items-center text-sm lg:w-80"
 		>
 			<label className="w-full">
-				<span className="sr-only">search for products</span>
+				<span className="sr-only">{t("search_label")}</span>
 				<input
 					type="text"
 					name="search"
 					// placeholder="Search for products..."
-					placeholder={locale === "fa" ? "جستجو در محصولات..." : "Search for products..."}
+					// placeholder={locale === "fa" ? "جستجو در محصولات..." : "Search for products..."}
+					placeholder={t("search_placeholder")}
 					autoComplete="on"
 					required
 					dir={locale === "fa" ? "rtl" : "ltr"}
@@ -73,7 +76,7 @@ export const SearchBar = ({ channel, locale }: { channel: string; locale: string
 					type="submit"
 					className="inline-flex aspect-square w-10 items-center justify-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 group-invalid:pointer-events-none group-invalid:opacity-80"
 				>
-					<span className="sr-only">search</span>
+					<span className="sr-only">{t("search_button_label")}</span>
 					<SearchIcon aria-hidden className="h-5 w-5" />
 				</button>
 			</div>

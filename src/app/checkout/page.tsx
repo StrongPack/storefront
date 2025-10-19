@@ -2,15 +2,17 @@
 
 import Link from "next/link";
 import { invariant } from "ts-invariant";
+import { getTranslations } from "next-intl/server";
 import { RootWrapper } from "./pageWrapper";
 
 export const metadata = {
-	title: "Checkout · Saleor Storefront example",
+	title: "Checkout · 20pack",
 };
 
 export default async function CheckoutPage(props: {
 	searchParams: Promise<{ checkout?: string; order?: string }>;
 }) {
+	const t = await getTranslations("common");
 	const searchParams = await props.searchParams;
 	invariant(process.env.NEXT_PUBLIC_SALEOR_API_URL, "Missing NEXT_PUBLIC_SALEOR_API_URL env variable");
 
@@ -24,10 +26,10 @@ export default async function CheckoutPage(props: {
 				<div className="flex items-center font-bold">
 					<Link aria-label="homepage" href="/">
 						{/* {t("site_name")} */}
-						20pack
+						{t("site_name")}
 					</Link>
 				</div>
-				<h1 className="mt-8 text-3xl font-bold text-neutral-900">Checkout</h1>
+				<h1 className="mt-8 text-3xl font-bold text-neutral-900">{t("checkout_title")}</h1>
 
 				<section className="mb-12 mt-6 flex-1">
 					<RootWrapper saleorApiUrl={process.env.NEXT_PUBLIC_SALEOR_API_URL} />
