@@ -1,6 +1,11 @@
 import { notFound, redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { OrderDirection, ProductOrderField, SearchProductsDocument } from "@/gql/graphql";
+import {
+	OrderDirection,
+	ProductOrderField,
+	SearchProductsDocument,
+	// LegacySearchProductsDocument,
+} from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { Pagination } from "@/ui/components/Pagination";
 import { ProductList } from "@/ui/components/ProductList";
@@ -33,6 +38,14 @@ export default async function Page(props: {
 		redirect(`/${params.locale}/search?${new URLSearchParams({ query: firstValidSearchValue }).toString()}`);
 	}
 
+	// console.log("🔎 Running Search Query with:", {
+	// 	ProductsPerPage,
+	// 	searchValue,
+	// 	cursor,
+	// 	channel: params.channel,
+	// 	locale: params.locale,
+	// });
+
 	const { products } = await executeGraphQL(SearchProductsDocument, {
 		variables: {
 			first: ProductsPerPage,
@@ -44,6 +57,8 @@ export default async function Page(props: {
 		},
 		revalidate: 60,
 	});
+
+	// console.log("📦 SearchProducts result:", JSON.stringify(products, null, 2));
 
 	if (!products) {
 		notFound();

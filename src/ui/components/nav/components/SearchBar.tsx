@@ -49,7 +49,7 @@ export const SearchBar = ({ channel, locale }: { channel: string; locale: string
 	const t = useTranslations("common");
 	return (
 		<form
-			action={async (formData: FormData) => searchAction(formData, channel)}
+			action={async (formData: FormData) => searchAction(formData, channel, locale)}
 			className="group relative my-2 flex w-full items-center justify-items-center text-sm lg:w-80"
 		>
 			<label className="w-full">

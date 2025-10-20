@@ -2,9 +2,14 @@
 
 import { redirect } from "next/navigation";
 
-export async function searchAction(formData: FormData, channel: string) {
+export async function searchAction(formData: FormData, channel: string, locale: string) {
 	const search = formData.get("search") as string;
+
 	if (search && search.trim().length > 0) {
-		redirect(`/${encodeURIComponent(channel)}/search?query=${encodeURIComponent(search)}`);
+		redirect(
+			`/${encodeURIComponent(channel)}/${encodeURIComponent(locale)}/search?query=${encodeURIComponent(
+				search,
+			)}`,
+		);
 	}
 }

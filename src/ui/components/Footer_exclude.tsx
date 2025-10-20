@@ -108,11 +108,11 @@ export async function Footer({ channel }: { channel: string }) {
 					<a
 						referrerPolicy="origin"
 						target="_blank"
-						href="https://trustseal.enamad.ir/?id=661390&Code=5QN0OwVVQQJYlfLwNdZW4aJUBHZi71X9"
+						href="https://trustseal.enamad.ir/?id=662386&Code=rjSjruE6FYX9LOcZMBLx5JylAAONJbQo"
 						// rel="noopener noreferrer"
 					>
 						<Image
-							src="https://trustseal.enamad.ir/logo.aspx?id=661390&Code=5QN0OwVVQQJYlfLwNdZW4aJUBHZi71X9"
+							src="https://trustseal.enamad.ir/logo.aspx?id=662386&Code=rjSjruE6FYX9LOcZMBLx5JylAAONJbQo"
 							alt="اینماد"
 							width={86}
 							height={86}

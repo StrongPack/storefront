@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { SignInFormContainer, type SignInFormContainerProps } from "../Contact/SignInFormContainer";
 import { PasswordInput } from "@/checkout/components/PasswordInput";
 import { Checkbox } from "@/checkout/components/Checkbox";
@@ -19,11 +20,14 @@ export const GuestUser: React.FC<GuestUserProps> = ({
 	const { handleChange } = form;
 	const { createAccount } = form.values;
 
+	const t = useTranslations("auth");
+	//   return <h2>{t("contactDetails")}</h2>;
+
 	return (
 		<SignInFormContainer
 			title="Contact details"
-			redirectSubtitle="Already have an account?"
-			redirectButtonLabel="Sign in"
+			redirectSubtitle={t("alreadyHaveAccount")}
+			redirectButtonLabel={t("signIn")}
 			onSectionChange={onSectionChange}
 		>
 			<FormProvider form={form}>
