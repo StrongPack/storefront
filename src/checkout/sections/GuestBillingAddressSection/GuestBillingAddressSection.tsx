@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import { useTranslations } from "next-intl";
 import { AddressForm } from "@/checkout/components/AddressForm";
 import { FormProvider } from "@/checkout/hooks/useForm/FormProvider";
 import { useGuestBillingAddressForm } from "@/checkout/sections/GuestBillingAddressSection/useGuestBillingAddressForm";
@@ -8,6 +9,7 @@ import { useBillingSameAsShippingForm } from "@/checkout/sections/GuestBillingAd
 import { Checkbox } from "@/checkout/components";
 
 export const GuestBillingAddressSection = () => {
+	const t = useTranslations("auth");
 	const {
 		checkout: { isShippingRequired },
 	} = useCheckout();
@@ -30,7 +32,7 @@ export const GuestBillingAddressSection = () => {
 					<FormProvider form={billingSameAsShippingForm}>
 						<Checkbox
 							name="billingSameAsShipping"
-							label="Use shipping address as billing address"
+							label={t("useShippingAsBilling")}
 							data-testid="useShippingAsBillingCheckbox"
 						/>
 					</FormProvider>
@@ -40,7 +42,7 @@ export const GuestBillingAddressSection = () => {
 				<div className="mb-4">
 					<FormProvider form={form}>
 						<AddressForm
-							title="Billing address"
+							title={t("billingAddress")}
 							fieldProps={{
 								onChange: handleChange,
 								onBlur: handleBlur,

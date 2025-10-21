@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 import { Select } from "@/checkout/components/Select";
 import { type CountryCode } from "@/checkout/graphql";
 import { countries as allCountries } from "@/checkout/lib/consts/countries";
@@ -9,6 +10,7 @@ interface CountrySelectProps {
 }
 
 export const CountrySelect: React.FC<CountrySelectProps> = ({ only = [] }) => {
+	const t = useTranslations("ui");
 	const countriesToMap = only.length ? only : allCountries;
 
 	const countryOptions = countriesToMap.map((countryCode) => ({
@@ -16,5 +18,7 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({ only = [] }) => {
 		label: getCountryName(countryCode),
 	}));
 
-	return <Select name="countryCode" label="Country" options={countryOptions} autoComplete="countryCode" />;
+	return (
+		<Select name="countryCode" label={t("country")} options={countryOptions} autoComplete="countryCode" />
+	);
 };

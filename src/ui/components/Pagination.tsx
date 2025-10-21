@@ -4,14 +4,16 @@ import { LinkWithChannel } from "../atoms/LinkWithChannel";
 
 export async function Pagination({
 	pageInfo,
+	locale,
 }: {
 	pageInfo: {
 		basePathname: string;
 		hasNextPage: boolean;
 		readonly urlSearchParams?: URLSearchParams;
 	};
+	locale: string;
 }) {
-	const t = await getTranslations("common");
+	const t = await getTranslations({ locale, namespace: "common" });
 	return (
 		<nav className="flex items-center justify-center gap-x-4 border-neutral-200 px-4 pt-12">
 			<LinkWithChannel

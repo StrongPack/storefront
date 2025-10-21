@@ -116,12 +116,12 @@ export function LanguageSwitcherSPA() {
 
 		const parts = pathname.split("/").filter(Boolean);
 		if (parts.length < 2) return;
-
-		// const channel = parts[0];
 		parts[1] = newLocale;
 		const newPath = "/" + parts.join("/");
 
-		router.push(newPath);
+		// اضافه کردن query string فعلی به مسیر جدید (برای حفظ پارامترهای جستجو)
+		const qs = typeof window !== "undefined" ? window.location.search : "";
+		router.push(newPath + qs);
 	};
 
 	return (

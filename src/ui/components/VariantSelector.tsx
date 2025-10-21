@@ -18,7 +18,7 @@ export async function VariantSelector({
 	channel: string;
 	locale: string;
 }) {
-	const t = await getTranslations("common");
+	const t = await getTranslations({ locale, namespace: "common" });
 	if (!selectedVariant && variants.length === 1 && variants[0]?.quantityAvailable) {
 		redirect(
 			"/" + channel + getHrefForVariant({ productSlug: product.slug, variantId: variants[0].id, locale }),

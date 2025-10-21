@@ -6,7 +6,7 @@ export async function getMessages(locale: string) {
 	const basePath = path.resolve(process.cwd(), "src/messages");
 
 	// const namespaces = ["common"];
-	const namespaces = ["common", "auth", "checkout", "orders"];
+	const namespaces = ["common", "auth", "checkout", "orders", "errors", "ui"];
 
 	const messages: Record<string, any> = {};
 

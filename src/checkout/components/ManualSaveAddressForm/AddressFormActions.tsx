@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Button } from "@/checkout/components/Button";
 import { IconButton } from "@/checkout/components/IconButton";
 import { TrashIcon } from "@/checkout/ui-kit/icons";
@@ -15,24 +16,25 @@ export const AddressFormActions: React.FC<AddressFormActionsProps> = ({
 	onCancel,
 	loading,
 }) => {
+	const t = useTranslations("ui");
 	return (
 		<div className="flex flex-row justify-end gap-2">
 			{onDelete && (
 				<div className="flex">
-					<IconButton ariaLabel="Delete address" onClick={onDelete} icon={<TrashIcon aria-hidden />} />
+					<IconButton ariaLabel={t("deleteAddress")} onClick={onDelete} icon={<TrashIcon aria-hidden />} />
 				</div>
 			)}
 
-			<Button ariaLabel="Cancel editing" variant="secondary" onClick={onCancel} label="Cancel" />
+			<Button ariaLabel={t("cancel")} variant="secondary" onClick={onCancel} label={t("cancel")} />
 			{loading ? (
 				<Button
 					ariaDisabled
-					ariaLabel="Save address"
+					ariaLabel={t("saveAddress")}
 					onClick={(e) => e.preventDefault()}
-					label="Processing…"
+					label={t("processing")}
 				/>
 			) : (
-				<Button ariaLabel="Save address" onClick={onSubmit} label="Save address" />
+				<Button ariaLabel={t("saveAddress")} onClick={onSubmit} label={t("saveAddress")} />
 			)}
 		</div>
 	);

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/checkout/components/Button";
 import { PasswordInput } from "@/checkout/components/PasswordInput";
 import { TextInput } from "@/checkout/components/TextInput";
@@ -25,6 +26,7 @@ export const SignIn: React.FC<SignInProps> = ({
 	onEmailChange,
 	email: initialEmail,
 }) => {
+	const t = useTranslations("ui");
 	const {
 		checkout: { email: checkoutEmail },
 	} = useCheckout();
@@ -63,9 +65,9 @@ export const SignIn: React.FC<SignInProps> = ({
 
 	return (
 		<SignInFormContainer
-			title="Sign in"
-			redirectSubtitle="New customer?"
-			redirectButtonLabel="Guest checkout"
+			title={t("signIn")}
+			redirectSubtitle={t("newCustomer")}
+			redirectButtonLabel={t("guestCheckout")}
 			onSectionChange={onSectionChange}
 		>
 			<FormProvider form={form}>
@@ -73,27 +75,27 @@ export const SignIn: React.FC<SignInProps> = ({
 					<TextInput
 						required
 						name="email"
-						label="Email"
+						label={t("email")}
 						onChange={(event) => {
 							handleChange(event);
 							onEmailChange(event.currentTarget.value);
 						}}
 					/>
-					<PasswordInput name="password" label="Password" required />
+					<PasswordInput name="password" label={t("password")} required />
 					<div className="flex w-full flex-row items-center justify-end">
 						<Button
 							ariaDisabled={isSubmitting}
-							ariaLabel="send password reset link"
+							ariaLabel={t("forgotPassword")}
 							variant="tertiary"
-							label={passwordResetSent ? "Resend?" : "Forgot password?"}
+							label={passwordResetSent ? t("resend") : t("forgotPassword")}
 							className="ml-1 mr-4"
 							onClick={(e) => (isSubmitting ? e.preventDefault() : onPasswordResetRequest)}
 						/>
 						<Button
 							type="submit"
 							disabled={isSubmitting}
-							ariaLabel={"Sign in"}
-							label={isSubmitting ? "Processing…" : "Sign in"}
+							ariaLabel={t("signInButton")}
+							label={isSubmitting ? t("processing") : t("signInButton")}
 						/>
 					</div>
 				</div>

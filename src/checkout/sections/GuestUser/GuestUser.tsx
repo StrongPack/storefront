@@ -21,11 +21,10 @@ export const GuestUser: React.FC<GuestUserProps> = ({
 	const { createAccount } = form.values;
 
 	const t = useTranslations("auth");
-	//   return <h2>{t("contactDetails")}</h2>;
 
 	return (
 		<SignInFormContainer
-			title="Contact details"
+			title={t("contactDetails")}
 			redirectSubtitle={t("alreadyHaveAccount")}
 			redirectButtonLabel={t("signIn")}
 			onSectionChange={onSectionChange}
@@ -35,20 +34,16 @@ export const GuestUser: React.FC<GuestUserProps> = ({
 					<TextInput
 						required
 						name="email"
-						label="Email"
+						label={t("email_label")}
 						onChange={(event) => {
 							handleChange(event);
 							onEmailChange(event.currentTarget.value);
 						}}
 					/>
-					<Checkbox
-						name="createAccount"
-						label="I want to create account"
-						data-testid={"createAccountCheckbox"}
-					/>
+					<Checkbox name="createAccount" label={t("createAccount")} data-testid={"createAccountCheckbox"} />
 					{createAccount && (
 						<div className="mt-2">
-							<PasswordInput name="password" label="Password (minimum 8 characters)" required />
+							<PasswordInput name="password" label={t("passwordMinChars")} required />
 						</div>
 					)}
 				</div>

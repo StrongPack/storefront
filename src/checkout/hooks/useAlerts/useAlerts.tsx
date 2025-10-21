@@ -12,7 +12,8 @@ import {
 import { type ErrorCode } from "@/checkout/lib/globalTypes";
 import { type ApiErrors } from "@/checkout/hooks/useGetParsedErrors/types";
 import { useGetParsedErrors } from "@/checkout/hooks/useGetParsedErrors";
-import { apiErrorMessages } from "@/checkout/sections/PaymentSection/errorMessages";
+import { useErrorMessages } from "@/checkout/hooks/useErrorMessages";
+import { type ErrorMessages } from "@/checkout/hooks/useErrorMessages/useErrorMessages";
 
 function useAlerts(scope: CheckoutScope): {
 	showErrors: (errors: ApiErrors<any>) => void;
@@ -28,27 +29,31 @@ function useAlerts(): {
 
 function useAlerts(globalScope?: any): any {
 	const { getParsedApiErrors } = useGetParsedErrors<any>();
+	const { errorMessages: apiErrorMessages } = useErrorMessages(); // apiErrorMessages: ErrorMessages
 
 	const getMessageKey = ({ scope, field, code }: AlertErrorData, { error } = { error: false }) => {
 		const keyBase = `${scope}-${field}-${code}`;
 		return camelCase(error ? `${keyBase}-error` : keyBase);
 	};
 
-	const getErrorMessage = useCallback(({ code, field, scope }: AlertErrorData): string => {
-		const messageKey = getMessageKey(
-			{ code, field, scope },
-			{ error: true },
-		) as keyof typeof apiErrorMessages;
+	const getErrorMessage = useCallback(
+		({ code, field, scope }: AlertErrorData): string => {
+			const messageKey = getMessageKey(
+				{ code, field, scope },
+				{ error: true },
+			) as keyof typeof apiErrorMessages;
 
-		try {
-			const fullMessage = apiErrorMessages[messageKey];
+			try {
+				const fullMessage = apiErrorMessages[messageKey as keyof ErrorMessages];
 
-			return fullMessage;
-		} catch (e) {
-			console.warn(`Missing translation: ${messageKey}`);
-			return apiErrorMessages.somethingWentWrong;
-		}
-	}, []);
+				return fullMessage;
+			} catch (e) {
+				console.warn(`Missing translation: ${messageKey}`);
+				return apiErrorMessages.somethingWentWrong;
+			}
+		},
+		[apiErrorMessages],
+	);
 
 	const getParsedAlert = useCallback(
 		(data: AlertErrorData, type: AlertType): Alert => {
@@ -97,7 +102,7 @@ function useAlerts(globalScope?: any): any {
 				}
 			});
 		},
-		[globalScope, showAlert, showDefaultAlert],
+		[globalScope, showAlert, showDefaultAlert, apiErrorMessages],
 	);
 
 	const showSuccess = useCallback(

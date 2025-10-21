@@ -28,13 +28,15 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 		<main lang={locale} dir={dir} className={dir}>
 			{/* <html lang={locale} dir={dir}> */}
 			{/* <body className={dir === "rtl" ? "rtl" : "ltr"}> */}
+			{/* <html lang={locale} dir={dir}>
+				<body className={dir === "rtl" ? "rtl font-vazir text-right" : "ltr"}> */}
 			<AuthProvider>
 				<NextIntlClientProvider locale={locale} messages={messages}>
 					{children}
 				</NextIntlClientProvider>
 			</AuthProvider>
-			{/* </body> */}
-			{/* </html> */}
+			{/* </body>
+			</html> */}
 		</main>
 	);
 }

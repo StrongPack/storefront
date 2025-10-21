@@ -1,4 +1,5 @@
 import { type FormEventHandler, useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { type StripePaymentElementOptions } from "@stripe/stripe-js";
 import { getUrlForTransactionInitialize } from "../utils";
@@ -30,6 +31,7 @@ const paymentElementOptions: StripePaymentElementOptions = {
 };
 
 export function CheckoutForm() {
+	const t = useTranslations("auth");
 	const [isLoading, setIsLoading] = useState(false);
 	const stripe = useStripe();
 	const elements = useElements();
@@ -132,9 +134,9 @@ export function CheckoutForm() {
 					// be redirected to an intermediate site first to authorize the payment, then
 					// redirected to the `return_url`.
 					if (error.type === "card_error" || error.type === "validation_error") {
-						showCustomErrors([{ message: error.message ?? "Something went wrong" }]);
+						showCustomErrors([{ message: error.message ?? t("somethingWentWrong") }]);
 					} else {
-						showCustomErrors([{ message: "An unexpected error occurred." }]);
+						showCustomErrors([{ message: t("unexpectedError") }]);
 					}
 					return;
 				}
@@ -187,13 +189,14 @@ export function CheckoutForm() {
 				aria-disabled={isLoading || !stripe || !elements}
 				id="submit"
 			>
-				<span className="button-text">{isLoading ? <Loader /> : "Pay now"}</span>
+				<span className="button-text">{isLoading ? <Loader /> : t("payNow")}</span>
 			</button>
 		</form>
 	);
 }
 
 function Loader() {
+	const t = useTranslations("auth");
 	return (
 		<div className="text-center" aria-busy="true" role="status">
 			<div>
@@ -213,7 +216,7 @@ function Loader() {
 						fill="currentFill"
 					/>
 				</svg>
-				<span className="sr-only">Loading...</span>
+				<span className="sr-only">{t("loading")}</span>
 			</div>
 		</div>
 	);

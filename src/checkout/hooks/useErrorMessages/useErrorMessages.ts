@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { type ErrorCode } from "@/checkout/lib/globalTypes";
 
 export const errorMessages = {
@@ -15,23 +16,35 @@ export const errorMessages = {
 	insufficientStock: "Not enough of chosen item in stock.",
 	invalidCredentials: "Invalid credentials provided at login.",
 	missingFields: "Missing fields in address form: ",
+	somethingWentWrong: "Sorry, something went wrong. Please try again in a moment.",
 } satisfies Record<ErrorCode, string>;
 
 export type ErrorMessages = Record<ErrorCode, string>;
 
 export const useErrorMessages = <TKey extends string = ErrorCode>(customMessages?: Record<TKey, string>) => {
+	const t = useTranslations("errors");
 	const messagesToUse = customMessages || errorMessages;
 
 	const getMessageByErrorCode = useCallback(
 		(errorCode: string) => {
+			// Prefer i18n value if available; fallback to provided maps
+			let i18nMessage: string | undefined;
+			try {
+				// Will throw in dev if key is missing; we swallow and fallback
+				i18nMessage = t(errorCode as any);
+			} catch {
+				i18nMessage = undefined;
+			}
+			if (i18nMessage) return i18nMessage;
+
 			const formattedMessage = messagesToUse[errorCode as keyof typeof messagesToUse];
 			if (!formattedMessage) {
-				console.warn(`Missing trnalsation: ${errorCode}`);
+				console.warn(`Missing translation: ${errorCode}`);
 				return "";
 			}
 			return formattedMessage;
 		},
-		[messagesToUse],
+		[messagesToUse, t],
 	);
 
 	const translatedErrorMessages = useMemo(

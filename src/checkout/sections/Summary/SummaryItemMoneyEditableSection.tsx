@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { type CheckoutLineFragment } from "@/checkout/graphql";
 import { TextInput } from "@/checkout/components/TextInput";
 
@@ -12,6 +13,7 @@ interface SummaryItemMoneyEditableSectionProps {
 }
 
 export const SummaryItemMoneyEditableSection: React.FC<SummaryItemMoneyEditableSectionProps> = ({ line }) => {
+	const t = useTranslations("auth");
 	const { form, onLineDelete } = useSummaryItemForm({ line });
 
 	const {
@@ -55,7 +57,7 @@ export const SummaryItemMoneyEditableSection: React.FC<SummaryItemMoneyEditableS
 					onChange={handleChange}
 					onBlur={handleQuantityInputBlur}
 					name="quantity"
-					label="Quantity"
+					label={t("quantity")}
 					className="max-w-[6ch] text-center"
 				/>
 			</FormProvider>

@@ -24,6 +24,7 @@ export type ErrorCode =
 	| "insufficientStock"
 	| "invalidCredentials"
 	| "emailInvalid"
+	| "somethingWentWrong"
 	| PasswordErrorCode
 	| CheckoutFinalizeErrorCode;
 

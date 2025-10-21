@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 import { camelCase } from "lodash-es";
 import { AddressSelectBox } from "../../components/AddressSelectBox";
 import { type AddressFragment } from "@/checkout/graphql";
@@ -25,6 +26,7 @@ export const AddressList: React.FC<AddressListProps> = ({
 	onAddAddressClick,
 	form,
 }) => {
+	const t = useTranslations("ui");
 	const {
 		values: { addressList },
 	} = form;
@@ -35,15 +37,15 @@ export const AddressList: React.FC<AddressListProps> = ({
 		<FormProvider form={form}>
 			<div className="flex flex-col">
 				<Title>{title}</Title>
-				{addressList.length < 1 && <p className="mb-3">You currently have no saved addresses.</p>}
+				{addressList.length < 1 && <p className="mb-3">{t("noSavedAddresses")}</p>}
 				<Button
 					variant="secondary"
-					ariaLabel="add address"
+					ariaLabel={t("addAddress")}
 					onClick={onAddAddressClick}
-					label="Add address"
+					label={t("addAddress")}
 					className="w-full"
 				/>
-				<SelectBoxGroup label="user addresses" className="mt-2">
+				<SelectBoxGroup label={t("userAddresses")} className="mt-2">
 					{addressList.map(({ id, ...rest }: AddressFragment) => {
 						const identifier = `${camelCase(title)}-${id}}`;
 

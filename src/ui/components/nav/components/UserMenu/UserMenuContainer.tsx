@@ -6,8 +6,8 @@ import { CurrentUserDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { LinkWithChannel } from "@/ui/atoms/LinkWithChannel";
 
-export default async function UserMenuContainer() {
-	const t = await getTranslations("auth");
+export default async function UserMenuContainer({ locale }: { locale: string }) {
+	const t = await getTranslations({ locale, namespace: "auth" });
 	// export async function UserMenuContainer() {
 	const { me: user } = await executeGraphQL(CurrentUserDocument, {
 		cache: "no-cache",

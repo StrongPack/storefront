@@ -1,4 +1,5 @@
 import { type FC } from "react";
+import { useTranslations } from "next-intl";
 import clsx from "clsx";
 import { SummaryItem, type SummaryLine } from "./SummaryItem";
 import { PromoCodeAdd } from "./PromoCodeAdd";
@@ -39,6 +40,7 @@ export const Summary: FC<SummaryProps> = ({
 	shippingPrice,
 	discount,
 }) => {
+	const t = useTranslations("auth");
 	return (
 		<div
 			className={clsx(
@@ -48,7 +50,7 @@ export const Summary: FC<SummaryProps> = ({
 		>
 			<details open className="group">
 				<summary className="-mb-2 flex cursor-pointer flex-row items-center pt-4">
-					<Title>Summary</Title>
+					<Title>{t("summary")}</Title>
 					<ChevronDownIcon className="mb-2 group-open:rotate-180" />
 				</summary>
 				<ul className="py-2" data-testid="SummaryProductList">
@@ -70,13 +72,13 @@ export const Summary: FC<SummaryProps> = ({
 				</>
 			)}
 			<div className="mt-4 flex max-w-full flex-col">
-				<SummaryMoneyRow label="Subtotal" money={subtotalPrice?.gross} ariaLabel="subtotal price" />
+				<SummaryMoneyRow label={t("subtotal")} money={subtotalPrice?.gross} ariaLabel="subtotal price" />
 				{voucherCode && (
 					<SummaryPromoCodeRow
 						editable={editable}
 						promoCode={voucherCode}
 						ariaLabel="voucher"
-						label={`Voucher code: ${voucherCode}`}
+						label={`${t("voucher")}: ${voucherCode}`}
 						money={discount}
 						negative
 					/>
@@ -87,18 +89,18 @@ export const Summary: FC<SummaryProps> = ({
 						editable={editable}
 						promoCodeId={id}
 						ariaLabel="gift card"
-						label={`Gift Card: •••• •••• ${displayCode}`}
+						label={`${t("giftCard")}: •••• •••• ${displayCode}`}
 						money={currentBalance}
 						negative
 					/>
 				))}
-				<SummaryMoneyRow label="Shipping cost" ariaLabel="shipping cost" money={shippingPrice?.gross} />
+				<SummaryMoneyRow label={t("shippingCost")} ariaLabel="shipping cost" money={shippingPrice?.gross} />
 				<Divider className="my-4" />
 				<div className="flex flex-row items-baseline justify-between pb-4">
 					<div className="flex flex-row items-baseline">
-						<p className="font-bold">Total price</p>
+						<p className="font-bold">{t("totalPrice")}</p>
 						<p color="secondary" className="ml-2">
-							includes {getFormattedMoney(totalPrice?.tax)} tax
+							{t("includesTax", { tax: getFormattedMoney(totalPrice?.tax) })}
 						</p>
 					</div>
 					<Money ariaLabel="total price" money={totalPrice?.gross} data-testid="totalOrderPrice" />

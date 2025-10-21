@@ -12,7 +12,7 @@ export const metadata = {
 
 export default async function Page(props: { params: Promise<{ channel: string; locale: string }> }) {
 	const params = await props.params;
-	const t = await getTranslations("common");
+	const t = await getTranslations({ locale: params.locale, namespace: "common" });
 	const checkoutId = await Checkout.getIdFromCookies(params.channel);
 
 	const checkout = await Checkout.find(checkoutId);
@@ -61,7 +61,6 @@ export default async function Page(props: { params: Promise<{ channel: string; l
 											href={getHrefForVariant({
 												productSlug: item.variant.product.slug,
 												variantId: item.variant.id,
-												locale: params.locale,
 											})}
 										>
 											<h2 className="font-medium text-neutral-700">{item.variant?.product?.name}</h2>

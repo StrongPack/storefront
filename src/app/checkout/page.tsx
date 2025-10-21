@@ -22,8 +22,6 @@ export default async function CheckoutPage(props: {
 
 	return (
 		<div className="min-h-dvh bg-white">
-			{/* <section className="mx-auto flex min-h-dvh w-full max-w-7xl flex-col p-8"> */}
-			{/* <section className="flex min-h-dvh w-full flex-col p-8"> */}
 			<section className="mx-auto flex min-h-dvh max-w-7xl flex-col p-8">
 				<div className="flex items-center font-bold">
 					<Link aria-label="homepage" href="/">
@@ -33,15 +31,8 @@ export default async function CheckoutPage(props: {
 				</div>
 				<h1 className="mt-8 text-3xl font-bold text-neutral-900">{t("checkout_title")}</h1>
 
-				{/* <section className="mb-12 mt-6 flex-1">
-					<RootWrapper saleorApiUrl={process.env.NEXT_PUBLIC_SALEOR_API_URL} />
-				</section> */}
-
 				<section className="mb-12 mt-6 flex-1">
-					{/* <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-x-12 lg:grid-cols-2 rtl:[direction:rtl] rtl:[grid-auto-flow:dense]"> */}
-					{/* <div className="grid w-full grid-cols-1 gap-x-12 lg:grid-cols-2 rtl:[direction:rtl] rtl:[grid-auto-flow:dense]"> */}
 					<RootWrapper saleorApiUrl={process.env.NEXT_PUBLIC_SALEOR_API_URL} />
-					{/* </div> */}
 				</section>
 			</section>
 		</div>

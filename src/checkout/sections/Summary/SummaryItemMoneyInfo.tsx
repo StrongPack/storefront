@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 import clsx from "clsx";
 import { Money } from "@/checkout/components";
 import { type Money as MoneyType } from "@/checkout/graphql";
@@ -16,6 +17,7 @@ export const SummaryItemMoneyInfo: React.FC<SummaryItemMoneyInfoProps> = ({
 	quantity,
 	undiscountedUnitPrice,
 }) => {
+	const t = useTranslations("auth");
 	const multiplePieces = quantity > 1;
 	const piecePrice = unitPrice.gross;
 	const onSale = undiscountedUnitPrice.amount !== unitPrice.gross.amount;
@@ -47,7 +49,7 @@ export const SummaryItemMoneyInfo: React.FC<SummaryItemMoneyInfoProps> = ({
 
 			{multiplePieces && (
 				<p aria-label="single piece price" color="secondary" className="text-end text-xs">
-					{getFormattedMoney(piecePrice)} each
+					{getFormattedMoney(piecePrice)} {t("each")}
 				</p>
 			)}
 		</div>

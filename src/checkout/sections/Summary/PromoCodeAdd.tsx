@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import React, { type FC } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/checkout/components/Button";
 import { TextInput } from "@/checkout/components/TextInput";
 import { useCheckoutAddPromoCodeMutation } from "@/checkout/graphql";
@@ -13,6 +14,7 @@ interface PromoCodeFormData {
 }
 
 export const PromoCodeAdd: FC<Classes> = ({ className }) => {
+	const t = useTranslations("auth");
 	const [, checkoutAddPromoCode] = useCheckoutAddPromoCodeMutation();
 
 	const onSubmit = useFormSubmit<PromoCodeFormData, typeof checkoutAddPromoCode>({
@@ -39,13 +41,13 @@ export const PromoCodeAdd: FC<Classes> = ({ className }) => {
 	return (
 		<FormProvider form={form}>
 			<div className={clsx("relative my-4", className)}>
-				<TextInput required={false} name="promoCode" label="Add gift card or discount code" />
+				<TextInput required={false} name="promoCode" label={t("addGiftOrDiscount")} />
 				{showApplyButton && (
 					<Button
 						className="absolute bottom-2.5 right-3"
 						variant="tertiary"
 						ariaLabel="apply"
-						label="Apply"
+						label={t("apply")}
 						type="submit"
 					/>
 				)}

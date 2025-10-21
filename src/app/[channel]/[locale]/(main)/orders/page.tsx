@@ -11,7 +11,7 @@ export default async function OrderPage({
 }) {
 	// چون layout اصلی params را به‌صورت Promise صادر کرده
 	const { locale } = await params; // ✅ همین خط رفع خطای TypeScript است
-	const t = await getTranslations("common");
+	const t = await getTranslations({ locale, namespace: "common" });
 	const { me: user } = await executeGraphQL(CurrentUserOrderListDocument, {
 		cache: "no-cache",
 	});

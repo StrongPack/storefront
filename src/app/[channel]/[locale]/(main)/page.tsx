@@ -8,9 +8,9 @@ export const metadata = {
 	description: "Storefront.",
 };
 
-export default async function Page(props: { params: Promise<{ channel: string }> }) {
+export default async function Page(props: { params: Promise<{ channel: string; locale: string }> }) {
 	const params = await props.params;
-	const t = await getTranslations("common");
+	const t = await getTranslations({ locale: params.locale, namespace: "common" });
 	const data = await executeGraphQL(ProductListByCollectionDocument, {
 		variables: {
 			slug: "featured-products",

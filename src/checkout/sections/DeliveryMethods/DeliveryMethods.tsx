@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 import { Title } from "@/checkout/components/Title";
 import { useCheckout } from "@/checkout/hooks/useCheckout";
 import { SelectBox } from "@/checkout/components/SelectBox";
@@ -13,6 +14,7 @@ import { DeliveryMethodsSkeleton } from "@/checkout/sections/DeliveryMethods/Del
 import { useUser } from "@/checkout/hooks/useUser";
 
 export const DeliveryMethods: React.FC<CommonSectionProps> = ({ collapsed }) => {
+	const t = useTranslations("auth");
 	const { checkout } = useCheckout();
 	const { authenticated } = useUser();
 	const { shippingMethods, shippingAddress } = checkout;
@@ -24,7 +26,7 @@ export const DeliveryMethods: React.FC<CommonSectionProps> = ({ collapsed }) => 
 			return undefined;
 		}
 
-		return `${min}-${max} business days`;
+		return `${min}-${max} ${t("businessDaysRange")}`;
 	};
 
 	if (!checkout?.isShippingRequired || collapsed) {
@@ -35,18 +37,16 @@ export const DeliveryMethods: React.FC<CommonSectionProps> = ({ collapsed }) => 
 		<FormProvider form={form}>
 			<Divider />
 			<div className="py-4" data-testid="deliveryMethods">
-				<Title className="mb-2">Delivery methods</Title>
-				{!authenticated && !shippingAddress && (
-					<p>Please fill in shipping address to see available shipping methods</p>
-				)}
+				<Title className="mb-2">{t("deliveryMethods")}</Title>
+				{!authenticated && !shippingAddress && <p>{t("fillShippingToSeeMethods")}</p>}
 				{authenticated && !shippingAddress && updateState.checkoutShippingUpdate ? (
 					<DeliveryMethodsSkeleton />
 				) : (
-					<SelectBoxGroup label="delivery methods">
+					<SelectBoxGroup label={t("deliveryMethodsGroupLabel")}>
 						{shippingMethods?.map(
 							({ id, name, price, minimumDeliveryDays: min, maximumDeliveryDays: max }) => (
 								<SelectBox key={id} name="selectedMethodId" value={id}>
-									<div className="min-h-12 pointer-events-none flex grow flex-col justify-center">
+									<div className="pointer-events-none flex min-h-12 grow flex-col justify-center">
 										<div className="flex flex-row items-center justify-between self-stretch">
 											<p>{name}</p>
 											<p>{getFormattedMoney(price)}</p>

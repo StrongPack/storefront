@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const OrderListItem = async ({ order, locale }: Props) => {
-	const t = await getTranslations("orders");
+	const t = await getTranslations({ locale, namespace: "orders" });
 	return (
 		<li className="bg-white">
 			<div className="flex flex-col gap-2 border bg-neutral-200/20 px-6 py-4 md:grid md:grid-cols-4 md:gap-8">
@@ -29,7 +29,7 @@ export const OrderListItem = async ({ order, locale }: Props) => {
 					<div className="flex flex-row items-center justify-between py-4 md:flex-col md:items-start md:gap-y-1">
 						<dt className="font-medium text-neutral-900">{t("payment_status")}</dt>
 						<dd>
-							<PaymentStatus status={order.paymentStatus} />
+							<PaymentStatus status={order.paymentStatus} locale={locale} />
 						</dd>
 					</div>
 				</dl>

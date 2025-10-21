@@ -28,14 +28,17 @@ export const Checkout = () => {
 				{isEmptyCart ? (
 					<EmptyCartPage />
 				) : (
-					// <div className="grid min-h-screen grid-cols-1 gap-x-16 lg:grid-cols-2">
-					<div className="grid min-h-screen grid-cols-1 gap-x-16 lg:grid-cols-2 rtl:[direction:rtl] rtl:[grid-auto-flow:dense]">
-						<Suspense fallback={<CheckoutFormSkeleton />}>
-							<CheckoutForm />
-						</Suspense>
-						<Suspense fallback={<SummarySkeleton />}>
-							<Summary {...checkout} />
-						</Suspense>
+					<div className="grid min-h-screen grid-cols-1 gap-x-16 lg:grid-cols-2 lg:grid-rows-1">
+						<div className="lg:col-start-1 lg:col-end-1">
+							<Suspense fallback={<CheckoutFormSkeleton />}>
+								<CheckoutForm />
+							</Suspense>
+						</div>
+						<div className="lg:col-start-2 lg:col-end-2">
+							<Suspense fallback={<SummarySkeleton />}>
+								<Summary {...checkout} />
+							</Suspense>
+						</div>
 					</div>
 				)}
 			</div>

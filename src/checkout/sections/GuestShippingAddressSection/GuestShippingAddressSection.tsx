@@ -1,10 +1,12 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 import { AddressForm } from "@/checkout/components/AddressForm";
 import { FormProvider } from "@/checkout/hooks/useForm/FormProvider";
 import { useAvailableShippingCountries } from "@/checkout/hooks/useAvailableShippingCountries";
 import { useGuestShippingAddressForm } from "@/checkout/sections/GuestShippingAddressSection/useGuestShippingAddressForm";
 
 export const GuestShippingAddressSection = () => {
+	const t = useTranslations("auth");
 	const { availableShippingCountries } = useAvailableShippingCountries();
 
 	const form = useGuestShippingAddressForm();
@@ -14,7 +16,7 @@ export const GuestShippingAddressSection = () => {
 	return (
 		<FormProvider form={form}>
 			<AddressForm
-				title="Shipping address"
+				title={t("shippingAddress")}
 				availableCountries={availableShippingCountries}
 				fieldProps={{
 					onChange: handleChange,

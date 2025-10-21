@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 import { SelectBox, type SelectBoxProps } from "@/checkout/components/SelectBox";
 import { Button } from "@/checkout/components/Button";
 import { Address } from "@/checkout/components/Address";
@@ -20,11 +21,12 @@ export const AddressSelectBox = <TFieldName extends string>({
 	unavailable,
 	...rest
 }: AddressSelectBoxProps<TFieldName>) => {
+	const t = useTranslations("ui");
 	return (
 		<SelectBox {...rest} disabled={unavailable}>
 			<div className="flex w-full flex-col justify-between pe-8">
 				<Address address={address as AddressFragment}>
-					{unavailable && <p className="font-xs my-1">Can&apos;t ship to this address</p>}
+					{unavailable && <p className="font-xs my-1">{t("cantShipToAddress")}</p>}
 				</Address>
 				<Button
 					variant="tertiary"
@@ -32,7 +34,7 @@ export const AddressSelectBox = <TFieldName extends string>({
 						event.stopPropagation();
 						onEdit();
 					}}
-					ariaLabel="edit"
+					ariaLabel={t("edit")}
 					className="s pointer-events-auto absolute right-2 top-2 h-6 w-6 p-0"
 					label={<EditIcon />}
 				/>

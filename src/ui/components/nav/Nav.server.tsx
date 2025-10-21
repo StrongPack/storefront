@@ -40,7 +40,7 @@ export default async function NavServer({ channel, locale }: { channel: string; 
 			locale={locale}
 			NavLinks={<NavLinksServer channel={channel} />}
 			CartNavItem={<CartNavItem channel={channel} />}
-			UserMenu={<UserMenuContainer />}
+			UserMenu={<UserMenuContainer locale={locale} />}
 		/>
 	);
 }

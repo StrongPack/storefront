@@ -3,7 +3,6 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useEffect, useMemo } from "react";
-import { apiErrorMessages } from "../errorMessages";
 import { CheckoutForm } from "./stripeElementsForm";
 import { stripeGatewayId } from "./types";
 import { useTransactionInitializeMutation } from "@/checkout/graphql";
@@ -25,7 +24,7 @@ export const StripeComponent = () => {
 		  };
 
 	const { showCustomErrors } = useAlerts();
-	const { errorMessages: commonErrorMessages } = useErrorMessages(apiErrorMessages);
+	const { errorMessages: commonErrorMessages } = useErrorMessages();
 
 	useEffect(() => {
 		transactionInitialize({

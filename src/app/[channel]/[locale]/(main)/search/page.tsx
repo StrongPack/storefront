@@ -23,7 +23,7 @@ export default async function Page(props: {
 	const [searchParams, params] = await Promise.all([props.searchParams, props.params]);
 	const cursor = typeof searchParams.cursor === "string" ? searchParams.cursor : null;
 	const searchValue = searchParams.query;
-	const t = await getTranslations("common");
+	const t = await getTranslations({ locale: params.locale, namespace: "common" });
 
 	if (!searchValue) {
 		notFound();
@@ -78,6 +78,7 @@ export default async function Page(props: {
 					</h1>
 					<ProductList products={products.edges.map((e) => e.node)} />
 					<Pagination
+						locale={params.locale}
 						pageInfo={{
 							...products.pageInfo,
 							basePathname: `/${params.locale}/search`,

@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import { useTranslations } from "next-intl";
 import { useCheckoutFormValidationTrigger } from "@/checkout/hooks/useCheckoutFormValidationTrigger";
 import { getById } from "@/checkout/lib/utils/common";
 import { AddressSectionSkeleton } from "@/checkout/components/AddressSectionSkeleton";
@@ -18,6 +19,7 @@ import { type AddressFragment } from "@/checkout/graphql";
 interface UserBillingAddressSectionProps {}
 
 export const UserBillingAddressSection: React.FC<UserBillingAddressSectionProps> = ({}) => {
+	const t = useTranslations("auth");
 	const {
 		checkout: { isShippingRequired },
 	} = useCheckout();
@@ -63,7 +65,7 @@ export const UserBillingAddressSection: React.FC<UserBillingAddressSectionProps>
 					<FormProvider form={billingSameAsShippingForm}>
 						<Checkbox
 							name="billingSameAsShipping"
-							label="Use shipping address as billing address"
+							label={t("useShippingAsBilling")}
 							data-testid={"useShippingAsBillingCheckbox"}
 						/>
 					</FormProvider>
@@ -90,7 +92,7 @@ export const UserBillingAddressSection: React.FC<UserBillingAddressSectionProps>
 
 								{displayAddressEdit && (
 									<AddressEditForm
-										title="Billing address"
+										title={t("billingAddress")}
 										onClose={() => setDisplayAddressEdit()}
 										address={form.values.addressList.find(getById(editedAddressId)) as AddressFragment}
 										onUpdate={onAddressUpdateSuccess}
@@ -102,7 +104,7 @@ export const UserBillingAddressSection: React.FC<UserBillingAddressSectionProps>
 									<AddressList
 										onEditChange={setDisplayAddressEdit}
 										onAddAddressClick={() => setDisplayAddressCreate(true)}
-										title="Billing address"
+										title={t("billingAddress")}
 										form={form}
 									/>
 								)}

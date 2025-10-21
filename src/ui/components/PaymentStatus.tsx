@@ -4,10 +4,11 @@ import { PaymentChargeStatusEnum } from "@/gql/graphql";
 
 type Props = {
 	status: PaymentChargeStatusEnum;
+	locale: string;
 };
 
-export const PaymentStatus = async ({ status }: Props) => {
-	const t = await getTranslations("orders");
+export const PaymentStatus = async ({ status, locale }: Props) => {
+	const t = await getTranslations({ locale, namespace: "orders" });
 
 	switch (status) {
 		case PaymentChargeStatusEnum.NotCharged:

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
+import { useTranslations } from "next-intl";
 import { type AddressFormData } from "@/checkout/components/AddressForm/types";
 import { getEmptyAddressFormData, getAddressInputData } from "@/checkout/components/AddressForm/utils";
 import { type ChangeHandler, useForm } from "@/checkout/hooks/useForm";
@@ -20,6 +21,7 @@ export const AddressCreateForm: React.FC<AddressCreateFormProps> = ({
 	onClose,
 	availableCountries,
 }) => {
+	const t = useTranslations("ui");
 	const [, userAddressCreate] = useUserAddressCreateMutation();
 	const { setCountryCode, validationSchema } = useAddressFormSchema();
 
@@ -53,7 +55,7 @@ export const AddressCreateForm: React.FC<AddressCreateFormProps> = ({
 
 	return (
 		<FormProvider form={{ ...form, handleChange: onChange }}>
-			<AddressForm title="Create address" availableCountries={availableCountries}>
+			<AddressForm title={t("createAddress")} availableCountries={availableCountries}>
 				<AddressFormActions onSubmit={handleSubmit} loading={isSubmitting} onCancel={onClose} />
 			</AddressForm>
 		</FormProvider>

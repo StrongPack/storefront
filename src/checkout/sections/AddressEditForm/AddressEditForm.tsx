@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
+import { useTranslations } from "next-intl";
 import { type AddressFormData } from "@/checkout/components/AddressForm/types";
 import { AddressForm, type AddressFormProps } from "@/checkout/components/AddressForm";
 import {
@@ -30,6 +31,7 @@ export const AddressEditForm: React.FC<AddressEditFormProps> = ({
 	address,
 	availableCountries,
 }) => {
+	const t = useTranslations("ui");
 	const [{ fetching: updating }, userAddressUpdate] = useUserAddressUpdateMutation();
 	const [{ fetching: deleting }, userAddressDelete] = useUserAddressDeleteMutation();
 	const { setCountryCode, validationSchema } = useAddressFormSchema();
@@ -76,7 +78,7 @@ export const AddressEditForm: React.FC<AddressEditFormProps> = ({
 
 	return (
 		<FormProvider form={{ ...form, handleChange: onChange }}>
-			<AddressForm title="Edit address" availableCountries={availableCountries}>
+			<AddressForm title={t("editAddress")} availableCountries={availableCountries}>
 				<AddressFormActions
 					onSubmit={handleSubmit}
 					loading={updating || deleting}

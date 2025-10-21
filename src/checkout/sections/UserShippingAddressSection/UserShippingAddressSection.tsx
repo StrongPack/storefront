@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import { useTranslations } from "next-intl";
 import { getById } from "@/checkout/lib/utils/common";
 import { AddressSectionSkeleton } from "@/checkout/components/AddressSectionSkeleton";
 import { UserAddressSectionContainer } from "@/checkout/sections/UserAddressSectionContainer";
@@ -13,6 +14,7 @@ import { useAvailableShippingCountries } from "@/checkout/hooks/useAvailableShip
 interface UserShippingAddressSectionProps {}
 
 export const UserShippingAddressSection: React.FC<UserShippingAddressSectionProps> = ({}) => {
+	const t = useTranslations("auth");
 	const { availableShippingCountries } = useAvailableShippingCountries();
 	const {
 		form,
@@ -47,7 +49,7 @@ export const UserShippingAddressSection: React.FC<UserShippingAddressSectionProp
 						{displayAddressEdit && (
 							<AddressEditForm
 								availableCountries={availableShippingCountries}
-								title="Shipping address"
+								title={t("shippingAddress")}
 								onClose={() => setDisplayAddressEdit()}
 								address={form.values.addressList.find(getById(editedAddressId)) as AddressFragment}
 								onUpdate={onAddressUpdateSuccess}
@@ -59,7 +61,7 @@ export const UserShippingAddressSection: React.FC<UserShippingAddressSectionProp
 							<AddressList
 								onEditChange={setDisplayAddressEdit}
 								onAddAddressClick={() => setDisplayAddressCreate(true)}
-								title="Shipping address"
+								title={t("shippingAddress")}
 								checkAddressAvailability={true}
 								form={form}
 							/>

@@ -31,7 +31,7 @@ export const Nav = ({ channel, locale }: { channel: string; locale: string }) =>
 					<SearchBar channel={channel} locale={locale} />
 				</div>
 				<Suspense fallback={<div className="w-8" />}>
-					<UserMenuContainer />
+					<UserMenuContainer locale={locale} />
 				</Suspense>
 			</div>
 			<div
@@ -43,7 +43,7 @@ export const Nav = ({ channel, locale }: { channel: string; locale: string }) =>
 					<SearchBar channel={channel} locale={locale} />
 				</div>
 				<Suspense fallback={<div className="w-8" />}>
-					<UserMenuContainer />
+					<UserMenuContainer locale={locale} />
 				</Suspense>
 
 				<LanguageSwitcherSPA />

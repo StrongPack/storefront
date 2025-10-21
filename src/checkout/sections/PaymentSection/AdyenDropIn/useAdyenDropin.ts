@@ -3,7 +3,6 @@
 import type DropinElement from "@adyen/adyen-web/dist/types/components/Dropin";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { camelCase } from "lodash-es";
-import { apiErrorMessages } from "../errorMessages";
 import {
 	type TransactionInitializeMutationVariables,
 	type TransactionProcessMutationVariables,
@@ -55,7 +54,7 @@ export const useAdyenDropin = (props: AdyenDropinProps) => {
 	} = useCheckout();
 	const { authenticated } = useUser();
 	const { getMessageByErrorCode } = useErrorMessages(adyenErrorMessages);
-	const { errorMessages: commonErrorMessages } = useErrorMessages(apiErrorMessages);
+	const { errorMessages: commonErrorMessages } = useErrorMessages();
 	const { validateAllForms } = useCheckoutValidationActions();
 	const { validationState } = useCheckoutValidationState();
 	const { updateState, loadingCheckout, ...rest } = useCheckoutUpdateState();
