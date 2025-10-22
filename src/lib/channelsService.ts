@@ -2,6 +2,10 @@
 import { executeGraphQL } from "@/lib/graphql";
 import { ChannelsListDocument, LanguageCodeEnum } from "@/gql/graphql";
 
+let cachedChannels: Awaited<ReturnType<typeof fetchChannels>> | null = null;
+let cacheTime = 0;
+const CACHE_TTL_MS = 60_000;
+
 export type ChannelConfig = {
 	locale: string;
 	languageCode: LanguageCodeEnum;
@@ -9,8 +13,6 @@ export type ChannelConfig = {
 };
 
 export type ChannelConfigMap = Record<string, ChannelConfig>;
-
-let cachedChannels: Awaited<ReturnType<typeof fetchChannels>> | null = null;
 
 async function fetchChannels() {
 	const channelsResult = process.env.SALEOR_APP_TOKEN
@@ -26,11 +28,12 @@ async function fetchChannels() {
 }
 
 export async function getChannelConfigMap(): Promise<ChannelConfigMap> {
-	if (!cachedChannels) {
+	const now = Date.now();
+	if (!cachedChannels || now - cacheTime > CACHE_TTL_MS) {
 		cachedChannels = await fetchChannels();
+		cacheTime = now;
 	}
 
-	// console.log(cachedChannels);
 	const map: ChannelConfigMap = {};
 	for (const ch of cachedChannels) {
 		map[ch.slug] = {
@@ -39,7 +42,5 @@ export async function getChannelConfigMap(): Promise<ChannelConfigMap> {
 			dir: ch.slug === "default-channel" ? "rtl" : "ltr",
 		};
 	}
-
-	// console.log(map);
 	return map;
 }

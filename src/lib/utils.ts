@@ -43,46 +43,46 @@ export const formatNumber = (number: number, locale?: string) => {
 	return new Intl.NumberFormat(nfLocale, { maximumFractionDigits: 0 }).format(Math.round(number));
 };
 
-// export function getHrefForVariant({
-// 	productSlug,
-// 	variantId,
-// }: {
-// 	productSlug: string;
-// 	variantId?: string;
-// }): string {
-// 	const pathname = `/products/${encodeURIComponent(productSlug)}`;
+export function getHrefForVariant({
+	productSlug,
+	variantId,
+}: {
+	productSlug: string;
+	variantId?: string;
+}): string {
+	const pathname = `/products/${encodeURIComponent(productSlug)}`;
 
-// 	if (!variantId) {
-// 		return pathname;
-// 	}
+	if (!variantId) {
+		return pathname;
+	}
 
-// 	const query = new URLSearchParams({ variant: variantId });
-// 	return `${pathname}?${query.toString()}`;
-// }
+	const query = new URLSearchParams({ variant: variantId });
+	return `${pathname}?${query.toString()}`;
+}
 
 /**
  * Generate product variant URL preserving channel and locale if present.
  */
-export function getHrefForVariant({
-	productSlug,
-	variantId,
-	locale,
-}: {
-	productSlug: string;
-	variantId?: string;
-	locale?: string;
-}): string {
-	const encodedSlug = encodeURIComponent(productSlug);
-	let pathname = `/products/${encodedSlug}`;
-	const query = variantId ? `?variant=${encodeURIComponent(variantId)}` : "";
+// export function getHrefForVariant({
+// 	productSlug,
+// 	variantId,
+// 	locale,
+// }: {
+// 	productSlug: string;
+// 	variantId?: string;
+// 	locale?: string;
+// }): string {
+// 	const encodedSlug = encodeURIComponent(productSlug);
+// 	let pathname = `/products/${encodedSlug}`;
+// 	const query = variantId ? `?variant=${encodeURIComponent(variantId)}` : "";
 
-	// if (channel && locale) {
-	// 	pathname = `/${encodeURIComponent(channel)}/${encodeURIComponent(locale)}${pathname}`;
-	// }
+// 	// if (channel && locale) {
+// 	// 	pathname = `/${encodeURIComponent(channel)}/${encodeURIComponent(locale)}${pathname}`;
+// 	// }
 
-	if (locale) {
-		pathname = `/${encodeURIComponent(locale)}${pathname}`;
-	}
+// 	if (locale) {
+// 		pathname = `/${encodeURIComponent(locale)}${pathname}`;
+// 	}
 
-	return `${pathname}${query}`;
-}
+// 	return `${pathname}${query}`;
+// }

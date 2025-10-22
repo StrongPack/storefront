@@ -32,7 +32,7 @@ export default async function Page({ params }: { params: Promise<{ channel: stri
 	return (
 		<section className="mx-auto max-w-7xl p-8 pb-16">
 			<h2 className="sr-only">{t("featured_products")}</h2>
-			<ProductList products={products} />
+			<ProductList products={products} channel={channel} />
 		</section>
 	);
 }

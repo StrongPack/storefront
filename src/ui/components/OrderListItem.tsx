@@ -83,7 +83,6 @@ export const OrderListItem = async ({ order, locale }: Props) => {
 															href={getHrefForVariant({
 																productSlug: product.slug,
 																variantId: item.variant.id,
-																locale,
 															})}
 															className="font-medium text-neutral-900"
 														>

@@ -4,13 +4,13 @@ import {
 	OrderDirection,
 	ProductOrderField,
 	SearchProductsDocument,
-	LanguageCodeEnum,
 	// LegacySearchProductsDocument,
 } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { Pagination } from "@/ui/components/Pagination";
 import { ProductList } from "@/ui/components/ProductList";
 import { ProductsPerPage } from "@/app/config";
+import { getChannelConfig } from "@/lib/channelConfig";
 
 export const metadata = {
 	title: "Search products · 20pack",
@@ -19,12 +19,16 @@ export const metadata = {
 
 export default async function Page(props: {
 	searchParams: Promise<Record<"query" | "cursor", string | string[] | undefined>>;
-	params: Promise<{ channel: string; locale: string }>;
+	params: Promise<{ channel: string }>;
 }) {
 	const [searchParams, params] = await Promise.all([props.searchParams, props.params]);
 	const cursor = typeof searchParams.cursor === "string" ? searchParams.cursor : null;
 	const searchValue = searchParams.query;
-	const t = await getTranslations({ locale: params.locale, namespace: "common" });
+
+	const { channel } = params;
+	const { locale, languageCode } = await getChannelConfig(channel);
+
+	const t = await getTranslations({ locale: locale, namespace: "common" });
 
 	if (!searchValue) {
 		notFound();
@@ -56,7 +60,7 @@ export default async function Page(props: {
 			sortBy: ProductOrderField.Rating,
 			sortDirection: OrderDirection.Asc,
 			channel: params.channel,
-			languageCode: LanguageCodeEnum.FaIr,
+			languageCode: languageCode,
 		},
 		revalidate: 60,
 	});
@@ -79,9 +83,9 @@ export default async function Page(props: {
 					<h1 className="pb-8 text-xl font-semibold">
 						{t("search_results_for")} &quot;{searchValue}&quot;:
 					</h1>
-					<ProductList products={products.edges.map((e) => e.node)} />
+					<ProductList products={products.edges.map((e) => e.node)} channel={channel} />
 					<Pagination
-						locale={params.locale}
+						locale={locale}
 						pageInfo={{
 							...products.pageInfo,
 							basePathname: `/search`,

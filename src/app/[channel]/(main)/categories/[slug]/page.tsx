@@ -1,16 +1,20 @@
 import { notFound } from "next/navigation";
 import { type ResolvingMetadata, type Metadata } from "next";
-import { ProductListByCategoryDocument, LanguageCodeEnum } from "@/gql/graphql";
+import { ProductListByCategoryDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { ProductList } from "@/ui/components/ProductList";
+import { getChannelConfig } from "@/lib/channelConfig";
 
 export const generateMetadata = async (
 	props: { params: Promise<{ slug: string; channel: string }> },
 	parent: ResolvingMetadata,
 ): Promise<Metadata> => {
 	const params = await props.params;
+	const { channel, slug } = params;
+	const { languageCode } = await getChannelConfig(channel);
+
 	const { category } = await executeGraphQL(ProductListByCategoryDocument, {
-		variables: { slug: params.slug, channel: params.channel, languageCode: LanguageCodeEnum.FaIr },
+		variables: { slug: slug, channel: channel, languageCode: languageCode },
 		revalidate: 60,
 	});
 
@@ -22,21 +26,27 @@ export const generateMetadata = async (
 
 export default async function Page(props: { params: Promise<{ slug: string; channel: string }> }) {
 	const params = await props.params;
+	const { channel, slug } = params;
+
+	const { languageCode, locale } = await getChannelConfig(channel);
+
 	const { category } = await executeGraphQL(ProductListByCategoryDocument, {
-		variables: { slug: params.slug, channel: params.channel, languageCode: LanguageCodeEnum.FaIr },
+		variables: { slug, channel, languageCode },
 		revalidate: 60,
 	});
 
-	if (!category || !category.products) {
-		notFound();
-	}
+	if (!category || !category.products) notFound();
 
-	const { name, products } = category;
+	const { products } = category;
+	const isFa = locale === "fa";
+
+	const translation = category.translation;
+	const displayName = isFa && translation?.name ? translation.name : category.name;
 
 	return (
 		<div className="mx-auto max-w-7xl p-8 pb-16">
-			<h1 className="pb-8 text-xl font-semibold">{name}</h1>
-			<ProductList products={products.edges.map((e) => e.node)} />
+			<h1 className="pb-8 text-xl font-semibold">{displayName}</h1>
+			<ProductList products={products.edges.map((e) => e.node)} channel={channel} />
 		</div>
 	);
 }

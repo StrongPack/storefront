@@ -4,6 +4,12 @@ query ProductListByCollection($languageCode: LanguageCodeEnum!, $slug: String!, 
 		description
 		seoDescription
 		seoTitle
+		translation(languageCode: $languageCode) {
+			name
+			description
+			seoTitle
+			seoDescription
+		}
 		products(first: 100) {
 			edges {
 				node {

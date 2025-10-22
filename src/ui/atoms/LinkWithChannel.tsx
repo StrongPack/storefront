@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { type ComponentProps } from "react";
+import { type ComponentProps, useMemo } from "react";
 
 export const LinkWithChannel = ({
 	href,
@@ -11,13 +11,22 @@ export const LinkWithChannel = ({
 
 	const { channel } = useParams<{ channel?: string }>();
 
-	if (!href.startsWith("/")) {
-		return <Link {...props} href={href} />;
-	}
+	// if (!href.startsWith("/")) {
+	// 	return <Link {...props} href={href} />;
+	// }
 
 	const encodedChannel = encodeURIComponent(channel ?? "default-channel");
-	const hrefWithChannel = `/${encodedChannel}${href}`;
+
+	const hrefWithChannel = useMemo(() => {
+		if (!href.startsWith("/")) return href;
+		// return `/${encodedChannel}${href.startsWith("/") ? "" : "/"}${href}`;
+		return `/${encodedChannel}${href}`;
+	}, [href, encodedChannel]);
+
 	return <Link {...props} href={hrefWithChannel} />;
+
+	// const hrefWithChannel = `/${encodedChannel}${href}`;
+	// return <Link {...props} href={hrefWithChannel} />;
 
 	// // اگر channel و locale وجود داشته باشد، در مسیر بساز
 	// const encodedChannel = encodeURIComponent(channel ?? "");

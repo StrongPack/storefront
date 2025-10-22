@@ -9,13 +9,12 @@ import { AddButton } from "./AddButton";
 import { VariantSelector } from "@/ui/components/VariantSelector";
 import { ProductImageWrapper } from "@/ui/atoms/ProductImageWrapper";
 import { executeGraphQL } from "@/lib/graphql";
-
+import { getChannelConfig } from "@/lib/channelConfig";
 import { formatMoney, formatMoneyRange } from "@/lib/utils";
 import {
 	CheckoutAddLineDocument,
 	ProductDetailsDocument,
 	ProductListDocument,
-	LanguageCodeEnum,
 	type ProductListItemFragment,
 } from "@/gql/graphql";
 import * as Checkout from "@/lib/checkout";
@@ -30,11 +29,14 @@ export async function generateMetadata(
 ): Promise<Metadata> {
 	const [searchParams, params] = await Promise.all([props.searchParams, props.params]);
 
+	const { channel } = params;
+	const { languageCode } = await getChannelConfig(channel);
+
 	const { product } = await executeGraphQL(ProductDetailsDocument, {
 		variables: {
 			slug: decodeURIComponent(params.slug),
 			channel: params.channel,
-			languageCode: LanguageCodeEnum.FaIr,
+			languageCode: languageCode,
 		},
 		revalidate: 60,
 	});
@@ -69,9 +71,12 @@ export async function generateMetadata(
 }
 
 export async function generateStaticParams({ params }: { params: { channel: string } }) {
+	const { channel } = params;
+	const { languageCode } = await getChannelConfig(channel);
+
 	const { products } = await executeGraphQL(ProductListDocument, {
 		revalidate: 60,
-		variables: { first: 20, channel: params.channel, languageCode: LanguageCodeEnum.FaIr },
+		variables: { first: 20, channel: params.channel, languageCode: languageCode },
 		withAuth: false,
 	});
 
@@ -82,15 +87,19 @@ export async function generateStaticParams({ params }: { params: { channel: stri
 const parser = edjsHTML();
 
 export default async function Page(props: {
-	params: Promise<{ slug: string; channel: string; locale: string }>;
+	params: Promise<{ slug: string; channel: string }>;
 	searchParams: Promise<{ variant?: string }>;
 }) {
 	const [searchParams, params] = await Promise.all([props.searchParams, props.params]);
+
+	const { channel } = params;
+	const { languageCode, locale } = await getChannelConfig(channel);
+
 	const { product } = await executeGraphQL(ProductDetailsDocument, {
 		variables: {
 			slug: decodeURIComponent(params.slug),
 			channel: params.channel,
-			languageCode: LanguageCodeEnum.FaIr,
+			languageCode: languageCode,
 		},
 		revalidate: 60,
 	});
@@ -100,8 +109,7 @@ export default async function Page(props: {
 	}
 
 	const firstImage = product.thumbnail;
-	// Prefer translation when locale is Persian
-	const locale = String(params.locale);
+
 	const isFa = locale === "fa";
 
 	const productTyped = product as ProductListItemFragment;
@@ -153,7 +161,7 @@ export default async function Page(props: {
 		? formatMoney(
 				selectedVariant.pricing.price.gross.amount,
 				selectedVariant.pricing.price.gross.currency,
-				params.locale,
+				locale,
 			)
 		: isAvailable
 			? formatMoneyRange(
@@ -161,7 +169,7 @@ export default async function Page(props: {
 						start: product?.pricing?.priceRange?.start?.gross,
 						stop: product?.pricing?.priceRange?.stop?.gross,
 					},
-					params.locale,
+					locale,
 				)
 			: "";
 
@@ -231,8 +239,8 @@ export default async function Page(props: {
 								selectedVariant={selectedVariant}
 								variants={variants}
 								product={product}
-								channel={params.channel}
-								locale={params.locale}
+								channel={channel}
+								locale={locale}
 							/>
 						)}
 						<AvailabilityMessage isAvailable={isAvailable} />

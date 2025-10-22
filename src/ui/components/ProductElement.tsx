@@ -1,16 +1,23 @@
-import { useLocale } from "next-intl";
+// import { useLocale } from "next-intl";
 import { LinkWithChannel } from "../atoms/LinkWithChannel";
 import { ProductImageWrapper } from "@/ui/atoms/ProductImageWrapper";
 import type { ProductListItemFragment } from "@/gql/graphql";
 import { formatMoneyRange } from "@/lib/utils";
+import { getChannelConfig } from "@/lib/channelConfig";
 
-export function ProductElement({
+export async function ProductElement({
 	product,
 	loading,
+	channel,
 	priority,
-}: { product: ProductListItemFragment } & { loading: "eager" | "lazy"; priority?: boolean }) {
+}: { product: ProductListItemFragment } & {
+	loading: "eager" | "lazy";
+	channel: string;
+	priority?: boolean;
+}) {
 	// console.log(product);
-	const locale = useLocale();
+
+	const { locale } = await getChannelConfig(channel);
 	const isFa = locale === "fa";
 
 	const translation = product.translation;

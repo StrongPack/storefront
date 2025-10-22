@@ -20,9 +20,7 @@ export async function VariantSelector({
 }) {
 	const t = await getTranslations({ locale, namespace: "common" });
 	if (!selectedVariant && variants.length === 1 && variants[0]?.quantityAvailable) {
-		redirect(
-			"/" + channel + getHrefForVariant({ productSlug: product.slug, variantId: variants[0].id, locale }),
-		);
+		redirect("/" + channel + getHrefForVariant({ productSlug: product.slug, variantId: variants[0].id }));
 	}
 
 	return (
@@ -39,9 +37,7 @@ export async function VariantSelector({
 								prefetch={true}
 								scroll={false}
 								href={
-									isDisabled
-										? "#"
-										: getHrefForVariant({ productSlug: product.slug, variantId: variant.id, locale })
+									isDisabled ? "#" : getHrefForVariant({ productSlug: product.slug, variantId: variant.id })
 								}
 								className={clsx(
 									isCurrentVariant

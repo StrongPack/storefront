@@ -1,20 +1,22 @@
 import { getTranslations } from "next-intl/server";
-import { CurrentUserOrderListDocument, LanguageCodeEnum } from "@/gql/graphql";
+import { CurrentUserOrderListDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { LoginForm } from "@/ui/components/LoginForm";
 import { OrderListItem } from "@/ui/components/OrderListItem";
+import { getChannelConfig } from "@/lib/channelConfig";
 
-export default async function OrderPage({
-	params,
-}: {
-	params: Promise<{ channel: string; locale: string }>;
-}) {
-	// چون layout اصلی params را به‌صورت Promise صادر کرده
-	const { locale } = await params; // ✅ همین خط رفع خطای TypeScript است
-	const t = await getTranslations({ locale, namespace: "common" });
+export default async function OrderPage({ params }: { params: { channel: string } }) {
+	// params provided by Next.js
+	const { channel } = params;
+
+	// get channel config (synchronous helper)
+	const { languageCode, locale } = await getChannelConfig(channel);
+
+	// use short languageCode (en, fa, ...) for next-intl translations
+	const t = await getTranslations({ locale: languageCode, namespace: "common" });
 	const { me: user } = await executeGraphQL(CurrentUserOrderListDocument, {
 		variables: {
-			languageCode: LanguageCodeEnum.FaIr,
+			languageCode: languageCode,
 		},
 		cache: "no-cache",
 	});

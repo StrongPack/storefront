@@ -16,7 +16,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 	params: Promise<{ channel: string }>;
 }) {
-	const { channel } = await params; // ✅
+	const { channel } = await params;
 	const { locale } = await getChannelConfig(channel);
 	// console.log("locale from params:", locale);
 

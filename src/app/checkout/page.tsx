@@ -4,14 +4,20 @@ import Link from "next/link";
 import { invariant } from "ts-invariant";
 import { getTranslations } from "next-intl/server";
 import { RootWrapper } from "./pageWrapper";
+// import { getChannelConfig } from "@/lib/channelConfig";
 
 export const metadata = {
 	title: "Checkout · 20pack",
 };
 
 export default async function CheckoutPage(props: {
+	params: Promise<{ channel: string }>;
 	searchParams: Promise<{ checkout?: string; order?: string }>;
 }) {
+	// const params = await props.params;
+	// const { channel } = params;
+	// const { locale } = await getChannelConfig(channel);
+
 	const t = await getTranslations("common");
 	const searchParams = await props.searchParams;
 	invariant(process.env.NEXT_PUBLIC_SALEOR_API_URL, "Missing NEXT_PUBLIC_SALEOR_API_URL env variable");

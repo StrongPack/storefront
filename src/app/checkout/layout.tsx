@@ -1,8 +1,9 @@
 import { type ReactNode } from "react";
-import { getLocale } from "next-intl/server";
+// import { getLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { AuthProvider } from "@/ui/components/AuthProvider";
 import { getMessages } from "@/lib/getMessages";
+import { getChannelConfig } from "@/lib/channelConfig";
 
 export const metadata = {
 	title: "Checkout · 20pack",
@@ -19,10 +20,11 @@ export const metadata = {
 
 // }
 
-export default async function RootLayout({ children }: { children: ReactNode }) {
-	const locale = await getLocale();
+export default async function RootLayout({ children, channel }: { children: ReactNode; channel: string }) {
+	// اینجا کانال را از context یا از default-channel دریافت می‌کنیم:
+
+	const { locale, dir } = await getChannelConfig(channel);
 	const messages = await getMessages(locale);
-	const dir = locale === "fa" ? "rtl" : "ltr";
 
 	return (
 		<main lang={locale} dir={dir} className={dir}>

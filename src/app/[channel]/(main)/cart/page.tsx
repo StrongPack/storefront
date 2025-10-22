@@ -6,16 +6,20 @@ import * as Checkout from "@/lib/checkout";
 import type { ProductListItemFragment } from "@/gql/graphql";
 import { formatMoney, getHrefForVariant, formatNumber } from "@/lib/utils";
 import { LinkWithChannel } from "@/ui/atoms/LinkWithChannel";
+import { getChannelConfig } from "@/lib/channelConfig";
 
 export const metadata = {
 	title: "Shopping Cart · Saleor Storefront example",
 };
 
-export default async function Page(props: { params: Promise<{ channel: string; locale: string }> }) {
+export default async function Page(props: { params: Promise<{ channel: string }> }) {
 	const params = await props.params;
-	const t = await getTranslations({ locale: params.locale, namespace: "common" });
-	const checkoutId = await Checkout.getIdFromCookies(params.channel);
-	const isFa = params.locale === "fa";
+	const { channel } = params;
+	const { locale } = await getChannelConfig(channel);
+
+	const t = await getTranslations({ locale: locale, namespace: "common" });
+	const checkoutId = await Checkout.getIdFromCookies(channel);
+	const isFa = locale === "fa";
 
 	const checkout = await Checkout.find(checkoutId);
 
@@ -73,7 +77,6 @@ export default async function Page(props: { params: Promise<{ channel: string; l
 												href={getHrefForVariant({
 													productSlug: item.variant.product.slug,
 													variantId: item.variant.id,
-													locale: params.locale,
 												})}
 											>
 												<h2 className="font-medium text-neutral-700">{displayProductName}</h2>
@@ -87,16 +90,12 @@ export default async function Page(props: { params: Promise<{ channel: string; l
 											)}
 										</div>
 										<p className="text-right font-semibold text-neutral-900">
-											{formatMoney(
-												item.totalPrice.gross.amount,
-												item.totalPrice.gross.currency,
-												params.locale,
-											)}
+											{formatMoney(item.totalPrice.gross.amount, item.totalPrice.gross.currency, locale)}
 										</p>
 									</div>
 									<div className="flex justify-between">
 										<div className="text-sm font-bold">
-											{t("cart_quantity_label")}: {formatNumber(item.quantity, params.locale)}
+											{t("cart_quantity_label")}: {formatNumber(item.quantity, locale)}
 										</div>
 										<DeleteLineButton checkoutId={checkoutId} lineId={item.id} />
 									</div>
@@ -114,11 +113,7 @@ export default async function Page(props: { params: Promise<{ channel: string; l
 								<p className="mt-1 text-sm text-neutral-500">{t("cart_shipping_info")}</p>
 							</div>
 							<div className="font-medium text-neutral-900">
-								{formatMoney(
-									checkout.totalPrice.gross.amount,
-									checkout.totalPrice.gross.currency,
-									params.locale,
-								)}
+								{formatMoney(checkout.totalPrice.gross.amount, checkout.totalPrice.gross.currency, locale)}
 							</div>
 						</div>
 					</div>

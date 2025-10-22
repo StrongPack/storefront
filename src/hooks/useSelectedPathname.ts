@@ -1,14 +1,13 @@
 "use client";
 
 import { useParams, usePathname } from "next/navigation";
+import { useMemo } from "react";
 
 function useSelectedPathname() {
 	const pathname = usePathname();
-
 	const { channel } = useParams<{ channel?: string }>();
 
-	const selectedPathname = channel ? pathname.replace(`/${channel}`, "") : pathname;
-	return selectedPathname;
+	return useMemo(() => (channel ? pathname.replace(`/${channel}`, "") : pathname), [pathname, channel]);
 }
 
 export default useSelectedPathname;
