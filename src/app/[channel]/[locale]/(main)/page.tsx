@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { ProductListByCollectionDocument } from "@/gql/graphql";
+import { ProductListByCollectionDocument, LanguageCodeEnum } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { ProductList } from "@/ui/components/ProductList";
 
@@ -15,6 +15,7 @@ export default async function Page(props: { params: Promise<{ channel: string; l
 		variables: {
 			slug: "featured-products",
 			channel: params.channel,
+			languageCode: LanguageCodeEnum.FaIr,
 		},
 		revalidate: 60,
 	});

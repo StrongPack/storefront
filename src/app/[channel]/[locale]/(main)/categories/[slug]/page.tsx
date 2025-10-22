@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { type ResolvingMetadata, type Metadata } from "next";
-import { ProductListByCategoryDocument } from "@/gql/graphql";
+import { ProductListByCategoryDocument, LanguageCodeEnum } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { ProductList } from "@/ui/components/ProductList";
 
@@ -10,7 +10,7 @@ export const generateMetadata = async (
 ): Promise<Metadata> => {
 	const params = await props.params;
 	const { category } = await executeGraphQL(ProductListByCategoryDocument, {
-		variables: { slug: params.slug, channel: params.channel },
+		variables: { slug: params.slug, channel: params.channel, languageCode: LanguageCodeEnum.FaIr },
 		revalidate: 60,
 	});
 
@@ -23,7 +23,7 @@ export const generateMetadata = async (
 export default async function Page(props: { params: Promise<{ slug: string; channel: string }> }) {
 	const params = await props.params;
 	const { category } = await executeGraphQL(ProductListByCategoryDocument, {
-		variables: { slug: params.slug, channel: params.channel },
+		variables: { slug: params.slug, channel: params.channel, languageCode: LanguageCodeEnum.FaIr },
 		revalidate: 60,
 	});
 

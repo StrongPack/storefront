@@ -2,14 +2,14 @@
 import Image from "next/image";
 import { LinkWithChannel } from "../atoms/LinkWithChannel";
 import { ChannelSelect } from "./ChannelSelect";
-import { ChannelsListDocument, MenuGetBySlugDocument } from "@/gql/graphql";
+import { ChannelsListDocument, LanguageCodeEnum, MenuGetBySlugDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 
 // import { useTranslation } from "next-i18next";
 
 export async function Footer({ channel }: { channel: string }) {
 	const footerLinks = await executeGraphQL(MenuGetBySlugDocument, {
-		variables: { slug: "footer", channel },
+		variables: { slug: "footer", channel, languageCode: LanguageCodeEnum.FaIr },
 		revalidate: 60 * 60 * 24,
 	});
 	const channels = process.env.SALEOR_APP_TOKEN

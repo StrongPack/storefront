@@ -9,8 +9,15 @@ import { AddButton } from "./AddButton";
 import { VariantSelector } from "@/ui/components/VariantSelector";
 import { ProductImageWrapper } from "@/ui/atoms/ProductImageWrapper";
 import { executeGraphQL } from "@/lib/graphql";
+
 import { formatMoney, formatMoneyRange } from "@/lib/utils";
-import { CheckoutAddLineDocument, ProductDetailsDocument, ProductListDocument } from "@/gql/graphql";
+import {
+	CheckoutAddLineDocument,
+	ProductDetailsDocument,
+	ProductListDocument,
+	LanguageCodeEnum,
+	type ProductListItemFragment,
+} from "@/gql/graphql";
 import * as Checkout from "@/lib/checkout";
 import { AvailabilityMessage } from "@/ui/components/AvailabilityMessage";
 
@@ -27,6 +34,7 @@ export async function generateMetadata(
 		variables: {
 			slug: decodeURIComponent(params.slug),
 			channel: params.channel,
+			languageCode: LanguageCodeEnum.FaIr,
 		},
 		revalidate: 60,
 	});
@@ -63,7 +71,7 @@ export async function generateMetadata(
 export async function generateStaticParams({ params }: { params: { channel: string } }) {
 	const { products } = await executeGraphQL(ProductListDocument, {
 		revalidate: 60,
-		variables: { first: 20, channel: params.channel },
+		variables: { first: 20, channel: params.channel, languageCode: LanguageCodeEnum.FaIr },
 		withAuth: false,
 	});
 
@@ -82,6 +90,7 @@ export default async function Page(props: {
 		variables: {
 			slug: decodeURIComponent(params.slug),
 			channel: params.channel,
+			languageCode: LanguageCodeEnum.FaIr,
 		},
 		revalidate: 60,
 	});
@@ -91,7 +100,20 @@ export default async function Page(props: {
 	}
 
 	const firstImage = product.thumbnail;
-	const description = product?.description ? parser.parse(JSON.parse(product?.description)) : null;
+	// Prefer translation when locale is Persian
+	const locale = String(params.locale);
+	const isFa = locale === "fa";
+
+	const productTyped = product as ProductListItemFragment;
+	const productTranslation = productTyped.translation;
+
+	const displayName = (isFa && productTranslation?.name) || productTyped.name || product.name;
+	const displaySeoDescription =
+		(isFa && productTranslation?.seoDescription) || productTyped.seoDescription || product.seoDescription;
+
+	const descriptionJson =
+		(isFa && productTranslation?.description) || productTyped.description || product.description;
+	const description = descriptionJson ? parser.parse(JSON.parse(descriptionJson)) : null;
 
 	const variants = product.variants;
 	const selectedVariantID = searchParams.variant;
@@ -126,13 +148,21 @@ export default async function Page(props: {
 
 	const isAvailable = variants?.some((variant) => variant.quantityAvailable) ?? false;
 
+	// console.log(selectedVariant?.pricing?.price?.gross);
 	const price = selectedVariant?.pricing?.price?.gross
-		? formatMoney(selectedVariant.pricing.price.gross.amount, selectedVariant.pricing.price.gross.currency)
+		? formatMoney(
+				selectedVariant.pricing.price.gross.amount,
+				selectedVariant.pricing.price.gross.currency,
+				params.locale,
+			)
 		: isAvailable
-			? formatMoneyRange({
-					start: product?.pricing?.priceRange?.start?.gross,
-					stop: product?.pricing?.priceRange?.stop?.gross,
-				})
+			? formatMoneyRange(
+					{
+						start: product?.pricing?.priceRange?.start?.gross,
+						stop: product?.pricing?.priceRange?.stop?.gross,
+					},
+					params.locale,
+				)
 			: "";
 
 	const productJsonLd: WithContext<Product> = {
@@ -141,8 +171,8 @@ export default async function Page(props: {
 		image: product.thumbnail?.url,
 		...(selectedVariant
 			? {
-					name: `${product.name} - ${selectedVariant.name}`,
-					description: product.seoDescription || `${product.name} - ${selectedVariant.name}`,
+					name: `${displayName} - ${selectedVariant.name}`,
+					description: displaySeoDescription || `${displayName} - ${selectedVariant.name}`,
 					offers: {
 						"@type": "Offer",
 						availability: selectedVariant.quantityAvailable
@@ -153,9 +183,8 @@ export default async function Page(props: {
 					},
 				}
 			: {
-					name: product.name,
-
-					description: product.seoDescription || product.name,
+					name: displayName,
+					description: displaySeoDescription || displayName,
 					offers: {
 						"@type": "AggregateOffer",
 						availability: product.variants?.some((variant) => variant.quantityAvailable)
@@ -191,7 +220,7 @@ export default async function Page(props: {
 				<div className="flex flex-col pt-6 sm:col-span-1 sm:px-6 sm:pt-0 lg:col-span-3 lg:pt-16">
 					<div>
 						<h1 className="mb-4 flex-auto text-3xl font-medium tracking-tight text-neutral-900">
-							{product?.name}
+							{displayName}
 						</h1>
 						<p className="mb-8 text-sm " data-testid="ProductElement_Price">
 							{price}

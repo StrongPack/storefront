@@ -51,7 +51,7 @@ export const MobileMenu = ({ children, locale }: Props) => {
 						>
 							<div
 								className={clsx(
-									"sticky top-0 z-10 flex h-16 shrink-0 items-center border-b border-neutral-200 px-4",
+									"sticky top-0 z-10 flex h-20 shrink-0 items-center border-b border-neutral-200 px-4",
 									isRTL ? "flex-row-reverse" : "flex-row",
 								)}
 							>

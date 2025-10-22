@@ -1,4 +1,9 @@
-query ProductListPaginated($first: Int!, $after: String, $channel: String!) {
+query ProductListPaginated(
+	$languageCode: LanguageCodeEnum!
+	$first: Int!
+	$after: String
+	$channel: String!
+) {
 	products(first: $first, after: $after, channel: $channel) {
 		totalCount
 		edges {

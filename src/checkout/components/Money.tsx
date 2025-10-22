@@ -1,3 +1,4 @@
+import { useLocale } from "next-intl";
 import { type Money as MoneyType, getFormattedMoney } from "@/checkout/lib/utils/money";
 
 import { type AriaLabel, type Classes } from "@/checkout/lib/globalTypes";
@@ -14,7 +15,8 @@ export const Money = <TMoney extends MoneyType>({
 	negative,
 	...textProps
 }: MoneyProps<TMoney>) => {
-	const formattedMoney = getFormattedMoney(money, negative);
+	const locale = useLocale();
+	const formattedMoney = getFormattedMoney(money, locale, negative);
 
 	if (!money) {
 		return null;

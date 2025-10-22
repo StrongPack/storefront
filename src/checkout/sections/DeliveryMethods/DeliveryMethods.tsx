@@ -1,5 +1,5 @@
 import React from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Title } from "@/checkout/components/Title";
 import { useCheckout } from "@/checkout/hooks/useCheckout";
 import { SelectBox } from "@/checkout/components/SelectBox";
@@ -15,6 +15,7 @@ import { useUser } from "@/checkout/hooks/useUser";
 
 export const DeliveryMethods: React.FC<CommonSectionProps> = ({ collapsed }) => {
 	const t = useTranslations("auth");
+	const locale = useLocale();
 	const { checkout } = useCheckout();
 	const { authenticated } = useUser();
 	const { shippingMethods, shippingAddress } = checkout;
@@ -49,7 +50,7 @@ export const DeliveryMethods: React.FC<CommonSectionProps> = ({ collapsed }) => 
 									<div className="pointer-events-none flex min-h-12 grow flex-col justify-center">
 										<div className="flex flex-row items-center justify-between self-stretch">
 											<p>{name}</p>
-											<p>{getFormattedMoney(price)}</p>
+											<p>{getFormattedMoney(price, locale)}</p>
 										</div>
 										<p className="font-xs" color="secondary">
 											{getSubtitle({ min, max })}

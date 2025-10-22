@@ -29,6 +29,7 @@ export const SignInFormContainer: React.FC<PropsWithChildren<SignInFormContainer
 								{redirectSubtitle}
 							</p>
 						)}
+						&nbsp;&nbsp;
 						{redirectButtonLabel && (
 							<Button
 								ariaLabel={redirectButtonLabel}

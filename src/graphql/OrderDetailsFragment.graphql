@@ -17,6 +17,11 @@ fragment OrderDetails on Order {
 				name
 				description
 				slug
+				translation(languageCode: $languageCode) {
+					id
+					name
+					description
+				}
 				thumbnail {
 					url
 					alt
@@ -24,6 +29,10 @@ fragment OrderDetails on Order {
 				category {
 					id
 					name
+					translation(languageCode: $languageCode) {
+						id
+						name
+					}
 				}
 			}
 			pricing {

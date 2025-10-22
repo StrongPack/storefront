@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { CheckoutCreateDocument, CheckoutFindDocument } from "@/gql/graphql";
+import { CheckoutCreateDocument, CheckoutFindDocument, LanguageCodeEnum } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 
 export async function getIdFromCookies(channel: string) {
@@ -24,6 +24,7 @@ export async function find(checkoutId: string) {
 			? await executeGraphQL(CheckoutFindDocument, {
 					variables: {
 						id: checkoutId,
+						languageCode: LanguageCodeEnum.FaIr,
 					},
 					cache: "no-cache",
 				})

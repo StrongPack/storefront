@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { LinkWithChannel } from "../atoms/LinkWithChannel";
@@ -12,24 +13,20 @@ export const Logo = () => {
 
 	if (pathname === "/") {
 		return (
-			// <h1 className="flex items-center font-bold" aria-label="homepage">
-			// 	{companyName}
-			// </h1>
-
-			<h1 className="flex items-center whitespace-nowrap font-bold" aria-label="homepage">
+			<h1
+				className="flex flex-shrink-0 items-center whitespace-nowrap font-bold"
+				style={{ minWidth: 100 }}
+				aria-label="homepage"
+			>
+				<Image src="/20pack.webp" alt={`${companyName} logo`} width={32} height={32} className="mr-2" />
 				{companyName}
 			</h1>
 		);
 	}
 	return (
-		// <div className="flex items-center font-bold">
-		// 	<LinkWithChannel aria-label="homepage" href="/">
-		// 		{companyName}
-		// 	</LinkWithChannel>
-		// </div>
-
-		<div className="flex items-center whitespace-nowrap font-bold">
-			<LinkWithChannel aria-label="homepage" href="/" className="truncate">
+		<div className="flex flex-shrink-0 items-center whitespace-nowrap font-bold" style={{ minWidth: 100 }}>
+			<LinkWithChannel aria-label="homepage" href="/" className="flex items-center truncate">
+				<Image src="/20pack.webp" alt={`${companyName} logo`} width={32} height={32} className="mr-2" />
 				{companyName}
 			</LinkWithChannel>
 		</div>

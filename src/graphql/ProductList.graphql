@@ -1,4 +1,4 @@
-query ProductList($first: Int = 9, $channel: String!) {
+query ProductList($languageCode: LanguageCodeEnum!, $first: Int = 9, $channel: String!) {
 	products(first: $first, channel: $channel) {
 		edges {
 			node {

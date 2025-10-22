@@ -4,6 +4,7 @@ import {
 	OrderDirection,
 	ProductOrderField,
 	SearchProductsDocument,
+	LanguageCodeEnum,
 	// LegacySearchProductsDocument,
 } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
@@ -54,6 +55,7 @@ export default async function Page(props: {
 			sortBy: ProductOrderField.Rating,
 			sortDirection: OrderDirection.Asc,
 			channel: params.channel,
+			languageCode: LanguageCodeEnum.FaIr,
 		},
 		revalidate: 60,
 	});

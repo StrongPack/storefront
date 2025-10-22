@@ -94,7 +94,7 @@ export const useSubmit = <
 			setCheckoutUpdateState("loading");
 
 			const commonData: CommonVars = {
-				languageCode: "EN_US",
+				languageCode: "FA_IR",
 				channel: checkout.channel.slug,
 				checkoutId: checkout.id,
 			};

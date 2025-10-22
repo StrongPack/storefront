@@ -1,29 +1,39 @@
 // src/ui/components/nav/components/NavLinks.server.tsx
 import NavLinksClient from "./NavLinks.client";
 import { executeGraphQL } from "@/lib/graphql"; // توجه کن از نسخه server استفاده کن
-import { MenuGetBySlugDocument } from "@/gql/graphql";
+import { MenuGetBySlugDocument, LanguageCodeEnum } from "@/gql/graphql";
 
-export default async function NavLinksServer({ channel }: { channel: string }) {
+export default async function NavLinksServer({ channel, locale }: { channel: string; locale: string }) {
 	const { menu } = await executeGraphQL(MenuGetBySlugDocument, {
-		variables: { slug: "navbar", channel },
+		variables: { slug: "navbar", channel, languageCode: LanguageCodeEnum.FaIr },
 		revalidate: 60 * 60 * 24,
 	});
 
+	const isFa = locale === "fa";
 	// داده‌ها رو آماده کنیم برای لایه Client
 	const items =
 		menu?.items
 			?.map((item) => {
 				if (item.category) {
-					return { id: item.id, href: `/categories/${item.category.slug}`, label: item.category.name };
+					const Name =
+						isFa && item.category?.translation?.name ? item.category?.translation?.name : item.category.name;
+					return { id: item.id, href: `/categories/${item.category.slug}`, label: Name };
 				}
 				if (item.collection) {
-					return { id: item.id, href: `/collections/${item.collection.slug}`, label: item.collection.name };
+					const Name =
+						isFa && item.collection?.translation?.name
+							? item.collection?.translation?.name
+							: item.collection.name;
+					return { id: item.id, href: `/collections/${item.collection.slug}`, label: Name };
 				}
 				if (item.page) {
-					return { id: item.id, href: `/pages/${item.page.slug}`, label: item.page.title };
+					const Title =
+						isFa && item.page?.translation?.title ? item.page?.translation?.title : item.page.title;
+					return { id: item.id, href: `/pages/${item.page.slug}`, label: Title };
 				}
 				if (item.url) {
-					return { id: item.id, href: item.url, label: item.name };
+					const Name = isFa && item.translation?.name ? item.translation?.name : item.name;
+					return { id: item.id, href: item.url, label: Name };
 				}
 				return null;
 			})

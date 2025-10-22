@@ -25,7 +25,7 @@ export const SummaryPromoCodeRow: React.FC<SummaryPromoCodeRowProps> = ({
 		const variables = promoCode ? { promoCode: promoCode } : { promoCodeId: promoCodeId as string };
 
 		void checkoutRemovePromoCode({
-			languageCode: "EN_US",
+			languageCode: "FA_IR",
 			checkoutId: checkout.id,
 			...variables,
 		});

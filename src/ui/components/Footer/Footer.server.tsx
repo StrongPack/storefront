@@ -3,11 +3,11 @@
 
 import { FooterClient } from "./Footer.client";
 import { executeGraphQL } from "@/lib/graphql";
-import { ChannelsListDocument, MenuGetBySlugDocument } from "@/gql/graphql";
+import { ChannelsListDocument, MenuGetBySlugDocument, LanguageCodeEnum } from "@/gql/graphql";
 
 export const FooterServer = async ({ channel, locale }: { channel: string; locale: string }) => {
 	const footerLinks = await executeGraphQL(MenuGetBySlugDocument, {
-		variables: { slug: "footer", channel },
+		variables: { slug: "footer", channel, languageCode: LanguageCodeEnum.FaIr },
 		revalidate: 60 * 60 * 24,
 	});
 

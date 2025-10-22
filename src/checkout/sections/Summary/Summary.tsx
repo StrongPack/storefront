@@ -1,5 +1,7 @@
+"use client";
+
 import { type FC } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import clsx from "clsx";
 import { SummaryItem, type SummaryLine } from "./SummaryItem";
 import { PromoCodeAdd } from "./PromoCodeAdd";
@@ -41,6 +43,7 @@ export const Summary: FC<SummaryProps> = ({
 	discount,
 }) => {
 	const t = useTranslations("auth");
+	const locale = useLocale();
 	return (
 		<div
 			className={clsx(
@@ -100,7 +103,8 @@ export const Summary: FC<SummaryProps> = ({
 					<div className="flex flex-row items-baseline">
 						<p className="font-bold">{t("totalPrice")}</p>
 						<p color="secondary" className="ml-2">
-							{t("includesTax", { tax: getFormattedMoney(totalPrice?.tax) })}
+							&nbsp;&nbsp;
+							{t("includesTax", { tax: getFormattedMoney(totalPrice?.tax, locale) })}
 						</p>
 					</div>
 					<Money ariaLabel="total price" money={totalPrice?.gross} data-testid="totalOrderPrice" />

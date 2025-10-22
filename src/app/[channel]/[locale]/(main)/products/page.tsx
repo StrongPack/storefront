@@ -1,10 +1,12 @@
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { ProductListPaginatedDocument } from "@/gql/graphql";
+import { ProductListPaginatedDocument, LanguageCodeEnum } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { Pagination } from "@/ui/components/Pagination";
 import { ProductList } from "@/ui/components/ProductList";
 import { ProductsPerPage } from "@/app/config";
+// import { first } from "lodash-es";
+// import { channel } from "diagnostics_channel";
 
 export const metadata = {
 	title: "Products · Saleor Storefront example",
@@ -27,6 +29,7 @@ export default async function Page(props: {
 			first: ProductsPerPage,
 			after: cursor,
 			channel: params.channel,
+			languageCode: LanguageCodeEnum.FaIr,
 		},
 		revalidate: 60,
 	});

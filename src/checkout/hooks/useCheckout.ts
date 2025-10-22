@@ -9,7 +9,7 @@ export const useCheckout = ({ pause = false } = {}) => {
 	const { setLoadingCheckout } = useCheckoutUpdateStateActions();
 
 	const [{ data, fetching, stale }, refetch] = useCheckoutQuery({
-		variables: { id, languageCode: "EN_US" },
+		variables: { id, languageCode: "FA_IR" },
 		pause: pause,
 	});
 

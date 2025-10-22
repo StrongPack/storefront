@@ -3,7 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { CheckoutLink } from "./CheckoutLink";
 import { DeleteLineButton } from "./DeleteLineButton";
 import * as Checkout from "@/lib/checkout";
-import { formatMoney, getHrefForVariant } from "@/lib/utils";
+import type { ProductListItemFragment } from "@/gql/graphql";
+import { formatMoney, getHrefForVariant, formatNumber } from "@/lib/utils";
 import { LinkWithChannel } from "@/ui/atoms/LinkWithChannel";
 
 export const metadata = {
@@ -14,6 +15,7 @@ export default async function Page(props: { params: Promise<{ channel: string; l
 	const params = await props.params;
 	const t = await getTranslations({ locale: params.locale, namespace: "common" });
 	const checkoutId = await Checkout.getIdFromCookies(params.channel);
+	const isFa = params.locale === "fa";
 
 	const checkout = await Checkout.find(checkoutId);
 
@@ -41,50 +43,67 @@ export default async function Page(props: { params: Promise<{ channel: string; l
 					role="list"
 					className="divide-y divide-neutral-200 border-b border-t border-neutral-200"
 				>
-					{checkout.lines.map((item) => (
-						<li key={item.id} className="flex py-4">
-							<div className="aspect-square h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border bg-neutral-50 sm:h-32 sm:w-32">
-								{item.variant?.product?.thumbnail?.url && (
-									<Image
-										src={item.variant.product.thumbnail.url}
-										alt={item.variant.product.thumbnail.alt ?? ""}
-										width={200}
-										height={200}
-										className="h-full w-full object-contain object-center"
-									/>
-								)}
-							</div>
-							<div className="relative flex flex-1 flex-col justify-between p-4 py-2">
-								<div className="flex justify-between justify-items-start gap-4">
-									<div>
-										<LinkWithChannel
-											href={getHrefForVariant({
-												productSlug: item.variant.product.slug,
-												variantId: item.variant.id,
-											})}
-										>
-											<h2 className="font-medium text-neutral-700">{item.variant?.product?.name}</h2>
-										</LinkWithChannel>
-										<p className="mt-1 text-sm text-neutral-500">{item.variant?.product?.category?.name}</p>
-										{item.variant.name !== item.variant.id && Boolean(item.variant.name) && (
-											<p className="mt-1 text-sm text-neutral-500">
-												{t("cart_variant_label")}: {item.variant.name}
-											</p>
-										)}
-									</div>
-									<p className="text-right font-semibold text-neutral-900">
-										{formatMoney(item.totalPrice.gross.amount, item.totalPrice.gross.currency)}
-									</p>
+					{checkout.lines.map((item) => {
+						const product = item.variant?.product as ProductListItemFragment | undefined;
+						const productTranslationName = product?.translation?.name;
+						const displayProductName =
+							isFa && productTranslationName ? productTranslationName : product?.name;
+						const category = product?.category;
+						const categoryTranslationName = category?.translation?.name;
+						const displayCategoryName =
+							isFa && categoryTranslationName ? categoryTranslationName : category?.name;
+
+						return (
+							<li key={item.id} className="flex py-4">
+								<div className="aspect-square h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border bg-neutral-50 sm:h-32 sm:w-32">
+									{item.variant?.product?.thumbnail?.url && (
+										<Image
+											src={item.variant.product.thumbnail.url}
+											alt={item.variant.product.thumbnail.alt ?? ""}
+											width={200}
+											height={200}
+											className="h-full w-full object-contain object-center"
+										/>
+									)}
 								</div>
-								<div className="flex justify-between">
-									<div className="text-sm font-bold">
-										{t("cart_quantity_label")}: {item.quantity}
+								<div className="relative flex flex-1 flex-col justify-between p-4 py-2">
+									<div className="flex justify-between justify-items-start gap-4">
+										<div>
+											<LinkWithChannel
+												href={getHrefForVariant({
+													productSlug: item.variant.product.slug,
+													variantId: item.variant.id,
+													locale: params.locale,
+												})}
+											>
+												<h2 className="font-medium text-neutral-700">{displayProductName}</h2>
+											</LinkWithChannel>
+											<p className="mt-1 text-sm text-neutral-500">{displayCategoryName}</p>
+
+											{item.variant.name !== item.variant.id && Boolean(item.variant.name) && (
+												<p className="mt-1 text-sm text-neutral-500">
+													{t("cart_variant_label")}: {item.variant.name}
+												</p>
+											)}
+										</div>
+										<p className="text-right font-semibold text-neutral-900">
+											{formatMoney(
+												item.totalPrice.gross.amount,
+												item.totalPrice.gross.currency,
+												params.locale,
+											)}
+										</p>
 									</div>
-									<DeleteLineButton checkoutId={checkoutId} lineId={item.id} />
+									<div className="flex justify-between">
+										<div className="text-sm font-bold">
+											{t("cart_quantity_label")}: {formatNumber(item.quantity, params.locale)}
+										</div>
+										<DeleteLineButton checkoutId={checkoutId} lineId={item.id} />
+									</div>
 								</div>
-							</div>
-						</li>
-					))}
+							</li>
+						);
+					})}
 				</ul>
 
 				<div className="mt-12">
@@ -95,7 +114,11 @@ export default async function Page(props: { params: Promise<{ channel: string; l
 								<p className="mt-1 text-sm text-neutral-500">{t("cart_shipping_info")}</p>
 							</div>
 							<div className="font-medium text-neutral-900">
-								{formatMoney(checkout.totalPrice.gross.amount, checkout.totalPrice.gross.currency)}
+								{formatMoney(
+									checkout.totalPrice.gross.amount,
+									checkout.totalPrice.gross.currency,
+									params.locale,
+								)}
 							</div>
 						</div>
 					</div>

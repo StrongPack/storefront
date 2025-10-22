@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { CurrentUserOrderListDocument } from "@/gql/graphql";
+import { CurrentUserOrderListDocument, LanguageCodeEnum } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { LoginForm } from "@/ui/components/LoginForm";
 import { OrderListItem } from "@/ui/components/OrderListItem";
@@ -13,6 +13,9 @@ export default async function OrderPage({
 	const { locale } = await params; // ✅ همین خط رفع خطای TypeScript است
 	const t = await getTranslations({ locale, namespace: "common" });
 	const { me: user } = await executeGraphQL(CurrentUserOrderListDocument, {
+		variables: {
+			languageCode: LanguageCodeEnum.FaIr,
+		},
 		cache: "no-cache",
 	});
 

@@ -2,27 +2,45 @@ export const formatDate = (date: Date | number) => {
 	return new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(date);
 };
 
-export const formatMoney = (amount: number, currency: string) =>
-	new Intl.NumberFormat("en-US", {
+export const formatMoney = (amount: number, currency: string, locale?: string) => {
+	const nfLocale = locale === "fa" ? "fa-IR" : "en-US";
+
+	if (currency === "IRR") {
+		const formatted = new Intl.NumberFormat(nfLocale, { maximumFractionDigits: 0 }).format(
+			Math.round(amount),
+		);
+		if (locale === "fa") return `${formatted} ریال`;
+
+		return `${formatted} IRR`;
+	}
+
+	return new Intl.NumberFormat(nfLocale, {
 		style: "currency",
 		currency,
 	}).format(amount);
+};
 
 export const formatMoneyRange = (
 	range: {
 		start?: { amount: number; currency: string } | null;
 		stop?: { amount: number; currency: string } | null;
 	} | null,
+	locale?: string,
 ) => {
 	const { start, stop } = range || {};
-	const startMoney = start && formatMoney(start.amount, start.currency);
-	const stopMoney = stop && formatMoney(stop.amount, stop.currency);
+	const startMoney = start && formatMoney(start.amount, start.currency, locale);
+	const stopMoney = stop && formatMoney(stop.amount, stop.currency, locale);
 
 	if (startMoney === stopMoney) {
 		return startMoney;
 	}
 
 	return `${startMoney} - ${stopMoney}`;
+};
+
+export const formatNumber = (number: number, locale?: string) => {
+	const nfLocale = locale === "fa" ? "fa-IR" : "en-US";
+	return new Intl.NumberFormat(nfLocale, { maximumFractionDigits: 0 }).format(Math.round(number));
 };
 
 // export function getHrefForVariant({
