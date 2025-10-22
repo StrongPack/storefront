@@ -4,8 +4,9 @@
 import { FooterClient } from "./Footer.client";
 import { executeGraphQL } from "@/lib/graphql";
 import { ChannelsListDocument, MenuGetBySlugDocument, LanguageCodeEnum } from "@/gql/graphql";
+import { getChannelConfig } from "@/lib/channelConfig";
 
-export const FooterServer = async ({ channel, locale }: { channel: string; locale: string }) => {
+export const FooterServer = async ({ channel }: { channel: string }) => {
 	const footerLinks = await executeGraphQL(MenuGetBySlugDocument, {
 		variables: { slug: "footer", channel, languageCode: LanguageCodeEnum.FaIr },
 		revalidate: 60 * 60 * 24,
@@ -20,8 +21,10 @@ export const FooterServer = async ({ channel, locale }: { channel: string; local
 			})
 		: null;
 
+	const { dir } = await getChannelConfig(channel);
+
 	// const cookieStore = await cookies();
 	// const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
 
-	return <FooterClient footerLinks={footerLinks} channels={channels} locale={locale} />;
+	return <FooterClient footerLinks={footerLinks} channels={channels} dir={dir} />;
 };

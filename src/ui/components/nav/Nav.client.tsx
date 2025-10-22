@@ -1,6 +1,6 @@
 "use client";
 import { Suspense } from "react";
-import { LanguageSwitcherSPA } from "./components/LanguageSwitcher";
+// import { LanguageSwitcherSPA } from "./components/LanguageSwitcher";
 // import { CartNavItem } from "./components/CartNavItem";
 // import { CartNavItem } from "./components/CartNavItem.server";
 // import CartNavItemClient from "./components/CartNavItem.client"; // Add this import
@@ -80,7 +80,7 @@ export default function NavClient({
 				<div className="hidden lg:flex">
 					<SearchBar channel={channel} locale={locale} />
 				</div>
-				<LanguageSwitcherSPA />
+				{/* <LanguageSwitcherSPA /> */}
 				<Suspense fallback={<div className="w-6" />}>{CartNavItem}</Suspense>
 				<Suspense fallback={<div className="w-8" />}>{UserMenu}</Suspense>
 			</div>
@@ -109,7 +109,7 @@ export default function NavClient({
 
 						{/* 🔹 بخش پایین - دکمه‌های تمام‌صفحه‌ای */}
 						<div className="flex flex-1 flex-col justify-center gap-3 border-t border-gray-200 p-4">
-							<LanguageSwitcherSPA />
+							{/* <LanguageSwitcherSPA /> */}
 							{CartNavItem}
 							{UserMenu}
 						</div>

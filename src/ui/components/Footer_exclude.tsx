@@ -80,7 +80,7 @@ export async function Footer({ channel }: { channel: string }) {
 						<label>
 							<span className="text-sm">Change currency:</span>
 							{/* <span className="text-sm">{t("change_currency")}</span> */}
-							<ChannelSelect channels={channels.channels} />
+							<ChannelSelect channels={channels.channels} dir="ltr" />
 						</label>
 					</div>
 				)}

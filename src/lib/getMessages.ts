@@ -12,8 +12,18 @@ export async function getMessages(locale: string) {
 
 	for (const ns of namespaces) {
 		const filePath = path.join(basePath, locale, `${ns}.json`);
-		const content = await fs.promises.readFile(filePath, "utf8");
-		messages[ns] = JSON.parse(content);
+		// const content = await fs.promises.readFile(filePath, "utf8");
+		// messages[ns] = JSON.parse(content);
+
+		try {
+			const content = await fs.promises.readFile(filePath, "utf8");
+			messages[ns] = JSON.parse(content);
+		} catch {
+			// Fallback: اگر فایل یافت نشد، نسخه انگلیسی را بده
+			const fallbackPath = path.join(basePath, "en", `${ns}.json`);
+			const fallback = await fs.promises.readFile(fallbackPath, "utf8");
+			messages[ns] = JSON.parse(fallback);
+		}
 	}
 
 	return messages;

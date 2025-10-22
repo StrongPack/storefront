@@ -36,7 +36,8 @@ export default async function Page(props: {
 			notFound();
 		}
 		// redirect(`/${params.channel}/${params.locale}/search?${new URLSearchParams({ query: firstValidSearchValue }).toString()}`);
-		redirect(`/${params.locale}/search?${new URLSearchParams({ query: firstValidSearchValue }).toString()}`);
+		// redirect(`/${params.locale}/search?${new URLSearchParams({ query: firstValidSearchValue }).toString()}`);
+		redirect(`/search?${new URLSearchParams({ query: firstValidSearchValue }).toString()}`);
 	}
 
 	// console.log("🔎 Running Search Query with:", {
@@ -83,7 +84,8 @@ export default async function Page(props: {
 						locale={params.locale}
 						pageInfo={{
 							...products.pageInfo,
-							basePathname: `/${params.locale}/search`,
+							basePathname: `/search`,
+							// basePathname: `/${params.locale}/search`,
 							// basePathname: `/${channel}/${params.locale}/search`,
 							urlSearchParams: newSearchParams,
 						}}

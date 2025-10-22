@@ -2,6 +2,7 @@
 // import { getLocale } from "next-intl/server";
 import { Footer } from "@/ui/components/Footer";
 import { Header } from "@/ui/components/Header";
+import { getChannelConfig } from "@/lib/channelConfig";
 
 export const metadata = {
 	title: "20pack",
@@ -13,9 +14,10 @@ export default async function RootLayout({
 	params,
 }: {
 	children: React.ReactNode;
-	params: Promise<{ channel: string; locale: string }>;
+	params: Promise<{ channel: string }>;
 }) {
-	const { channel, locale } = await params; // ✅
+	const { channel } = await params; // ✅
+	const { locale } = await getChannelConfig(channel);
 	// console.log("locale from params:", locale);
 
 	// export default async function RootLayout(props: {
@@ -30,7 +32,7 @@ export default async function RootLayout({
 			<Header channel={channel} locale={locale} />
 			<div className="flex min-h-[calc(100dvh-64px)] flex-col">
 				<main className="flex-1">{children}</main>
-				<Footer channel={channel} locale={locale} />
+				<Footer channel={channel} />
 			</div>
 		</>
 	);

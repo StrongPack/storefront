@@ -13,21 +13,21 @@ import type { MenuGetBySlugQuery, ChannelsListQuery } from "@/gql/graphql";
 type FooterClientProps = {
 	footerLinks: MenuGetBySlugQuery;
 	channels: ChannelsListQuery | null;
-	locale: string;
+	dir: "rtl" | "ltr";
 };
 
 // export default function FooterClient({ footerLinks, channels }: FooterClientProps) {
 
-export const FooterClient = ({ footerLinks, channels, locale }: FooterClientProps) => {
+export const FooterClient = ({ footerLinks, channels, dir }: FooterClientProps) => {
 	// const { dir } = useDir(); // گرفتن جهت سایت: 'rtl' یا 'ltr'
 	// const isRTL = dir === "rtl";
 	// const { dir } = useDir();
 	// const isRTL = dir === "rtl";
-	const isRTL = locale === "fa";
 	const t = useTranslations("common");
+	const isRTL = dir === "rtl";
 
 	return (
-		<footer className="border-neutral-300 bg-neutral-50">
+		<footer className="border-t border-neutral-200 bg-neutral-50 text-neutral-700">
 			<div className="mx-auto max-w-7xl px-4 lg:px-8">
 				<div className="grid grid-cols-3 gap-8 py-16">
 					{footerLinks.menu?.items?.map((item) => (
@@ -76,7 +76,7 @@ export const FooterClient = ({ footerLinks, channels, locale }: FooterClientProp
 					<div className="mb-4 text-neutral-500">
 						<label>
 							<span className="text-sm">{t("change_currency")}</span>
-							<ChannelSelect channels={channels.channels} />
+							<ChannelSelect channels={channels.channels} dir={dir} />
 						</label>
 					</div>
 				)}
@@ -90,7 +90,6 @@ export const FooterClient = ({ footerLinks, channels, locale }: FooterClientProp
 						referrerPolicy="origin"
 						target="_blank"
 						href="https://trustseal.enamad.ir/?id=662386&Code=rjSjruE6FYX9LOcZMBLx5JylAAONJbQo"
-						// rel="noopener noreferrer"
 					>
 						<Image
 							src="https://trustseal.enamad.ir/logo.aspx?id=662386&Code=rjSjruE6FYX9LOcZMBLx5JylAAONJbQo"

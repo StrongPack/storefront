@@ -1,21 +1,24 @@
 import { getTranslations } from "next-intl/server";
-import { ProductListByCollectionDocument, LanguageCodeEnum } from "@/gql/graphql";
+import { ProductListByCollectionDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { ProductList } from "@/ui/components/ProductList";
+import { getChannelConfig } from "@/lib/channelConfig";
 
 export const metadata = {
 	title: "20pack",
 	description: "Storefront.",
 };
 
-export default async function Page(props: { params: Promise<{ channel: string; locale: string }> }) {
-	const params = await props.params;
-	const t = await getTranslations({ locale: params.locale, namespace: "common" });
+export default async function Page({ params }: { params: Promise<{ channel: string }> }) {
+	const { channel } = await params;
+	const { locale, languageCode } = await getChannelConfig(channel);
+
+	const t = await getTranslations({ locale: locale, namespace: "common" });
 	const data = await executeGraphQL(ProductListByCollectionDocument, {
 		variables: {
 			slug: "featured-products",
-			channel: params.channel,
-			languageCode: LanguageCodeEnum.FaIr,
+			channel: channel,
+			languageCode: languageCode,
 		},
 		revalidate: 60,
 	});

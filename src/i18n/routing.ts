@@ -10,11 +10,16 @@ import { defineRouting } from "next-intl/routing";
 export const routing = defineRouting({
 	locales: ["en", "fa"],
 	defaultLocale: "fa",
-	localePrefix: "always", // مهم: همیشه در مسیر باشد
+	localePrefix: "as-needed",
 	pathnames: {
-		"/[channel]/[locale]": {
-			en: "/:channel/en",
-			fa: "/:channel/fa",
+		// "/[channel]/[locale]": {
+		// 	en: "/:channel/en",
+		// 	fa: "/:channel/fa",
+		// },
+
+		"/[channel]": {
+			fa: "/:channel",
+			en: "/:channel",
 		},
 	},
 });

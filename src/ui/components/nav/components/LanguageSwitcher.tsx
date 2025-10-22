@@ -95,13 +95,20 @@
 
 "use client";
 import { useRouter, usePathname } from "next/navigation";
-import { useLocale } from "next-intl";
-import { routing } from "@/i18n/routing";
+// import { useLocale } from "next-intl";
+// import { routing } from "@/i18n/routing";
+// import { channelConfigMap } from "@/lib/channelConfig";
 
 export function LanguageSwitcherSPA() {
 	const router = useRouter();
 	const pathname = usePathname();
-	const locale = useLocale();
+	// const locale = useLocale();
+
+	// const isRTL = document?.documentElement?.dir === "rtl";
+	const currentChannel = pathname.split("/").filter(Boolean)[0] ?? "default-channel";
+
+	// از channelConfigMap زبان هر کانال را بگیر
+	// const channels = Object.entries(channelConfigMap);
 
 	// const changeLang = (lang: string) => {
 	// 	const newPath = pathname.replace(/^\/(fa|en)/, `/${lang}`);
@@ -111,17 +118,24 @@ export function LanguageSwitcherSPA() {
 	// 	// router.push(newPath);
 	// };
 
-	const changeLang = (newLocale: string) => {
-		if (newLocale === locale) return; // زبان فعلی، کاری نکن
+	// const changeLang = (newLocale: string) => {
+	// 	if (newLocale === locale) return; // زبان فعلی، کاری نکن
 
+	// 	const parts = pathname.split("/").filter(Boolean);
+	// 	if (parts.length < 2) return;
+	// 	parts[1] = newLocale;
+	// 	const newPath = "/" + parts.join("/");
+
+	// 	// اضافه کردن query string فعلی به مسیر جدید (برای حفظ پارامترهای جستجو)
+	// 	const qs = typeof window !== "undefined" ? window.location.search : "";
+	// 	router.push(newPath + qs);
+	// };
+
+	const switchChannel = (newChannel: string) => {
 		const parts = pathname.split("/").filter(Boolean);
-		if (parts.length < 2) return;
-		parts[1] = newLocale;
+		parts[0] = newChannel; // کانال را جایگزین کن
 		const newPath = "/" + parts.join("/");
-
-		// اضافه کردن query string فعلی به مسیر جدید (برای حفظ پارامترهای جستجو)
-		const qs = typeof window !== "undefined" ? window.location.search : "";
-		router.push(newPath + qs);
+		router.push(newPath);
 	};
 
 	return (
@@ -247,31 +261,59 @@ export function LanguageSwitcherSPA() {
 		// 	</select>
 		// </div>
 
+		// <div className="relative w-full">
+		// 	{/* نسخه‌ی دسکتاپ: فقط پرچم */}
+		// 	<select
+		// 		value={locale}
+		// 		onChange={(e) => changeLang(e.target.value)}
+		// 		className="hidden rounded-md border border-gray-300 bg-white px-3 py-1 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500 md:block"
+		// 	>
+		// 		{routing.locales.map((l) => (
+		// 			<option key={l} value={l}>
+		// 				{l === "fa" ? "🇮🇷" : "🇬🇧"}
+		// 			</option>
+		// 		))}
+		// 	</select>
+
+		// 	{/* نسخه‌ی موبایل: پرچم + نام زبان */}
+		// 	<select
+		// 		value={locale}
+		// 		onChange={(e) => changeLang(e.target.value)}
+		// 		className="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-base shadow-sm focus:border-blue-500 focus:ring-blue-500 md:hidden"
+		// 	>
+		// 		{routing.locales.map((l) => (
+		// 			<option key={l} value={l} dir={l === "fa" ? "rtl" : "ltr"}>
+		// 				{l === "fa" ? "🇮🇷 فارسی" : "🇬🇧 English"}
+		// 			</option>
+		// 		))}
+		// 	</select>
+		// </div>
+
 		<div className="relative w-full">
 			{/* نسخه‌ی دسکتاپ: فقط پرچم */}
 			<select
-				value={locale}
-				onChange={(e) => changeLang(e.target.value)}
+				value={currentChannel}
+				onChange={(e) => switchChannel(e.target.value)}
 				className="hidden rounded-md border border-gray-300 bg-white px-3 py-1 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500 md:block"
 			>
-				{routing.locales.map((l) => (
-					<option key={l} value={l}>
-						{l === "fa" ? "🇮🇷" : "🇬🇧"}
+				{/* {channels.map(([slug, cfg]) => (
+					<option key={slug} value={slug}>
+						{cfg.locale === "fa" ? "🇮🇷" : "🇬🇧"}
 					</option>
-				))}
+				))} */}
 			</select>
 
 			{/* نسخه‌ی موبایل: پرچم + نام زبان */}
 			<select
-				value={locale}
-				onChange={(e) => changeLang(e.target.value)}
+				value={currentChannel}
+				onChange={(e) => switchChannel(e.target.value)}
 				className="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-base shadow-sm focus:border-blue-500 focus:ring-blue-500 md:hidden"
 			>
-				{routing.locales.map((l) => (
-					<option key={l} value={l} dir={l === "fa" ? "rtl" : "ltr"}>
-						{l === "fa" ? "🇮🇷 فارسی" : "🇬🇧 English"}
+				{/* {channels.map(([slug, cfg]) => (
+					<option key={slug} value={slug}>
+						{cfg.locale === "fa" ? "🇮🇷 فارسی" : "🇬🇧 English"}
 					</option>
-				))}
+				))} */}
 			</select>
 		</div>
 	);
