@@ -1,13 +1,21 @@
 "use client";
-
 import { useRouter, usePathname } from "next/navigation";
+import { type LanguageCodeEnum } from "@/gql/graphql";
 
 type ChannelSelectProps = {
-	channels: { id: string; name: string; slug: string; currencyCode: string }[];
-	dir: "ltr" | "rtl";
+	channels: {
+		id: string;
+		slug: string;
+		name: string;
+		flag: string;
+		dir: "ltr" | "rtl";
+		locale: string;
+		languageCode: LanguageCodeEnum;
+		displayname: string;
+	}[];
 };
 
-export const ChannelSelect = ({ channels, dir }: ChannelSelectProps) => {
+export const ChannelSelect = ({ channels }: ChannelSelectProps) => {
 	const router = useRouter();
 	const pathname = usePathname();
 
@@ -16,9 +24,10 @@ export const ChannelSelect = ({ channels, dir }: ChannelSelectProps) => {
 	const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const newChannel = e.currentTarget.value;
 
-		document.cookie = `channel=${newChannel}; path=/; max-age=${60 * 60 * 24 * 7}`;
+		const newDir = channels.find((ch) => ch.slug === newChannel)?.dir || "ltr";
 
-		document.documentElement.dir = dir;
+		document.cookie = `channel=${newChannel}; path=/; max-age=${60 * 60 * 24 * 7}`;
+		document.documentElement.dir = newDir;
 
 		// if (pathname.startsWith("/default-channel") || pathname.startsWith("/en-channel")) {
 		const parts = pathname.split("/").filter(Boolean);
@@ -47,16 +56,41 @@ export const ChannelSelect = ({ channels, dir }: ChannelSelectProps) => {
 		// 	))}
 		// </select>
 
+		// <select
+		// 	className="h-10 w-fit rounded-md border border-neutral-300 bg-white px-4 py-2 pr-10 text-sm text-neutral-800 placeholder:text-neutral-500 focus:border-black focus:ring-black"
+		// 	onChange={handleChange}
+		// 	value={currentChannel}
+		// >
+		// 	{channels.map((channel) => (
+		// 		<option key={channel.id} value={channel.slug}>
+		// 			{channel.flag} {channel.displayname}
+		// 		</option>
+		// 	))}
+		// </select>
+
 		<select
 			className="h-10 w-fit rounded-md border border-neutral-300 bg-white px-4 py-2 pr-10 text-sm text-neutral-800 placeholder:text-neutral-500 focus:border-black focus:ring-black"
 			onChange={handleChange}
 			value={currentChannel}
 		>
-			{channels.map((channel) => (
-				<option key={channel.id} value={channel.slug}>
-					{channel.currencyCode}
-				</option>
-			))}
+			{channels.map((channel) => {
+				// بر اساس جهت زبان ترتیب را مشخص می‌کنیم
+				const optionText =
+					// channel.dir === "rtl"
+					// ?
+					`${channel.flag} ${channel.displayname}`;
+				// : `${channel.displayname} ${channel.flag}`;
+
+				return (
+					<option
+						key={channel.id}
+						value={channel.slug}
+						dir={channel.dir} // جهت را هم ست می‌کنیم تا مرورگر درست نمایش دهد
+					>
+						{optionText}
+					</option>
+				);
+			})}
 		</select>
 	);
 };

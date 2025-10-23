@@ -3,8 +3,8 @@
 
 import { FooterClient } from "./Footer.client";
 import { executeGraphQL } from "@/lib/graphql";
-import { ChannelsListDocument, MenuGetBySlugDocument, type LanguageCodeEnum } from "@/gql/graphql";
-import { getChannelConfig } from "@/lib/channelConfig";
+import { MenuGetBySlugDocument, type LanguageCodeEnum } from "@/gql/graphql";
+import { getChannelConfig, getAllChannelConfigs } from "@/lib/channelConfig";
 
 export const FooterServer = async ({
 	channel,
@@ -18,14 +18,28 @@ export const FooterServer = async ({
 		revalidate: 60 * 60 * 24,
 	});
 
-	const channels = process.env.SALEOR_APP_TOKEN
-		? await executeGraphQL(ChannelsListDocument, {
-				withAuth: false,
-				headers: {
-					Authorization: `Bearer ${process.env.SALEOR_APP_TOKEN}`,
-				},
-			})
-		: null;
+	// const channels = process.env.SALEOR_APP_TOKEN
+	// 	? await executeGraphQL(ChannelsListDocument, {
+	// 			withAuth: false,
+	// 			headers: {
+	// 				Authorization: `Bearer ${process.env.SALEOR_APP_TOKEN}`,
+	// 			},
+	// 		})
+	// 	: null;
+
+	const channelMap = await getAllChannelConfigs();
+
+	// ۲️⃣ تبدیل map به آرایه برای props
+	const channels = Object.entries(channelMap).map(([slug, cfg]) => ({
+		id: cfg.id,
+		slug,
+		name: cfg.name,
+		flag: cfg.flag,
+		locale: cfg.locale,
+		dir: cfg.dir,
+		languageCode: cfg.languageCode,
+		displayname: cfg.displayName,
+	}));
 
 	const { dir } = await getChannelConfig(channel);
 

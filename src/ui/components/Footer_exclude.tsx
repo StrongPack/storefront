@@ -1,8 +1,8 @@
 // import Link from "next/link";
 import Image from "next/image";
 import { LinkWithChannel } from "../atoms/LinkWithChannel";
-import { ChannelSelect } from "./ChannelSelect";
-import { ChannelsListDocument, type LanguageCodeEnum, MenuGetBySlugDocument } from "@/gql/graphql";
+// import { ChannelSelect } from "./ChannelSelect";
+import { type LanguageCodeEnum, MenuGetBySlugDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 
 // import { useTranslation } from "next-i18next";
@@ -12,15 +12,15 @@ export async function Footer({ channel, languageCode }: { channel: string; langu
 		variables: { slug: "footer", channel, languageCode: languageCode },
 		revalidate: 60 * 60 * 24,
 	});
-	const channels = process.env.SALEOR_APP_TOKEN
-		? await executeGraphQL(ChannelsListDocument, {
-				withAuth: false, // disable cookie-based auth for this call
-				headers: {
-					// and use app token instead
-					Authorization: `Bearer ${process.env.SALEOR_APP_TOKEN}`,
-				},
-			})
-		: null;
+	// const channels = process.env.SALEOR_APP_TOKEN
+	// 	? await executeGraphQL(ChannelsListDocument, {
+	// 			withAuth: false, // disable cookie-based auth for this call
+	// 			headers: {
+	// 				// and use app token instead
+	// 				Authorization: `Bearer ${process.env.SALEOR_APP_TOKEN}`,
+	// 			},
+	// 		})
+	// 	: null;
 	// const currentYear = new Date().getFullYear();
 	// const { t } = useTranslation("common");
 	return (
@@ -75,15 +75,14 @@ export async function Footer({ channel, languageCode }: { channel: string; langu
 					})}
 				</div>
 
-				{channels?.channels && (
+				{/* {channels?.channels && (
 					<div className="mb-4 text-neutral-500">
 						<label className="flex items-center gap-2 text-sm">
 							<span className="text-sm">Change currency:</span>
-							{/* <span className="text-sm">{t("change_currency")}</span> */}
 							<ChannelSelect channels={channels.channels} dir="ltr" />
 						</label>
 					</div>
-				)}
+				)} */}
 
 				<div className="flex flex-col justify-between border-t border-neutral-200 py-10 sm:flex-row">
 					{/* <p className="text-sm text-neutral-500">Copyright &copy; {currentYear} Your Store, Inc.</p>

@@ -1,0 +1,6 @@
+{
+	"page_not_found_text": "Ödemenizle ilgili bilgileri alamadık. Mağazaya geri dönüp tekrar deneyin.",
+	"go_back_button": "Mağazaya geri dön",
+	"order_confirmed_title": "Sipariş {{number}} onaylandı",
+	"order_confirmed_text": "Siparişinizi verdiğiniz için teşekkürler. Siparişinizi aldık ve paketiniz kargolandığında sizinle iletişime geçeceğiz. {{email}} adresine bir onay e-postası gönderildi."
+}

@@ -48,8 +48,8 @@ export default async function Page(props: {
 	// 	ProductsPerPage,
 	// 	searchValue,
 	// 	cursor,
-	// 	channel: params.channel,
-	// 	locale: params.locale,
+	// 	channel: channel,
+	// 	locale: locale,
 	// });
 
 	const { products } = await executeGraphQL(SearchProductsDocument, {

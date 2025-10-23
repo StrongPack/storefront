@@ -12,7 +12,6 @@
 	"insufficientStock": "Not enough of chosen item in stock.",
 	"invalidCredentials": "Invalid credentials provided at login.",
 	"missingFields": "Missing fields in address form: ",
-
 	"somethingWentWrong": "Sorry, something went wrong. Please try again in a moment.",
 	"requestPasswordResetEmailNotFoundError": "User with provided email has not been found",
 	"requestPasswordResetEmailInactiveError": "User account with provided email is inactive",

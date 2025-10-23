@@ -5,7 +5,7 @@ import { Suspense } from "react";
 // import { CartNavItem } from "./components/CartNavItem.server";
 // import CartNavItemClient from "./components/CartNavItem.client"; // Add this import
 // import { UserMenuContainer } from "./components/UserMenu/UserMenuContainer";
-import { SearchBar } from "./components/SearchBar";
+// import { SearchBar } from "./components/SearchBar";
 import { MobileMenu } from "./components/MobileMenu";
 // import { NavLinks } from "./components/NavLinks";
 
@@ -14,7 +14,6 @@ import { MobileMenu } from "./components/MobileMenu";
 // export const NavClient = ({ channel, locale }: { channel: string; locale: string }) => {
 
 export default function NavClient({
-	channel,
 	locale,
 	// lineCount,
 	NavLinks,
@@ -77,9 +76,7 @@ export default function NavClient({
 
 			{/* <div className={`flex items-center gap-4 whitespace-nowrap lg:gap-8`}> */}
 			<div className="hidden items-center gap-4 whitespace-nowrap lg:flex lg:gap-8">
-				<div className="hidden lg:flex">
-					<SearchBar channel={channel} locale={locale} />
-				</div>
+				<div className="hidden lg:flex">{/* <SearchBar channel={channel} locale={locale} /> */}</div>
 				{/* <LanguageSwitcherSPA /> */}
 				<Suspense fallback={<div className="w-6" />}>{CartNavItem}</Suspense>
 				<Suspense fallback={<div className="w-8" />}>{UserMenu}</Suspense>
@@ -103,9 +100,7 @@ export default function NavClient({
 
 					<div className="flex h-full flex-col">
 						{/* 🔹 بخش بالا - سرچ بار */}
-						<div className="p-4">
-							<SearchBar channel={channel} locale={locale} />
-						</div>
+						<div className="p-4">{/* <SearchBar channel={channel} locale={locale} /> */}</div>
 
 						{/* 🔹 بخش پایین - دکمه‌های تمام‌صفحه‌ای */}
 						<div className="flex flex-1 flex-col justify-center gap-3 border-t border-gray-200 p-4">

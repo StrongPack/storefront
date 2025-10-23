@@ -6,7 +6,7 @@ import UserMenuContainer from "./components/UserMenu/UserMenuContainer";
 import { CartNavItem } from "./components/CartNavItem.server";
 import { NavLinks } from "./components/NavLinks";
 import { MobileMenu } from "./components/MobileMenu";
-import { SearchBar } from "./components/SearchBar";
+// import { SearchBar } from "./components/SearchBar";
 import { LanguageSwitcherSPA } from "./components/LanguageSwitcher";
 import { type LanguageCodeEnum } from "@/gql/graphql";
 // import { useDir } from "@/ui/context/DirContext";
@@ -35,9 +35,7 @@ export const Nav = ({
 				<NavLinks channel={channel} languageCode={languageCode} />
 			</ul>
 			<div className="ml-auto flex items-center justify-center gap-4 whitespace-nowrap lg:gap-8">
-				<div className="hidden lg:flex">
-					<SearchBar channel={channel} locale={locale} />
-				</div>
+				<div className="hidden lg:flex">{/* <SearchBar channel={channel} locale={locale} /> */}</div>
 				<Suspense fallback={<div className="w-8" />}>
 					<UserMenuContainer locale={locale} />
 				</Suspense>
@@ -47,9 +45,7 @@ export const Nav = ({
 					isRTL ? "mr-auto" : "ml-auto"
 				} flex items-center justify-center gap-4 whitespace-nowrap lg:gap-8`}
 			>
-				<div className="hidden lg:flex">
-					<SearchBar channel={channel} locale={locale} />
-				</div>
+				<div className="hidden lg:flex">{/* <SearchBar channel={channel} locale={locale} /> */}</div>
 				<Suspense fallback={<div className="w-8" />}>
 					<UserMenuContainer locale={locale} />
 				</Suspense>
@@ -63,7 +59,7 @@ export const Nav = ({
 			</div>
 			<Suspense>
 				<MobileMenu>
-					<SearchBar channel={channel} locale={locale} />
+					{/* <SearchBar channel={channel} locale={locale} /> */}
 					<NavLinks channel={channel} languageCode={languageCode} />
 				</MobileMenu>
 			</Suspense>

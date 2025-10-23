@@ -1,0 +1,18 @@
+{
+	"order_number": "رقم الطلب",
+	"date_placed": "تاريخ الطلب",
+	"payment_status": "حالة الدفع",
+	"variant_label": "المتغير: {{name}}",
+	"total_including_delivery": "المجموع شامل التوصيل",
+	"payment_unpaid": "غير مدفوع",
+	"payment_cancelled": "ملغى",
+	"payment_refused": "مرفوض",
+	"payment_paid": "مدفوع",
+	"payment_refunded": "مسترد",
+	"payment_partially_paid": "مدفوع جزئيًا",
+	"payment_partially_refunded": "مسترد جزئيًا",
+	"payment_pending": "قيد الانتظار",
+	"quantity_price": "الكمية والسعر للوحدة",
+	"price": "السعر",
+	"product": "المنتج"
+}

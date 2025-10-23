@@ -7,12 +7,21 @@ import Image from "next/image"; // جایگزین برای <img>
 import { useTranslations } from "next-intl";
 import { LinkWithChannel } from "../../atoms/LinkWithChannel";
 import { ChannelSelect } from "../ChannelSelect";
-import type { MenuGetBySlugQuery, ChannelsListQuery } from "@/gql/graphql";
+import type { MenuGetBySlugQuery, LanguageCodeEnum } from "@/gql/graphql";
 // import { useDir } from "@/ui/context/DirContext"; // اضافه کردن
 
 type FooterClientProps = {
 	footerLinks: MenuGetBySlugQuery;
-	channels: ChannelsListQuery | null;
+	channels: {
+		id: string;
+		slug: string;
+		name: string;
+		flag: string;
+		dir: "ltr" | "rtl";
+		locale: string;
+		languageCode: LanguageCodeEnum;
+		displayname: string;
+	}[];
 	dir: "rtl" | "ltr";
 };
 
@@ -72,11 +81,11 @@ export const FooterClient = ({ footerLinks, channels, dir }: FooterClientProps) 
 					))}
 				</div>
 
-				{channels?.channels && (
+				{channels?.length && (
 					<div className="mb-4 text-neutral-500">
 						<label className="flex items-center gap-2 text-sm">
 							<span className="text-sm">{t("change_currency")}</span>
-							<ChannelSelect channels={channels.channels} dir={dir} />
+							<ChannelSelect channels={channels} />
 						</label>
 					</div>
 				)}

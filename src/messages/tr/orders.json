@@ -1,0 +1,18 @@
+{
+	"order_number": "Sipariş numarası",
+	"date_placed": "Sipariş tarihi",
+	"payment_status": "Ödeme durumu",
+	"variant_label": "Varyant: {{name}}",
+	"total_including_delivery": "Teslimat dahil toplam tutar",
+	"payment_unpaid": "ödenmedi",
+	"payment_cancelled": "iptal edildi",
+	"payment_refused": "reddedildi",
+	"payment_paid": "ödendi",
+	"payment_refunded": "iade edildi",
+	"payment_partially_paid": "kısmen ödendi",
+	"payment_partially_refunded": "kısmen iade edildi",
+	"payment_pending": "beklemede",
+	"quantity_price": "miktar ve birim fiyatı",
+	"price": "fiyat",
+	"product": "ürün"
+}

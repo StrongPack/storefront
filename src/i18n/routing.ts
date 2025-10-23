@@ -8,7 +8,7 @@
 import { defineRouting } from "next-intl/routing";
 
 export const routing = defineRouting({
-	locales: ["en", "fa"],
+	locales: ["en", "fa", "ar", "tr"],
 	defaultLocale: "fa",
 	localePrefix: "as-needed",
 	pathnames: {
@@ -20,6 +20,8 @@ export const routing = defineRouting({
 		"/[channel]": {
 			fa: "/:channel",
 			en: "/:channel",
+			ar: "/:channel",
+			tr: "/:channel",
 		},
 	},
 });
