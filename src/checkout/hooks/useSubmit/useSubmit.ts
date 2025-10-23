@@ -82,6 +82,17 @@ export const useSubmit = <
 		async (formData: TData = {} as TData, formHelpers?: any) => {
 			const callbackProps: CallbackProps<TData> = { formData, formHelpers };
 
+			// اگر checkout هنوز undefined است، اجازه ارسال فرم نده
+			if (!checkout) {
+				// console.warn("Checkout object not ready yet, skipping submit.");
+				return {
+					hasErrors: true,
+					apiErrors: [],
+					customErrors: [],
+					graphqlErrors: [],
+				};
+			}
+
 			onStart?.(callbackProps);
 
 			const shouldAbortSubmit = typeof shouldAbort === "function" ? await shouldAbort(callbackProps) : false;
@@ -140,8 +151,7 @@ export const useSubmit = <
 			onStart,
 			shouldAbort,
 			setCheckoutUpdateState,
-			checkout.channel.slug,
-			checkout.id,
+			checkout,
 			onSubmit,
 			parse,
 			extractCustomErrors,

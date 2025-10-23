@@ -46,6 +46,7 @@ export const useDeliveryMethodsForm = (
 	const onSubmit = useFormSubmit<DeliveryMethodsFormData, typeof updateDeliveryMethod>(
 		useMemo(
 			() => ({
+				languageCode: languageCode,
 				scope: "checkoutDeliveryMethodUpdate",
 				onSubmit: updateDeliveryMethod,
 				shouldAbort: ({ formData: { selectedMethodId } }) =>

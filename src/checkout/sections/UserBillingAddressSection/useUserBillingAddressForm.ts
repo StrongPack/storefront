@@ -28,6 +28,7 @@ export const useUserBillingAddressForm = ({ languageCode }: { languageCode: Lang
 	const onSubmit = useFormSubmit<AddressListFormData, typeof checkoutBillingAddressUpdate>(
 		useMemo(
 			() => ({
+				languageCode,
 				scope: "checkoutBillingUpdate",
 				onSubmit: checkoutBillingAddressUpdate,
 				shouldAbort: ({ formData: { addressList, selectedAddressId } }) =>
@@ -43,7 +44,7 @@ export const useUserBillingAddressForm = ({ languageCode }: { languageCode: Lang
 				}),
 				onFinished: () => setChangingBillingCountry(false),
 			}),
-			[billingAddress, checkoutBillingAddressUpdate, setChangingBillingCountry],
+			[billingAddress, checkoutBillingAddressUpdate, setChangingBillingCountry, languageCode],
 		),
 	);
 

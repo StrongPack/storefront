@@ -40,6 +40,7 @@ export const AddressEditForm: React.FC<AddressEditFormProps> = ({
 	const { setCountryCode, validationSchema } = useAddressFormSchema();
 
 	const onSubmit = useFormSubmit<AddressFormData, typeof userAddressUpdate>({
+		languageCode: languageCode,
 		scope: "userAddressUpdate",
 		onSubmit: userAddressUpdate,
 		parse: (formData) => ({ id: address.id, address: { ...getAddressInputData(formData) } }),

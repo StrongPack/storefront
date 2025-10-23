@@ -11,6 +11,7 @@ import {
 } from "@/checkout/hooks/useSubmit/types";
 import { type ApiErrors } from "@/checkout/hooks/useGetParsedErrors/types";
 import { useSubmit, type UseSubmitProps } from "@/checkout/hooks/useSubmit/useSubmit";
+import { type LanguageCodeEnum } from "@/gql/graphql";
 
 export type FormSubmitFn<TData extends FormDataBase> = (
 	formData: TData,
@@ -27,6 +28,7 @@ interface UseFormSubmitProps<
 	TMutationFn extends MutationBaseFn,
 	TErrorCodes extends string = string,
 > {
+	languageCode?: LanguageCodeEnum;
 	hideAlerts?: boolean;
 	scope: CheckoutUpdateStateScope;
 	onSubmit: (vars: MutationVars<TMutationFn>) => Promise<MutationData<TMutationFn>>;

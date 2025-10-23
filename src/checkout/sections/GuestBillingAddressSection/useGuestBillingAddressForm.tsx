@@ -37,6 +37,7 @@ export const useGuestBillingAddressForm = ({
 	const onSubmit = useFormSubmit<AutoSaveAddressFormData, typeof checkoutBillingAddressUpdate>(
 		useMemo(
 			() => ({
+				languageCode: languageCode,
 				scope: "checkoutBillingUpdate",
 				onSubmit: checkoutBillingAddressUpdate,
 				onStart: ({ formData }) => {
@@ -65,6 +66,7 @@ export const useGuestBillingAddressForm = ({
 				checkoutBillingAddressUpdate,
 				setChangingBillingCountry,
 				setCheckoutFormValidationState,
+				languageCode,
 			],
 		),
 	);

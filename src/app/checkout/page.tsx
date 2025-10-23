@@ -1,10 +1,11 @@
 // "use client";
 import { cookies } from "next/headers";
-import Link from "next/link";
+// import Link from "next/link";
 import { invariant } from "ts-invariant";
 import { getTranslations } from "next-intl/server";
 import { RootWrapper } from "./pageWrapper";
 import { getChannelConfig } from "@/lib/channelConfig";
+import { Logo } from "@/ui/components/Logo";
 
 export const metadata = {
 	title: "Checkout · 20pack",
@@ -29,10 +30,10 @@ export default async function CheckoutPage(props: {
 		<div className="min-h-dvh bg-white">
 			<section className="mx-auto flex min-h-dvh max-w-7xl flex-col p-8">
 				<div className="flex items-center font-bold">
-					<Link aria-label="homepage" href="/">
-						{/* {t("site_name")} */}
+					{/* <Link aria-label="homepage" href="/">
 						{t("site_name")}
-					</Link>
+					</Link> */}
+					<Logo />
 				</div>
 				<h1 className="mt-8 text-3xl font-bold text-neutral-900">{t("checkout_title")}</h1>
 

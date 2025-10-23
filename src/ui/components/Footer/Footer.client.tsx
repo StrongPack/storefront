@@ -74,7 +74,7 @@ export const FooterClient = ({ footerLinks, channels, dir }: FooterClientProps) 
 
 				{channels?.channels && (
 					<div className="mb-4 text-neutral-500">
-						<label>
+						<label className="flex items-center gap-2 text-sm">
 							<span className="text-sm">{t("change_currency")}</span>
 							<ChannelSelect channels={channels.channels} dir={dir} />
 						</label>

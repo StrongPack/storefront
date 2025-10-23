@@ -56,6 +56,7 @@ export const useGuestUserForm = ({ initialEmail, languageCode }: GuestUserFormPr
 	const onSubmit = useFormSubmit<GuestUserFormData, typeof userRegister>(
 		useMemo(
 			() => ({
+				languageCode,
 				scope: "userRegister",
 				onSubmit: userRegister,
 				onStart: () => setShouldRegisterUser(false),
@@ -83,7 +84,7 @@ export const useGuestUserForm = ({ initialEmail, languageCode }: GuestUserFormPr
 				},
 				onSuccess: () => setUserRegistrationDisabled(true),
 			}),
-			[setRegisterState, setShouldRegisterUser, setSubmitInProgress, userRegister],
+			[setRegisterState, setShouldRegisterUser, setSubmitInProgress, userRegister, languageCode],
 		),
 	);
 

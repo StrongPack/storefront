@@ -26,6 +26,7 @@ export const useGuestShippingAddressForm = ({ languageCode }: { languageCode: La
 	const onSubmit = useFormSubmit<AutoSaveAddressFormData, typeof checkoutShippingAddressUpdate>(
 		useMemo(
 			() => ({
+				languageCode: languageCode,
 				scope: "checkoutShippingUpdate",
 				onSubmit: checkoutShippingAddressUpdate,
 				parse: ({ languageCode, checkoutId, ...rest }) => ({
@@ -41,7 +42,7 @@ export const useGuestShippingAddressForm = ({ languageCode }: { languageCode: La
 					});
 				},
 			}),
-			[checkoutShippingAddressUpdate, setCheckoutFormValidationState],
+			[checkoutShippingAddressUpdate, setCheckoutFormValidationState, languageCode],
 		),
 	);
 

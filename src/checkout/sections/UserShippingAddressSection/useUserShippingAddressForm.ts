@@ -24,6 +24,7 @@ export const useUserShippingAddressForm = ({ languageCode }: { languageCode: Lan
 	const onSubmit = useFormSubmit<AddressListFormData, typeof checkoutShippingAddressUpdate>(
 		useMemo(
 			() => ({
+				languageCode: languageCode,
 				scope: "checkoutShippingUpdate",
 				onSubmit: checkoutShippingAddressUpdate,
 				shouldAbort: ({ formData: { addressList, selectedAddressId } }) =>

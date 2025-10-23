@@ -78,7 +78,7 @@ export const Summary: FC<SummaryProps> = ({
 			</details>
 			{editable && (
 				<>
-					<PromoCodeAdd />
+					<PromoCodeAdd languageCode={languageCode} />
 					<Divider />
 				</>
 			)}

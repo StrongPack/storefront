@@ -77,7 +77,7 @@ export async function Footer({ channel, languageCode }: { channel: string; langu
 
 				{channels?.channels && (
 					<div className="mb-4 text-neutral-500">
-						<label>
+						<label className="flex items-center gap-2 text-sm">
 							<span className="text-sm">Change currency:</span>
 							{/* <span className="text-sm">{t("change_currency")}</span> */}
 							<ChannelSelect channels={channels.channels} dir="ltr" />

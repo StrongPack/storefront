@@ -42,6 +42,7 @@ export const useBillingSameAsShippingForm = ({
 	const [, checkoutBillingAddressUpdate] = useCheckoutBillingAddressUpdateMutation();
 
 	const onSubmit = useFormSubmit<BillingSameAsShippingFormData, typeof checkoutBillingAddressUpdate>({
+		languageCode: languageCode,
 		scope: "checkoutBillingUpdate",
 		onSubmit: checkoutBillingAddressUpdate,
 		shouldAbort: () => !formBillingAddress || !Object.keys(formBillingAddress).length,
