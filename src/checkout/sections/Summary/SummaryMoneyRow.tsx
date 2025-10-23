@@ -3,10 +3,12 @@ import { Money, type MoneyProps } from "@/checkout/components/Money";
 
 export interface SummaryMoneyRowProps extends MoneyProps {
 	label: string;
+	locale: string;
 }
 
 export const SummaryMoneyRow: React.FC<PropsWithChildren<SummaryMoneyRowProps>> = ({
 	label,
+	locale,
 	children,
 	...moneyProps
 }) => {
@@ -16,7 +18,7 @@ export const SummaryMoneyRow: React.FC<PropsWithChildren<SummaryMoneyRowProps>> 
 				<p color="secondary">{label}</p>
 				{children}
 			</div>
-			<Money {...moneyProps} />
+			<Money {...moneyProps} locale={locale} />
 		</div>
 	);
 };

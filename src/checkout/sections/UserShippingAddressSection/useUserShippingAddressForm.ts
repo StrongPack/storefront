@@ -14,9 +14,9 @@ import {
 	type AddressListFormData,
 	useAddressListForm,
 } from "@/checkout/sections/AddressList/useAddressListForm";
-
-export const useUserShippingAddressForm = () => {
-	const { checkout } = useCheckout();
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const useUserShippingAddressForm = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
+	const { checkout } = useCheckout({ languageCode });
 	const { shippingAddress } = checkout;
 	const { user } = useUser();
 	const [, checkoutShippingAddressUpdate] = useCheckoutShippingAddressUpdateMutation();
@@ -47,6 +47,7 @@ export const useUserShippingAddressForm = () => {
 		onSubmit,
 		defaultAddress: user?.defaultShippingAddress,
 		checkoutAddress: shippingAddress,
+		languageCode: languageCode,
 	});
 
 	return { form, userAddressActions };

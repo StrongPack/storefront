@@ -17,7 +17,7 @@ export default async function RootLayout({
 	params: Promise<{ channel: string }>;
 }) {
 	const { channel } = await params;
-	const { locale } = await getChannelConfig(channel);
+	const { languageCode, locale } = await getChannelConfig(channel);
 	// console.log("locale from params:", locale);
 
 	// export default async function RootLayout(props: {
@@ -29,10 +29,10 @@ export default async function RootLayout({
 
 	return (
 		<>
-			<Header channel={channel} locale={locale} />
+			<Header channel={channel} locale={locale} languageCode={languageCode} />
 			<div className="flex min-h-[calc(100dvh-64px)] flex-col">
 				<main className="flex-1">{children}</main>
-				<Footer channel={channel} />
+				<Footer channel={channel} languageCode={languageCode} />
 			</div>
 		</>
 	);

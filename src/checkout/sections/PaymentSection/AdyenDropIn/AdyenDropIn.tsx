@@ -16,8 +16,8 @@ const _hack = (adyenCheckout: AdyenCheckoutInstance) =>
 	adyenCheckout.create("dropin").mount("#dropin-container");
 type DropinElement = ReturnType<typeof _hack>;
 
-export const AdyenDropIn: FC<AdyenDropinProps> = ({ config }) => {
-	const { onSubmit, onAdditionalDetails } = useAdyenDropin({ config });
+export const AdyenDropIn: FC<AdyenDropinProps> = ({ config, languageCode }) => {
+	const { onSubmit, onAdditionalDetails } = useAdyenDropin({ config, languageCode });
 	const dropinContainerElRef = useRef<HTMLDivElement>(null);
 	const dropinComponentRef = useRef<DropinElement | null>(null);
 

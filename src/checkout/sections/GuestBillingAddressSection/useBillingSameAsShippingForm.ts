@@ -14,7 +14,7 @@ import { type ChangeHandler, useForm } from "@/checkout/hooks/useForm";
 import { useFormSubmit } from "@/checkout/hooks/useFormSubmit";
 import { type MightNotExist } from "@/checkout/lib/globalTypes";
 import { useCheckoutUpdateStateActions } from "@/checkout/state/updateStateStore";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 interface BillingSameAsShippingFormData {
 	billingSameAsShipping: boolean;
 	billingAddress: OptionalAddress;
@@ -22,13 +22,16 @@ interface BillingSameAsShippingFormData {
 
 interface BillingSameAsShippingFormProps {
 	autoSave: boolean;
+	languageCode: LanguageCodeEnum;
 	onSetBillingSameAsShipping?: (address: OptionalAddress) => void;
 }
 
-export const useBillingSameAsShippingForm = (
-	{ autoSave, onSetBillingSameAsShipping }: BillingSameAsShippingFormProps = { autoSave: false },
-) => {
-	const { checkout } = useCheckout();
+export const useBillingSameAsShippingForm = ({
+	autoSave = false,
+	languageCode,
+	onSetBillingSameAsShipping,
+}: BillingSameAsShippingFormProps) => {
+	const { checkout } = useCheckout({ languageCode });
 	const { billingAddress, shippingAddress, isShippingRequired } = checkout;
 	const previousShippingAddress = useRef<OptionalAddress>(shippingAddress);
 	const previousIsShippingRequired = useRef(isShippingRequired);

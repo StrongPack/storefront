@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { type TaxedMoney } from "@/checkout/graphql";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 export interface Classes {
 	className?: string;
 }
@@ -45,6 +45,8 @@ export interface ValidationError<TFormData> {
 
 export interface CommonSectionProps {
 	collapsed: boolean;
+	locale: string;
+	languageCode: LanguageCodeEnum;
 }
 
 export type MightNotExist<TData> = TData | null | undefined;

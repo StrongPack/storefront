@@ -7,9 +7,9 @@ import { Summary, SummarySkeleton } from "@/checkout/sections/Summary";
 import { CheckoutForm, CheckoutFormSkeleton } from "@/checkout/sections/CheckoutForm";
 import { useCheckout } from "@/checkout/hooks/useCheckout";
 import { CheckoutSkeleton } from "@/checkout/views/Checkout/CheckoutSkeleton";
-
-export const Checkout = () => {
-	const { checkout, fetching: fetchingCheckout } = useCheckout();
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const Checkout = ({ locale, languageCode }: { locale: string; languageCode: LanguageCodeEnum }) => {
+	const { checkout, fetching: fetchingCheckout } = useCheckout({ languageCode });
 	const { loading: isAuthenticating } = useUser();
 
 	const isCheckoutInvalid = !fetchingCheckout && !checkout && !isAuthenticating;
@@ -31,12 +31,12 @@ export const Checkout = () => {
 					<div className="grid min-h-screen grid-cols-1 gap-x-16 lg:grid-cols-2 lg:grid-rows-1">
 						<div className="lg:col-start-1 lg:col-end-1">
 							<Suspense fallback={<CheckoutFormSkeleton />}>
-								<CheckoutForm />
+								<CheckoutForm locale={locale} languageCode={languageCode} />
 							</Suspense>
 						</div>
 						<div className="lg:col-start-2 lg:col-end-2">
 							<Suspense fallback={<SummarySkeleton />}>
-								<Summary {...checkout} />
+								<Summary {...checkout} locale={locale} languageCode={languageCode} />
 							</Suspense>
 						</div>
 					</div>

@@ -16,9 +16,11 @@ import { useFormSubmit } from "@/checkout/hooks/useFormSubmit";
 import { AddressFormActions } from "@/checkout/components/ManualSaveAddressForm";
 import { useAddressFormSchema } from "@/checkout/components/AddressForm/useAddressFormSchema";
 import { useSubmit } from "@/checkout/hooks/useSubmit/useSubmit";
+import { type LanguageCodeEnum } from "@/gql/graphql";
 
 export interface AddressEditFormProps extends Pick<AddressFormProps, "title" | "availableCountries"> {
 	address: AddressFragment;
+	languageCode: LanguageCodeEnum;
 	onUpdate: (address: AddressFragment) => void;
 	onDelete: (id: string) => void;
 	onClose: () => void;
@@ -30,6 +32,7 @@ export const AddressEditForm: React.FC<AddressEditFormProps> = ({
 	onDelete,
 	address,
 	availableCountries,
+	languageCode,
 }) => {
 	const t = useTranslations("ui");
 	const [{ fetching: updating }, userAddressUpdate] = useUserAddressUpdateMutation();
@@ -49,6 +52,7 @@ export const AddressEditForm: React.FC<AddressEditFormProps> = ({
 	});
 
 	const onAddressDelete = useSubmit<{ id: string }, typeof userAddressDelete>({
+		languageCode,
 		scope: "userAddressDelete",
 		onSubmit: userAddressDelete,
 		parse: ({ id }) => ({ id }),

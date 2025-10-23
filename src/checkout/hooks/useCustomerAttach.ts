@@ -3,9 +3,9 @@ import { useCheckoutCustomerAttachMutation } from "@/checkout/graphql";
 import { useSubmit } from "@/checkout/hooks/useSubmit/useSubmit";
 import { useUser } from "@/checkout/hooks/useUser";
 import { useCheckout } from "@/checkout/hooks/useCheckout";
-
-export const useCustomerAttach = () => {
-	const { checkout, fetching: fetchingCheckout, refetch } = useCheckout();
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const useCustomerAttach = (languageCode: LanguageCodeEnum) => {
+	const { checkout, fetching: fetchingCheckout, refetch } = useCheckout({ languageCode });
 	const { authenticated } = useUser();
 
 	const [{ fetching: fetchingCustomerAttach }, customerAttach] = useCheckoutCustomerAttachMutation();
@@ -13,6 +13,7 @@ export const useCustomerAttach = () => {
 	const onSubmit = useSubmit<{}, typeof customerAttach>(
 		useMemo(
 			() => ({
+				languageCode,
 				hideAlerts: true,
 				scope: "checkoutCustomerAttach",
 				shouldAbort: () =>

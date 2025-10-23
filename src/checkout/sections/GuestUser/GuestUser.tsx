@@ -5,18 +5,20 @@ import { Checkbox } from "@/checkout/components/Checkbox";
 import { TextInput } from "@/checkout/components/TextInput";
 import { useGuestUserForm } from "@/checkout/sections/GuestUser/useGuestUserForm";
 import { FormProvider } from "@/checkout/hooks/useForm/FormProvider";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 type GuestUserProps = Pick<SignInFormContainerProps, "onSectionChange"> & {
 	onEmailChange: (email: string) => void;
 	email: string;
+	languageCode: LanguageCodeEnum;
 };
 
 export const GuestUser: React.FC<GuestUserProps> = ({
 	onSectionChange,
 	onEmailChange,
 	email: initialEmail,
+	languageCode,
 }) => {
-	const form = useGuestUserForm({ initialEmail });
+	const form = useGuestUserForm({ initialEmail, languageCode });
 	const { handleChange } = form;
 	const { createAccount } = form.values;
 

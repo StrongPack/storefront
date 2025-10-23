@@ -5,34 +5,38 @@ import { RemoveIcon } from "@/checkout/ui-kit/icons";
 import { useCheckoutRemovePromoCodeMutation } from "@/checkout/graphql";
 import { useCheckout } from "@/checkout/hooks/useCheckout";
 import { isOrderConfirmationPage } from "@/checkout/lib/utils/url";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 interface SummaryPromoCodeRowProps extends SummaryMoneyRowProps {
 	promoCode?: string;
 	promoCodeId?: string;
 	editable: boolean;
+	locale: string;
+	languageCode: LanguageCodeEnum;
 }
 
 export const SummaryPromoCodeRow: React.FC<SummaryPromoCodeRowProps> = ({
 	promoCode,
 	promoCodeId,
 	editable,
+	locale,
+	languageCode,
 	...rest
 }) => {
-	const { checkout } = useCheckout({ pause: isOrderConfirmationPage() });
+	const { checkout } = useCheckout({ pause: isOrderConfirmationPage(), languageCode });
 	const [, checkoutRemovePromoCode] = useCheckoutRemovePromoCodeMutation();
 
 	const onDelete = () => {
 		const variables = promoCode ? { promoCode: promoCode } : { promoCodeId: promoCodeId as string };
 
 		void checkoutRemovePromoCode({
-			languageCode: "FA_IR",
+			languageCode: languageCode,
 			checkoutId: checkout.id,
 			...variables,
 		});
 	};
 
 	return (
-		<SummaryMoneyRow {...rest}>
+		<SummaryMoneyRow {...rest} locale={locale}>
 			{editable && (
 				<div>
 					<IconButton onClick={onDelete} ariaLabel="remove promo code" icon={<RemoveIcon aria-hidden />} />

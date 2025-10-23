@@ -5,9 +5,12 @@ import { LoginForm } from "@/ui/components/LoginForm";
 import { OrderListItem } from "@/ui/components/OrderListItem";
 import { getChannelConfig } from "@/lib/channelConfig";
 
-export default async function OrderPage({ params }: { params: { channel: string } }) {
-	// params provided by Next.js
-	const { channel } = params;
+interface OrderPageProps {
+	params: Promise<{ channel: string }>;
+}
+
+export default async function OrderPage({ params }: OrderPageProps) {
+	const { channel } = await params;
 
 	// get channel config (synchronous helper)
 	const { languageCode, locale } = await getChannelConfig(channel);

@@ -3,7 +3,7 @@ import { Section } from "./Section";
 
 import { useOrder } from "@/checkout/hooks/useOrder";
 import { usePaymentStatus } from "@/checkout/sections/PaymentSection/utils";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 const ErrorMessage = ({ message }: { message: string }) => {
 	return (
 		<>
@@ -24,8 +24,8 @@ const SuccessMessage = ({ message }: { message: string }) => {
 	);
 };
 
-export const PaymentSection = () => {
-	const { order } = useOrder();
+export const PaymentSection = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
+	const { order } = useOrder(languageCode);
 	const paymentStatus = usePaymentStatus(order);
 
 	return (

@@ -40,18 +40,19 @@ import { type MightNotExist } from "@/checkout/lib/globalTypes";
 import { useUser } from "@/checkout/hooks/useUser";
 import { getUrlForTransactionInitialize } from "@/checkout/sections/PaymentSection/utils";
 import { usePaymentProcessingScreen } from "@/checkout/sections/PaymentSection/PaymentProcessingScreen";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 export interface AdyenDropinProps {
 	config: ParsedAdyenGateway;
+	languageCode: LanguageCodeEnum;
 }
 
 export const useAdyenDropin = (props: AdyenDropinProps) => {
-	const { config } = props;
+	const { languageCode, config } = props;
 	const { id } = config;
 
 	const {
 		checkout: { id: checkoutId, totalPrice },
-	} = useCheckout();
+	} = useCheckout({ languageCode });
 	const { authenticated } = useUser();
 	const { getMessageByErrorCode } = useErrorMessages(adyenErrorMessages);
 	const { errorMessages: commonErrorMessages } = useErrorMessages();
@@ -68,7 +69,7 @@ export const useAdyenDropin = (props: AdyenDropinProps) => {
 	);
 	const [, transactionInitialize] = useTransactionInitializeMutation();
 	const [, transactionProcess] = useTransactionProcessMutation();
-	const { onCheckoutComplete } = useCheckoutComplete();
+	const { onCheckoutComplete } = useCheckoutComplete(languageCode);
 
 	const [adyenCheckoutSubmitParams, setAdyenCheckoutSubmitParams] = useState<{
 		state: AdyenCheckoutInstanceState;
@@ -132,6 +133,7 @@ export const useAdyenDropin = (props: AdyenDropinProps) => {
 	>(
 		useMemo(
 			() => ({
+				languageCode,
 				onSubmit: transactionInitialize,
 				onError: () => {
 					showCustomErrors([{ message: commonErrorMessages.somethingWentWrong }]);
@@ -171,6 +173,7 @@ export const useAdyenDropin = (props: AdyenDropinProps) => {
 	const onTransactionProccess = useSubmit<TransactionProcessMutationVariables, typeof transactionProcess>(
 		useMemo(
 			() => ({
+				languageCode,
 				onSubmit: transactionProcess,
 				onError: () => {
 					// will tell the processing screen to disappear

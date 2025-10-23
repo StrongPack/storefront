@@ -22,7 +22,7 @@ import { useAlerts } from "@/checkout/hooks/useAlerts";
 import { useCheckout } from "@/checkout/hooks/useCheckout";
 import { useCheckoutComplete } from "@/checkout/hooks/useCheckoutComplete";
 import { getQueryParams } from "@/checkout/lib/utils/url";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 const paymentElementOptions: StripePaymentElementOptions = {
 	layout: "tabs",
 	fields: {
@@ -30,12 +30,12 @@ const paymentElementOptions: StripePaymentElementOptions = {
 	},
 };
 
-export function CheckoutForm() {
+export function CheckoutForm({ languageCode }: { languageCode: LanguageCodeEnum }) {
 	const t = useTranslations("auth");
 	const [isLoading, setIsLoading] = useState(false);
 	const stripe = useStripe();
 	const elements = useElements();
-	const { checkout } = useCheckout();
+	const { checkout } = useCheckout({ languageCode });
 
 	const { authenticated } = useUser();
 	const { showCustomErrors } = useAlerts();
@@ -48,7 +48,7 @@ export function CheckoutForm() {
 	const { validationState } = useCheckoutValidationState();
 
 	const { setIsProcessingPayment } = usePaymentProcessingScreen();
-	const { onCheckoutComplete, completingCheckout } = useCheckoutComplete();
+	const { onCheckoutComplete, completingCheckout } = useCheckoutComplete(languageCode);
 
 	// handler for when user presses submit
 	const onSubmitInitialize: FormEventHandler<HTMLFormElement> = useEvent(async (e) => {

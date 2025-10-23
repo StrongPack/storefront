@@ -16,16 +16,19 @@ export const ChannelSelect = ({ channels, dir }: ChannelSelectProps) => {
 	const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const newChannel = e.currentTarget.value;
 
-		// جایگزینی channel در مسیر فعلی
+		document.cookie = `channel=${newChannel}; path=/; max-age=${60 * 60 * 24 * 7}`;
+
+		document.documentElement.dir = dir;
+
+		// if (pathname.startsWith("/default-channel") || pathname.startsWith("/en-channel")) {
 		const parts = pathname.split("/").filter(Boolean);
 		parts[0] = newChannel;
 		const newPath = "/" + parts.join("/");
-
-		// به‌روزرسانی جهت نوشتار
-		document.documentElement.dir = dir;
-
-		// هدایت به مسیر جدید
 		router.push(newPath);
+		// } else {
+		// 	// 4️⃣ اگر در مسیر بدون channel هستیم (مثل `/checkout`) فقط refresh کن
+		// 	router.refresh();
+		// }
 	};
 
 	return (

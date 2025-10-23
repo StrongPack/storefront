@@ -1,5 +1,5 @@
 import React from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import clsx from "clsx";
 import { Money } from "@/checkout/components";
 import { type Money as MoneyType } from "@/checkout/graphql";
@@ -10,15 +10,17 @@ interface SummaryItemMoneyInfoProps {
 	unitPrice: GrossMoney;
 	undiscountedUnitPrice: MoneyType;
 	quantity: number;
+	locale: string;
 }
 
 export const SummaryItemMoneyInfo: React.FC<SummaryItemMoneyInfoProps> = ({
 	unitPrice,
 	quantity,
 	undiscountedUnitPrice,
+	locale,
 }) => {
 	const t = useTranslations("auth");
-	const locale = useLocale();
+
 	const multiplePieces = quantity > 1;
 	const piecePrice = unitPrice.gross;
 	const onSale = undiscountedUnitPrice.amount !== unitPrice.gross.amount;
@@ -29,6 +31,7 @@ export const SummaryItemMoneyInfo: React.FC<SummaryItemMoneyInfoProps> = ({
 				{onSale && (
 					<Money
 						ariaLabel="undiscounted price"
+						locale={locale}
 						money={{
 							currency: undiscountedUnitPrice.currency,
 							amount: undiscountedUnitPrice.amount * quantity,
@@ -38,6 +41,7 @@ export const SummaryItemMoneyInfo: React.FC<SummaryItemMoneyInfoProps> = ({
 				)}
 				<Money
 					ariaLabel="total price"
+					locale={locale}
 					money={{
 						currency: piecePrice?.currency,
 						amount: (piecePrice?.amount || 0) * quantity,

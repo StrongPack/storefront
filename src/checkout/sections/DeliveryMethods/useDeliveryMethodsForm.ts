@@ -7,13 +7,16 @@ import { useFormSubmit } from "@/checkout/hooks/useFormSubmit";
 import { type MightNotExist } from "@/checkout/lib/globalTypes";
 import { getById } from "@/checkout/lib/utils/common";
 import { useCheckoutUpdateStateChange } from "@/checkout/state/updateStateStore";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 interface DeliveryMethodsFormData {
 	selectedMethodId: string | undefined;
+	// languageCode: LanguageCodeEnum;
 }
 
-export const useDeliveryMethodsForm = (): UseFormReturn<DeliveryMethodsFormData> => {
-	const { checkout } = useCheckout();
+export const useDeliveryMethodsForm = (
+	languageCode: LanguageCodeEnum,
+): UseFormReturn<DeliveryMethodsFormData> => {
+	const { checkout } = useCheckout({ languageCode });
 	const { shippingMethods, shippingAddress, deliveryMethod } = checkout;
 	const [, updateDeliveryMethod] = useCheckoutDeliveryMethodUpdateMutation();
 	const { setCheckoutUpdateState } = useCheckoutUpdateStateChange("checkoutDeliveryMethodUpdate");

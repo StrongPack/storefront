@@ -3,18 +3,21 @@ import { useCheckoutEmailUpdateMutation } from "@/checkout/graphql";
 import { useDebouncedSubmit } from "@/checkout/hooks/useDebouncedSubmit";
 import { useSubmit } from "@/checkout/hooks/useSubmit/useSubmit";
 import { isValidEmail } from "@/checkout/lib/utils/common";
+import { type LanguageCodeEnum } from "@/gql/graphql";
 
 interface CheckoutEmailUpdateFormData {
 	email: string;
+	languageCode: LanguageCodeEnum;
 }
 
-export const useCheckoutEmailUpdate = ({ email }: CheckoutEmailUpdateFormData) => {
+export const useCheckoutEmailUpdate = ({ email, languageCode }: CheckoutEmailUpdateFormData) => {
 	const [, updateEmail] = useCheckoutEmailUpdateMutation();
 	const previousEmail = useRef(email);
 
 	const onSubmit = useSubmit<CheckoutEmailUpdateFormData, typeof updateEmail>(
 		useMemo(
 			() => ({
+				languageCode,
 				scope: "checkoutEmailUpdate",
 				onSubmit: updateEmail,
 				shouldAbort: async ({ formData: { email } }) => {
@@ -36,7 +39,7 @@ export const useCheckoutEmailUpdate = ({ email }: CheckoutEmailUpdateFormData) =
 
 		if (hasEmailChanged) {
 			previousEmail.current = email;
-			void debouncedSubmit({ email });
+			void debouncedSubmit({ email, languageCode });
 		}
 	}, [debouncedSubmit, email]);
 };

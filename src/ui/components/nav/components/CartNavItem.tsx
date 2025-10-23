@@ -2,10 +2,16 @@ import { ShoppingBagIcon } from "lucide-react";
 import clsx from "clsx";
 import * as Checkout from "@/lib/checkout";
 import { LinkWithChannel } from "@/ui/atoms/LinkWithChannel";
-
-export const CartNavItem = async ({ channel }: { channel: string }) => {
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const CartNavItem = async ({
+	channel,
+	languageCode,
+}: {
+	channel: string;
+	languageCode: LanguageCodeEnum;
+}) => {
 	const checkoutId = await Checkout.getIdFromCookies(channel);
-	const checkout = checkoutId ? await Checkout.find(checkoutId) : null;
+	const checkout = checkoutId ? await Checkout.find(checkoutId, languageCode) : null;
 
 	const lineCount = checkout ? checkout.lines.reduce((result, line) => result + line.quantity, 0) : 0;
 

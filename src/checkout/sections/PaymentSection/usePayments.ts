@@ -4,16 +4,16 @@ import { useCheckoutComplete } from "@/checkout/hooks/useCheckoutComplete";
 import { type PaymentStatus } from "@/checkout/sections/PaymentSection/types";
 import { usePaymentGatewaysInitialize } from "@/checkout/sections/PaymentSection/usePaymentGatewaysInitialize";
 import { usePaymentStatus } from "@/checkout/sections/PaymentSection/utils";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 const paidStatuses: PaymentStatus[] = ["overpaid", "paidInFull", "authorized"];
 
-export const usePayments = () => {
-	const { checkout } = useCheckout();
+export const usePayments = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
+	const { checkout } = useCheckout({ languageCode });
 	const paymentStatus = usePaymentStatus(checkout);
 
-	const { fetching, availablePaymentGateways } = usePaymentGatewaysInitialize();
+	const { fetching, availablePaymentGateways } = usePaymentGatewaysInitialize({ languageCode });
 
-	const { onCheckoutComplete, completingCheckout } = useCheckoutComplete();
+	const { onCheckoutComplete, completingCheckout } = useCheckoutComplete(languageCode);
 
 	useEffect(() => {
 		// the checkout was already paid earlier, complete

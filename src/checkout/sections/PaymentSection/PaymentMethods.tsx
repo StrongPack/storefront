@@ -3,9 +3,9 @@ import { paymentMethodToComponent } from "./supportedPaymentApps";
 import { PaymentSectionSkeleton } from "@/checkout/sections/PaymentSection/PaymentSectionSkeleton";
 import { usePayments } from "@/checkout/sections/PaymentSection/usePayments";
 import { useCheckoutUpdateState } from "@/checkout/state/updateStateStore";
-
-export const PaymentMethods = () => {
-	const { availablePaymentGateways, fetching } = usePayments();
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const PaymentMethods = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
+	const { availablePaymentGateways, fetching } = usePayments({ languageCode });
 	const {
 		changingBillingCountry,
 		updateState: { checkoutDeliveryMethodUpdate },

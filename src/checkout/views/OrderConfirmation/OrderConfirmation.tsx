@@ -5,9 +5,15 @@ import { useTranslations } from "next-intl";
 import { Summary, SummarySkeleton } from "@/checkout/sections/Summary";
 import { OrderInfo } from "@/checkout/sections/OrderInfo";
 import { useOrder } from "@/checkout/hooks/useOrder";
-
-export const OrderConfirmation = () => {
-	const { order } = useOrder();
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const OrderConfirmation = ({
+	locale,
+	languageCode,
+}: {
+	locale: string;
+	languageCode: LanguageCodeEnum;
+}) => {
+	const { order } = useOrder(languageCode);
 	const t = useTranslations("checkout");
 
 	return (
@@ -20,11 +26,13 @@ export const OrderConfirmation = () => {
 					<p className="text-base">{t("order_confirmed_text", { email: order.userEmail || "" })}</p>
 				</header>
 
-				<OrderInfo />
+				<OrderInfo languageCode={languageCode} />
 			</div>
 			<Suspense fallback={<SummarySkeleton />}>
 				<Summary
 					{...order}
+					locale={locale}
+					languageCode={languageCode}
 					// for now there can only be one voucher per order in the api
 					discount={order?.discounts?.find(({ type }) => type === "VOUCHER")?.amount}
 					voucherCode={order?.voucher?.code}

@@ -6,16 +6,18 @@ import {
 import { useForm } from "@/checkout/hooks/useForm";
 import { useFormSubmit } from "@/checkout/hooks/useFormSubmit";
 import { useSubmit } from "@/checkout/hooks/useSubmit/useSubmit";
+import { type LanguageCodeEnum } from "@/gql/graphql";
 
 export interface SummaryItemFormProps {
 	line: CheckoutLineFragment;
+	languageCode: LanguageCodeEnum;
 }
 
 export interface SummaryLineFormData {
 	quantity: string;
 }
 
-export const useSummaryItemForm = ({ line }: SummaryItemFormProps) => {
+export const useSummaryItemForm = ({ line, languageCode }: SummaryItemFormProps) => {
 	const [, updateLines] = useCheckoutLinesUpdateMutation();
 	const [, deleteLines] = useCheckoutLineDeleteMutation();
 
@@ -43,6 +45,7 @@ export const useSummaryItemForm = ({ line }: SummaryItemFormProps) => {
 	});
 
 	const onLineDelete = useSubmit<{}, typeof deleteLines>({
+		languageCode,
 		scope: "checkoutLinesDelete",
 		onSubmit: deleteLines,
 		parse: ({ languageCode, checkoutId }) => ({ languageCode, checkoutId, lineId: line.id }),

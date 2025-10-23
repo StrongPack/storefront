@@ -3,14 +3,14 @@ import { Checkout, CheckoutSkeleton } from "@/checkout/views/Checkout";
 import { OrderConfirmation, OrderConfirmationSkeleton } from "@/checkout/views/OrderConfirmation";
 import { getQueryParams } from "@/checkout/lib/utils/url";
 import { PaymentProcessingScreen } from "@/checkout/sections/PaymentSection/PaymentProcessingScreen";
-
-export const RootViews = () => {
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const RootViews = ({ locale, languageCode }: { locale: string; languageCode: LanguageCodeEnum }) => {
 	const orderId = getQueryParams().orderId;
 
 	if (orderId) {
 		return (
 			<Suspense fallback={<OrderConfirmationSkeleton />}>
-				<OrderConfirmation />
+				<OrderConfirmation locale={locale} languageCode={languageCode} />
 			</Suspense>
 		);
 	}
@@ -18,7 +18,7 @@ export const RootViews = () => {
 	return (
 		<PaymentProcessingScreen>
 			<Suspense fallback={<CheckoutSkeleton />}>
-				<Checkout />
+				<Checkout locale={locale} languageCode={languageCode} />
 			</Suspense>
 		</PaymentProcessingScreen>
 	);

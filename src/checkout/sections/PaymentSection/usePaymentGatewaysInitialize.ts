@@ -5,14 +5,14 @@ import { useSubmit } from "@/checkout/hooks/useSubmit";
 import { type MightNotExist } from "@/checkout/lib/globalTypes";
 import { type ParsedPaymentGateways } from "@/checkout/sections/PaymentSection/types";
 import { getFilteredPaymentGateways } from "@/checkout/sections/PaymentSection/utils";
-
-export const usePaymentGatewaysInitialize = () => {
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const usePaymentGatewaysInitialize = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
 	const {
 		checkout: { billingAddress },
-	} = useCheckout();
+	} = useCheckout({ languageCode });
 	const {
 		checkout: { id: checkoutId, availablePaymentGateways },
-	} = useCheckout();
+	} = useCheckout({ languageCode });
 
 	const billingCountry = billingAddress?.country.code as MightNotExist<CountryCode>;
 
@@ -24,6 +24,7 @@ export const usePaymentGatewaysInitialize = () => {
 	const onSubmit = useSubmit<{}, typeof paymentGatewaysInitialize>(
 		useMemo(
 			() => ({
+				languageCode,
 				hideAlerts: true,
 				scope: "paymentGatewaysInitialize",
 				shouldAbort: () => !availablePaymentGateways.length,

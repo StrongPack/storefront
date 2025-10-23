@@ -16,8 +16,16 @@ import { alertsContainerProps } from "./hooks/useAlerts/consts";
 import { RootViews } from "./views/RootViews";
 import { PageNotFound } from "@/checkout/views/PageNotFound";
 import "./index.css";
-
-export const Root = ({ saleorApiUrl }: { saleorApiUrl: string }) => {
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const Root = ({
+	saleorApiUrl,
+	locale,
+	languageCode,
+}: {
+	saleorApiUrl: string;
+	locale: string;
+	languageCode: LanguageCodeEnum;
+}) => {
 	const saleorAuthClient = useSaleorAuthContext();
 
 	const makeUrqlClient = () =>
@@ -40,7 +48,7 @@ export const Root = ({ saleorApiUrl }: { saleorApiUrl: string }) => {
 		<UrqlProvider value={urqlClient}>
 			<ToastContainer {...alertsContainerProps} />
 			<ErrorBoundary FallbackComponent={PageNotFound}>
-				<RootViews />
+				<RootViews locale={locale} languageCode={languageCode} />
 			</ErrorBoundary>
 		</UrqlProvider>
 	);

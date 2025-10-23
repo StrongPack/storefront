@@ -3,13 +3,18 @@ import { useEffect, useMemo } from "react";
 import { type Checkout, useCheckoutQuery } from "@/checkout/graphql";
 import { extractCheckoutIdFromUrl } from "@/checkout/lib/utils/url";
 import { useCheckoutUpdateStateActions } from "@/checkout/state/updateStateStore";
+import { type LanguageCodeEnum } from "@/gql/graphql";
+interface UseCheckoutProps {
+	pause?: boolean;
+	languageCode: LanguageCodeEnum;
+}
 
-export const useCheckout = ({ pause = false } = {}) => {
+export const useCheckout = ({ pause = false, languageCode }: UseCheckoutProps) => {
 	const id = useMemo(() => extractCheckoutIdFromUrl(), []);
 	const { setLoadingCheckout } = useCheckoutUpdateStateActions();
 
 	const [{ data, fetching, stale }, refetch] = useCheckoutQuery({
-		variables: { id, languageCode: "FA_IR" },
+		variables: { id, languageCode },
 		pause: pause,
 	});
 

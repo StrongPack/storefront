@@ -10,12 +10,13 @@ import { Title } from "@/checkout/components/Title";
 import { type UseFormReturn } from "@/checkout/hooks/useForm";
 import { type AddressListFormData } from "@/checkout/sections/AddressList/useAddressListForm";
 import { FormProvider } from "@/checkout/hooks/useForm/FormProvider";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 export interface AddressListProps {
 	onEditChange: (id: string) => void;
 	onAddAddressClick: () => void;
 	checkAddressAvailability?: boolean;
 	title: string;
+	languageCode: LanguageCodeEnum;
 	form: UseFormReturn<AddressListFormData>;
 }
 
@@ -25,13 +26,14 @@ export const AddressList: React.FC<AddressListProps> = ({
 	title,
 	onAddAddressClick,
 	form,
+	languageCode,
 }) => {
 	const t = useTranslations("ui");
 	const {
 		values: { addressList },
 	} = form;
 
-	const { isAvailable } = useAddressAvailability(!checkAddressAvailability);
+	const { isAvailable } = useAddressAvailability(languageCode, !checkAddressAvailability);
 
 	return (
 		<FormProvider form={form}>

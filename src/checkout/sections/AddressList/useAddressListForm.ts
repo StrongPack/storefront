@@ -9,7 +9,7 @@ import { useForm } from "@/checkout/hooks/useForm";
 import { type FormSubmitFn } from "@/checkout/hooks/useFormSubmit";
 import { useUser } from "@/checkout/hooks/useUser";
 import { getById, getByUnmatchingId } from "@/checkout/lib/utils/common";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 export interface AddressListFormData {
 	selectedAddressId: string | undefined;
 	addressList: AddressFragment[];
@@ -20,6 +20,7 @@ interface UseAddressListProps {
 	checkoutAddress: OptionalAddress;
 	defaultAddress: OptionalAddress;
 	checkAddressAvailability?: boolean;
+	languageCode: LanguageCodeEnum;
 }
 
 export const useAddressListForm = ({
@@ -27,10 +28,11 @@ export const useAddressListForm = ({
 	checkoutAddress,
 	defaultAddress,
 	checkAddressAvailability = false,
+	languageCode,
 }: UseAddressListProps) => {
 	const { user } = useUser();
 
-	const { isAvailable } = useAddressAvailability(!checkAddressAvailability);
+	const { isAvailable } = useAddressAvailability(languageCode, !checkAddressAvailability);
 
 	// sdk has outdated types
 	const addresses = (user?.addresses || []) as AddressFragment[];

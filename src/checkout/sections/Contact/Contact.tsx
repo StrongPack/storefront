@@ -6,17 +6,18 @@ import { getQueryParams } from "@/checkout/lib/utils/url";
 import { SignIn } from "@/checkout/sections/SignIn/SignIn";
 import { GuestUser } from "@/checkout/sections/GuestUser/GuestUser";
 import { useUser } from "@/checkout/hooks/useUser";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 type Section = "signedInUser" | "guestUser" | "signIn" | "resetPassword";
 
 const onlyContactShownSections: Section[] = ["signIn", "resetPassword"];
 
 interface ContactProps {
 	setShowOnlyContact: (value: boolean) => void;
+	languageCode: LanguageCodeEnum;
 }
 
-export const Contact: FC<ContactProps> = ({ setShowOnlyContact }) => {
-	useCustomerAttach();
+export const Contact: FC<ContactProps> = ({ setShowOnlyContact, languageCode }) => {
+	useCustomerAttach(languageCode);
 	const { user, authenticated } = useUser();
 	const [email, setEmail] = useState(user?.email || "");
 
@@ -67,7 +68,12 @@ export const Contact: FC<ContactProps> = ({ setShowOnlyContact }) => {
 	return (
 		<div>
 			{isCurrentSection("guestUser") && (
-				<GuestUser onSectionChange={handleChangeSection("signIn")} onEmailChange={setEmail} email={email} />
+				<GuestUser
+					languageCode={languageCode}
+					onSectionChange={handleChangeSection("signIn")}
+					onEmailChange={setEmail}
+					email={email}
+				/>
 			)}
 
 			{isCurrentSection("signIn") && (
@@ -76,6 +82,7 @@ export const Contact: FC<ContactProps> = ({ setShowOnlyContact }) => {
 					onSignInSuccess={handleChangeSection("signedInUser")}
 					onEmailChange={setEmail}
 					email={email}
+					languageCode={languageCode}
 				/>
 			)}
 

@@ -7,21 +7,21 @@ import { useCheckout } from "@/checkout/hooks/useCheckout";
 import { AddressSectionSkeleton } from "@/checkout/components/AddressSectionSkeleton";
 import { useBillingSameAsShippingForm } from "@/checkout/sections/GuestBillingAddressSection/useBillingSameAsShippingForm";
 import { Checkbox } from "@/checkout/components";
-
-export const GuestBillingAddressSection = () => {
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const GuestBillingAddressSection = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
 	const t = useTranslations("auth");
 	const {
 		checkout: { isShippingRequired },
-	} = useCheckout();
+	} = useCheckout({ languageCode });
 
-	const billingSameAsShippingForm = useBillingSameAsShippingForm({ autoSave: true });
+	const billingSameAsShippingForm = useBillingSameAsShippingForm({ autoSave: true, languageCode });
 
 	const {
 		values: { billingSameAsShipping },
 	} = billingSameAsShippingForm;
 
 	// we want to avoid validating this form on "pay" click when it's not visible
-	const form = useGuestBillingAddressForm({ skipValidation: billingSameAsShipping });
+	const form = useGuestBillingAddressForm({ skipValidation: billingSameAsShipping, languageCode });
 
 	const { handleBlur, handleChange } = form;
 

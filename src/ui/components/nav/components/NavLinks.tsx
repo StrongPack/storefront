@@ -1,11 +1,17 @@
 import Link from "next/link";
 import { NavLink } from "./NavLink";
 import { executeGraphQL } from "@/lib/graphql";
-import { MenuGetBySlugDocument, LanguageCodeEnum } from "@/gql/graphql";
+import { MenuGetBySlugDocument, type LanguageCodeEnum } from "@/gql/graphql";
 
-export const NavLinks = async ({ channel }: { channel: string }) => {
+export const NavLinks = async ({
+	channel,
+	languageCode,
+}: {
+	channel: string;
+	languageCode: LanguageCodeEnum;
+}) => {
 	const navLinks = await executeGraphQL(MenuGetBySlugDocument, {
-		variables: { slug: "navbar", channel, languageCode: LanguageCodeEnum.FaIr },
+		variables: { slug: "navbar", channel, languageCode: languageCode },
 		revalidate: 60 * 60 * 24,
 	});
 

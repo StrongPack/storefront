@@ -16,15 +16,19 @@ import {
 } from "@/checkout/hooks/useAutoSaveAddressForm";
 import { useSetCheckoutFormValidationState } from "@/checkout/hooks/useSetCheckoutFormValidationState";
 import { useCheckoutUpdateStateActions } from "@/checkout/state/updateStateStore";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 interface GuestBillingAddressFormProps {
 	skipValidation: boolean;
+	languageCode: LanguageCodeEnum;
 }
 
-export const useGuestBillingAddressForm = ({ skipValidation }: GuestBillingAddressFormProps) => {
+export const useGuestBillingAddressForm = ({
+	skipValidation,
+	languageCode,
+}: GuestBillingAddressFormProps) => {
 	const {
 		checkout: { billingAddress },
-	} = useCheckout();
+	} = useCheckout({ languageCode });
 	const validationSchema = useAddressFormSchema();
 	const [, checkoutBillingAddressUpdate] = useCheckoutBillingAddressUpdateMutation();
 	const { setCheckoutFormValidationState } = useSetCheckoutFormValidationState("billingAddress");

@@ -4,16 +4,16 @@ import { PaymentSection } from "./PaymentSection";
 import { Section } from "./Section";
 import { Address } from "@/checkout/components/Address";
 import { useOrder } from "@/checkout/hooks/useOrder";
-
-export const OrderInfo = () => {
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const OrderInfo = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
 	const t = useTranslations("auth");
 	const {
 		order: { deliveryMethod, shippingAddress, billingAddress, userEmail },
-	} = useOrder();
+	} = useOrder(languageCode);
 
 	return (
 		<section className="mt-8">
-			<PaymentSection />
+			<PaymentSection languageCode={languageCode} />
 			<DeliverySection deliveryMethod={deliveryMethod} />
 			<Section title={t("contactDetails")}>
 				<p>{userEmail}</p>

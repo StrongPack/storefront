@@ -14,10 +14,16 @@ import { UserBillingAddressSection } from "@/checkout/sections/UserBillingAddres
 import { PaymentSection, PaymentSectionSkeleton } from "@/checkout/sections/PaymentSection";
 import { GuestBillingAddressSection } from "@/checkout/sections/GuestBillingAddressSection";
 import { useUser } from "@/checkout/hooks/useUser";
-
-export const CheckoutForm = () => {
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const CheckoutForm = ({
+	locale,
+	languageCode,
+}: {
+	locale: string;
+	languageCode: LanguageCodeEnum;
+}) => {
 	const { user } = useUser();
-	const { checkout } = useCheckout();
+	const { checkout } = useCheckout({ languageCode });
 	const { passwordResetToken } = getQueryParams();
 
 	const [showOnlyContact, setShowOnlyContact] = useState(!!passwordResetToken);
@@ -26,7 +32,7 @@ export const CheckoutForm = () => {
 		<div className="flex flex-col">
 			<div className="flex w-full flex-col rounded">
 				<Suspense fallback={<ContactSkeleton />}>
-					<Contact setShowOnlyContact={setShowOnlyContact} />
+					<Contact setShowOnlyContact={setShowOnlyContact} languageCode={languageCode} />
 				</Suspense>
 				<>
 					{checkout?.isShippingRequired && (
@@ -34,18 +40,26 @@ export const CheckoutForm = () => {
 							<CollapseSection collapse={showOnlyContact}>
 								<Divider />
 								<div className="py-4" data-testid="shippingAddressSection">
-									{user ? <UserShippingAddressSection /> : <GuestShippingAddressSection />}
+									{user ? (
+										<UserShippingAddressSection languageCode={languageCode} />
+									) : (
+										<GuestShippingAddressSection languageCode={languageCode} />
+									)}
 								</div>
-								{user ? <UserBillingAddressSection /> : <GuestBillingAddressSection />}
+								{user ? (
+									<UserBillingAddressSection languageCode={languageCode} />
+								) : (
+									<GuestBillingAddressSection languageCode={languageCode} />
+								)}
 							</CollapseSection>
 						</Suspense>
 					)}
 					<Suspense fallback={<DeliveryMethodsSkeleton />}>
-						<DeliveryMethods collapsed={showOnlyContact} />
+						<DeliveryMethods collapsed={showOnlyContact} locale={locale} languageCode={languageCode} />
 					</Suspense>
 					<Suspense fallback={<PaymentSectionSkeleton />}>
 						<CollapseSection collapse={showOnlyContact}>
-							<PaymentSection />
+							<PaymentSection languageCode={languageCode} />
 						</CollapseSection>
 					</Suspense>
 				</>

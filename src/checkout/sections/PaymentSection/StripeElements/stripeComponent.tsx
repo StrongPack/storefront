@@ -9,9 +9,9 @@ import { useTransactionInitializeMutation } from "@/checkout/graphql";
 import { useAlerts } from "@/checkout/hooks/useAlerts";
 import { useErrorMessages } from "@/checkout/hooks/useErrorMessages";
 import { useCheckout } from "@/checkout/hooks/useCheckout";
-
-export const StripeComponent = () => {
-	const { checkout } = useCheckout();
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const StripeComponent = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
+	const { checkout } = useCheckout({ languageCode });
 
 	const [transactionInitializeResult, transactionInitialize] = useTransactionInitializeMutation();
 	const stripeData = transactionInitializeResult.data?.transactionInitialize?.data as
@@ -57,7 +57,7 @@ export const StripeComponent = () => {
 			options={{ clientSecret: stripeData.paymentIntent.client_secret, appearance: { theme: "stripe" } }}
 			stripe={stripePromise}
 		>
-			<CheckoutForm />
+			<CheckoutForm languageCode={languageCode} />
 		</Elements>
 	);
 };

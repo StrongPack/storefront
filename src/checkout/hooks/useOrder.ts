@@ -1,12 +1,12 @@
 import { type OrderFragment, useOrderQuery } from "@/checkout/graphql";
 import { getQueryParams } from "@/checkout/lib/utils/url";
-
-export const useOrder = () => {
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const useOrder = (languageCode: LanguageCodeEnum) => {
 	const { orderId } = getQueryParams();
 
 	const [{ data, fetching: loading }] = useOrderQuery({
 		pause: !orderId,
-		variables: { languageCode: "FA_IR", id: orderId as string },
+		variables: { languageCode: languageCode, id: orderId as string },
 	});
 
 	return { order: data?.order as OrderFragment, loading };

@@ -19,6 +19,7 @@ import {
 } from "@/checkout/hooks/useSubmit/types";
 import { type ApiErrors } from "@/checkout/hooks/useGetParsedErrors/types";
 import { extractMutationData, extractMutationErrors } from "@/checkout/hooks/useSubmit/utils";
+import { type LanguageCodeEnum } from "@/gql/graphql";
 
 interface CallbackProps<TData> {
 	formData: TData;
@@ -32,6 +33,7 @@ export interface UseSubmitProps<
 > {
 	hideAlerts?: boolean;
 	scope?: CheckoutUpdateStateScope;
+	languageCode: LanguageCodeEnum;
 	onSubmit: (vars: MutationVars<TMutationFn>) => Promise<MutationData<TMutationFn>>;
 	parse?: ParserFunction<TData, TMutationFn>;
 	onAbort?: (props: CallbackProps<TData>) => void;
@@ -67,13 +69,14 @@ export const useSubmit = <
 	onFinished,
 	extractCustomErrors,
 	hideAlerts = false,
+	languageCode,
 }: UseSubmitProps<TData, TMutationFn, TErrorCodes>): SimpleSubmitFn<TData, TErrorCodes> => {
 	const { setCheckoutUpdateState } = useCheckoutUpdateStateChange(
 		// @ts-expect-error -- something is fishy
 		scope,
 	);
 	const { showErrors } = useAlerts();
-	const { checkout } = useCheckout();
+	const { checkout } = useCheckout({ languageCode: languageCode });
 
 	const handleSubmit = useCallback(
 		async (formData: TData = {} as TData, formHelpers?: any) => {
@@ -94,7 +97,7 @@ export const useSubmit = <
 			setCheckoutUpdateState("loading");
 
 			const commonData: CommonVars = {
-				languageCode: "FA_IR",
+				languageCode,
 				channel: checkout.channel.slug,
 				checkoutId: checkout.id,
 			};
@@ -149,6 +152,7 @@ export const useSubmit = <
 			onAbort,
 			onSuccess,
 			showErrors,
+			languageCode,
 		],
 	);
 

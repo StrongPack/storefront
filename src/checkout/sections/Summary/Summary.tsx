@@ -1,7 +1,7 @@
 "use client";
 
 import { type FC } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import clsx from "clsx";
 import { SummaryItem, type SummaryLine } from "./SummaryItem";
 import { PromoCodeAdd } from "./PromoCodeAdd";
@@ -20,7 +20,7 @@ import {
 } from "@/checkout/graphql";
 import { SummaryItemMoneySection } from "@/checkout/sections/Summary/SummaryItemMoneySection";
 import { type GrossMoney, type GrossMoneyWithTax } from "@/checkout/lib/globalTypes";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 interface SummaryProps {
 	editable?: boolean;
 	lines: SummaryLine[];
@@ -30,6 +30,8 @@ interface SummaryProps {
 	voucherCode?: string | null;
 	discount?: MoneyType | null;
 	shippingPrice: GrossMoney;
+	locale: string;
+	languageCode: LanguageCodeEnum;
 }
 
 export const Summary: FC<SummaryProps> = ({
@@ -41,9 +43,11 @@ export const Summary: FC<SummaryProps> = ({
 	voucherCode,
 	shippingPrice,
 	discount,
+	locale,
+	languageCode,
 }) => {
 	const t = useTranslations("auth");
-	const locale = useLocale();
+
 	return (
 		<div
 			className={clsx(
@@ -60,9 +64,13 @@ export const Summary: FC<SummaryProps> = ({
 					{lines.map((line) => (
 						<SummaryItem line={line} key={line?.id}>
 							{editable ? (
-								<SummaryItemMoneyEditableSection line={line as CheckoutLineFragment} />
+								<SummaryItemMoneyEditableSection
+									line={line as CheckoutLineFragment}
+									locale={locale}
+									languageCode={languageCode}
+								/>
 							) : (
-								<SummaryItemMoneySection line={line as OrderLineFragment} />
+								<SummaryItemMoneySection line={line as OrderLineFragment} locale={locale} />
 							)}
 						</SummaryItem>
 					))}
@@ -75,12 +83,19 @@ export const Summary: FC<SummaryProps> = ({
 				</>
 			)}
 			<div className="mt-4 flex max-w-full flex-col">
-				<SummaryMoneyRow label={t("subtotal")} money={subtotalPrice?.gross} ariaLabel="subtotal price" />
+				<SummaryMoneyRow
+					label={t("subtotal")}
+					money={subtotalPrice?.gross}
+					ariaLabel="subtotal price"
+					locale={locale}
+				/>
 				{voucherCode && (
 					<SummaryPromoCodeRow
 						editable={editable}
 						promoCode={voucherCode}
 						ariaLabel="voucher"
+						locale={locale}
+						languageCode={languageCode}
 						label={`${t("voucher")}: ${voucherCode}`}
 						money={discount}
 						negative
@@ -91,13 +106,20 @@ export const Summary: FC<SummaryProps> = ({
 						key={id}
 						editable={editable}
 						promoCodeId={id}
+						locale={locale}
+						languageCode={languageCode}
 						ariaLabel="gift card"
 						label={`${t("giftCard")}: •••• •••• ${displayCode}`}
 						money={currentBalance}
 						negative
 					/>
 				))}
-				<SummaryMoneyRow label={t("shippingCost")} ariaLabel="shipping cost" money={shippingPrice?.gross} />
+				<SummaryMoneyRow
+					label={t("shippingCost")}
+					ariaLabel="shipping cost"
+					money={shippingPrice?.gross}
+					locale={locale}
+				/>
 				<Divider className="my-4" />
 				<div className="flex flex-row items-baseline justify-between pb-4">
 					<div className="flex flex-row items-baseline">
@@ -107,7 +129,12 @@ export const Summary: FC<SummaryProps> = ({
 							{t("includesTax", { tax: getFormattedMoney(totalPrice?.tax, locale) })}
 						</p>
 					</div>
-					<Money ariaLabel="total price" money={totalPrice?.gross} data-testid="totalOrderPrice" />
+					<Money
+						ariaLabel="total price"
+						money={totalPrice?.gross}
+						data-testid="totalOrderPrice"
+						locale={locale}
+					/>
 				</div>
 			</div>
 		</div>

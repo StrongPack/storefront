@@ -15,19 +15,21 @@ import { useBillingSameAsShippingForm } from "@/checkout/sections/GuestBillingAd
 import { type OptionalAddress } from "@/checkout/components/AddressForm/types";
 import { getByMatchingAddress } from "@/checkout/components/AddressForm/utils";
 import { type AddressFragment } from "@/checkout/graphql";
+import { type LanguageCodeEnum } from "@/gql/graphql";
+interface UserBillingAddressSectionProps {
+	languageCode: LanguageCodeEnum;
+}
 
-interface UserBillingAddressSectionProps {}
-
-export const UserBillingAddressSection: React.FC<UserBillingAddressSectionProps> = ({}) => {
+export const UserBillingAddressSection: React.FC<UserBillingAddressSectionProps> = ({ languageCode }) => {
 	const t = useTranslations("auth");
 	const {
 		checkout: { isShippingRequired },
-	} = useCheckout();
+	} = useCheckout({ languageCode });
 
 	const {
 		form,
 		userAddressActions: { onAddressCreateSuccess, onAddressDeleteSuccess, onAddressUpdateSuccess },
-	} = useUserBillingAddressForm();
+	} = useUserBillingAddressForm({ languageCode });
 
 	const {
 		resetForm,
@@ -46,6 +48,7 @@ export const UserBillingAddressSection: React.FC<UserBillingAddressSectionProps>
 
 	const billingSameAsShippingForm = useBillingSameAsShippingForm({
 		autoSave: false,
+		languageCode,
 		onSetBillingSameAsShipping: handleSetBillingSameAsShipping,
 	});
 
@@ -97,6 +100,7 @@ export const UserBillingAddressSection: React.FC<UserBillingAddressSectionProps>
 										address={form.values.addressList.find(getById(editedAddressId)) as AddressFragment}
 										onUpdate={onAddressUpdateSuccess}
 										onDelete={onAddressDeleteSuccess}
+										languageCode={languageCode}
 									/>
 								)}
 
@@ -106,6 +110,7 @@ export const UserBillingAddressSection: React.FC<UserBillingAddressSectionProps>
 										onAddAddressClick={() => setDisplayAddressCreate(true)}
 										title={t("billingAddress")}
 										form={form}
+										languageCode={languageCode}
 									/>
 								)}
 							</>

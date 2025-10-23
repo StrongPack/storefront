@@ -1,5 +1,7 @@
+"use client";
+
 import React from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Title } from "@/checkout/components/Title";
 import { useCheckout } from "@/checkout/hooks/useCheckout";
 import { SelectBox } from "@/checkout/components/SelectBox";
@@ -13,13 +15,12 @@ import { useCheckoutUpdateState } from "@/checkout/state/updateStateStore";
 import { DeliveryMethodsSkeleton } from "@/checkout/sections/DeliveryMethods/DeliveryMethodsSkeleton";
 import { useUser } from "@/checkout/hooks/useUser";
 
-export const DeliveryMethods: React.FC<CommonSectionProps> = ({ collapsed }) => {
+export const DeliveryMethods: React.FC<CommonSectionProps> = ({ collapsed, locale, languageCode }) => {
 	const t = useTranslations("auth");
-	const locale = useLocale();
-	const { checkout } = useCheckout();
+	const { checkout } = useCheckout({ languageCode });
 	const { authenticated } = useUser();
 	const { shippingMethods, shippingAddress } = checkout;
-	const form = useDeliveryMethodsForm();
+	const form = useDeliveryMethodsForm(languageCode);
 	const { updateState } = useCheckoutUpdateState();
 
 	const getSubtitle = ({ min, max }: { min?: number | null; max?: number | null }) => {

@@ -3,16 +3,17 @@ import { useCheckoutCompleteMutation } from "@/checkout/graphql";
 import { useCheckout } from "@/checkout/hooks/useCheckout";
 import { useSubmit } from "@/checkout/hooks/useSubmit";
 import { replaceUrl } from "@/checkout/lib/utils/url";
-
-export const useCheckoutComplete = () => {
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const useCheckoutComplete = (languageCode: LanguageCodeEnum) => {
 	const {
 		checkout: { id: checkoutId },
-	} = useCheckout();
+	} = useCheckout({ languageCode });
 	const [{ fetching }, checkoutComplete] = useCheckoutCompleteMutation();
 
 	const onCheckoutComplete = useSubmit<{}, typeof checkoutComplete>(
 		useMemo(
 			() => ({
+				languageCode,
 				parse: () => ({
 					checkoutId,
 				}),

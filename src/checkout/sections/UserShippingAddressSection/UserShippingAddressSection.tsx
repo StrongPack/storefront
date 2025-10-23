@@ -10,16 +10,18 @@ import { AddressList } from "@/checkout/sections/AddressList/AddressList";
 import { type AddressFragment } from "@/checkout/graphql";
 import { useCheckoutFormValidationTrigger } from "@/checkout/hooks/useCheckoutFormValidationTrigger";
 import { useAvailableShippingCountries } from "@/checkout/hooks/useAvailableShippingCountries";
+import { type LanguageCodeEnum } from "@/gql/graphql";
+interface UserShippingAddressSectionProps {
+	languageCode: LanguageCodeEnum;
+}
 
-interface UserShippingAddressSectionProps {}
-
-export const UserShippingAddressSection: React.FC<UserShippingAddressSectionProps> = ({}) => {
+export const UserShippingAddressSection: React.FC<UserShippingAddressSectionProps> = ({ languageCode }) => {
 	const t = useTranslations("auth");
-	const { availableShippingCountries } = useAvailableShippingCountries();
+	const { availableShippingCountries } = useAvailableShippingCountries(languageCode);
 	const {
 		form,
 		userAddressActions: { onAddressCreateSuccess, onAddressDeleteSuccess, onAddressUpdateSuccess },
-	} = useUserShippingAddressForm();
+	} = useUserShippingAddressForm({ languageCode });
 
 	useCheckoutFormValidationTrigger({
 		scope: "shippingAddress",
@@ -54,6 +56,7 @@ export const UserShippingAddressSection: React.FC<UserShippingAddressSectionProp
 								address={form.values.addressList.find(getById(editedAddressId)) as AddressFragment}
 								onUpdate={onAddressUpdateSuccess}
 								onDelete={onAddressDeleteSuccess}
+								languageCode={languageCode}
 							/>
 						)}
 
@@ -64,6 +67,7 @@ export const UserShippingAddressSection: React.FC<UserShippingAddressSectionProp
 								title={t("shippingAddress")}
 								checkAddressAvailability={true}
 								form={form}
+								languageCode={languageCode}
 							/>
 						)}
 					</>

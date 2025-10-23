@@ -14,11 +14,11 @@ import {
 	useAutoSaveAddressForm,
 } from "@/checkout/hooks/useAutoSaveAddressForm";
 import { useSetCheckoutFormValidationState } from "@/checkout/hooks/useSetCheckoutFormValidationState";
-
-export const useGuestShippingAddressForm = () => {
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const useGuestShippingAddressForm = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
 	const {
 		checkout: { shippingAddress },
-	} = useCheckout();
+	} = useCheckout({ languageCode });
 
 	const [, checkoutShippingAddressUpdate] = useCheckoutShippingAddressUpdateMutation();
 	const { setCheckoutFormValidationState } = useSetCheckoutFormValidationState("shippingAddress");

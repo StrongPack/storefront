@@ -7,14 +7,21 @@ import { Skeleton } from "@/checkout/components";
 import { SummaryItemMoneyInfo } from "@/checkout/sections/Summary/SummaryItemMoneyInfo";
 import { FormProvider } from "@/checkout/hooks/useForm/FormProvider";
 import { useSummaryItemForm } from "@/checkout/sections/Summary/useSummaryItemForm";
+import { type LanguageCodeEnum } from "@/gql/graphql";
 
 interface SummaryItemMoneyEditableSectionProps {
 	line: CheckoutLineFragment;
+	locale: string;
+	languageCode: LanguageCodeEnum;
 }
 
-export const SummaryItemMoneyEditableSection: React.FC<SummaryItemMoneyEditableSectionProps> = ({ line }) => {
+export const SummaryItemMoneyEditableSection: React.FC<SummaryItemMoneyEditableSectionProps> = ({
+	line,
+	locale,
+	languageCode,
+}) => {
 	const t = useTranslations("auth");
-	const { form, onLineDelete } = useSummaryItemForm({ line });
+	const { form, onLineDelete } = useSummaryItemForm({ line, languageCode });
 
 	const {
 		handleBlur,
@@ -67,7 +74,7 @@ export const SummaryItemMoneyEditableSection: React.FC<SummaryItemMoneyEditableS
 					<Skeleton />
 				</div>
 			) : (
-				<SummaryItemMoneyInfo {...line} />
+				<SummaryItemMoneyInfo {...line} locale={locale} />
 			)}
 		</div>
 	);

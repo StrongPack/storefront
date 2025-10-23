@@ -22,8 +22,16 @@ import NavClient from "./Nav.client";
 import NavLinksServer from "./components/NavLinks.server";
 import { CartNavItem } from "./components/CartNavItem.server";
 import UserMenuContainer from "./components/UserMenu/UserMenuContainer";
-
-export default async function NavServer({ channel, locale }: { channel: string; locale: string }) {
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export default async function NavServer({
+	channel,
+	locale,
+	languageCode,
+}: {
+	channel: string;
+	locale: string;
+	languageCode: LanguageCodeEnum;
+}) {
 	// const cookieStore = await cookies();
 	// const checkout = await getCheckout(channel, cookieStore); // Remove if unused
 	// const user = await getCurrentUser(); // Remove if unused
@@ -38,8 +46,8 @@ export default async function NavServer({ channel, locale }: { channel: string; 
 		<NavClient
 			channel={channel}
 			locale={locale}
-			NavLinks={<NavLinksServer channel={channel} locale={locale} />}
-			CartNavItem={<CartNavItem channel={channel} />}
+			NavLinks={<NavLinksServer channel={channel} locale={locale} languageCode={languageCode} />}
+			CartNavItem={<CartNavItem channel={channel} languageCode={languageCode} />}
 			UserMenu={<UserMenuContainer locale={locale} />}
 		/>
 	);

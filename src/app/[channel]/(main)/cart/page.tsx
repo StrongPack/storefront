@@ -15,13 +15,12 @@ export const metadata = {
 export default async function Page(props: { params: Promise<{ channel: string }> }) {
 	const params = await props.params;
 	const { channel } = params;
-	const { locale } = await getChannelConfig(channel);
-
+	const { languageCode, locale } = await getChannelConfig(channel);
 	const t = await getTranslations({ locale: locale, namespace: "common" });
 	const checkoutId = await Checkout.getIdFromCookies(channel);
 	const isFa = locale === "fa";
 
-	const checkout = await Checkout.find(checkoutId);
+	const checkout = await Checkout.find(checkoutId, languageCode);
 
 	if (!checkout || checkout.lines.length < 1) {
 		return (

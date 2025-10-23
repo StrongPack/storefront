@@ -4,16 +4,21 @@ import { SummaryItemMoneyInfo } from "@/checkout/sections/Summary/SummaryItemMon
 
 interface LineItemQuantitySelectorProps {
 	line: OrderLineFragment;
+	locale: string;
 }
 
-export const SummaryItemMoneySection: React.FC<LineItemQuantitySelectorProps> = ({ line }) => {
+export const SummaryItemMoneySection: React.FC<LineItemQuantitySelectorProps> = ({ line, locale }) => {
 	const t = useTranslations("auth");
 	return (
 		<div className="flex flex-col items-end">
 			<p>
 				{t("qty")}: {line.quantity}
 			</p>
-			<SummaryItemMoneyInfo {...line} undiscountedUnitPrice={line.undiscountedUnitPrice.gross} />
+			<SummaryItemMoneyInfo
+				{...line}
+				locale={locale}
+				undiscountedUnitPrice={line.undiscountedUnitPrice.gross}
+			/>
 		</div>
 	);
 };

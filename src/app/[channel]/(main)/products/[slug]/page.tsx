@@ -133,6 +133,7 @@ export default async function Page(props: {
 		const checkout = await Checkout.findOrCreate({
 			checkoutId: await Checkout.getIdFromCookies(params.channel),
 			channel: params.channel,
+			languageCode: languageCode,
 		});
 		invariant(checkout, "This should never happen");
 

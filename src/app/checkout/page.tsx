@@ -1,24 +1,23 @@
 // "use client";
-
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { invariant } from "ts-invariant";
 import { getTranslations } from "next-intl/server";
 import { RootWrapper } from "./pageWrapper";
-// import { getChannelConfig } from "@/lib/channelConfig";
+import { getChannelConfig } from "@/lib/channelConfig";
 
 export const metadata = {
 	title: "Checkout · 20pack",
 };
 
 export default async function CheckoutPage(props: {
-	params: Promise<{ channel: string }>;
 	searchParams: Promise<{ checkout?: string; order?: string }>;
 }) {
-	// const params = await props.params;
-	// const { channel } = params;
-	// const { locale } = await getChannelConfig(channel);
+	const cookieStore = await cookies();
+	const channel = cookieStore.get("channel")?.value ?? "default-channel";
+	const { languageCode, locale } = await getChannelConfig(channel);
 
-	const t = await getTranslations("common");
+	const t = await getTranslations({ locale, namespace: "common" });
 	const searchParams = await props.searchParams;
 	invariant(process.env.NEXT_PUBLIC_SALEOR_API_URL, "Missing NEXT_PUBLIC_SALEOR_API_URL env variable");
 
@@ -38,7 +37,11 @@ export default async function CheckoutPage(props: {
 				<h1 className="mt-8 text-3xl font-bold text-neutral-900">{t("checkout_title")}</h1>
 
 				<section className="mb-12 mt-6 flex-1">
-					<RootWrapper saleorApiUrl={process.env.NEXT_PUBLIC_SALEOR_API_URL} />
+					<RootWrapper
+						saleorApiUrl={process.env.NEXT_PUBLIC_SALEOR_API_URL}
+						locale={locale}
+						languageCode={languageCode}
+					/>
 				</section>
 			</section>
 		</div>

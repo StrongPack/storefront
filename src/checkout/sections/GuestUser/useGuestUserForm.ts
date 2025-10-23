@@ -15,7 +15,7 @@ import { useCheckoutEmailUpdate } from "@/checkout/sections/GuestUser/useCheckou
 import { useErrorMessages } from "@/checkout/hooks/useErrorMessages";
 import { useUser } from "@/checkout/hooks/useUser";
 import { isValidEmail } from "@/checkout/lib/utils/common";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 export interface GuestUserFormData {
 	email: string;
 	password: string;
@@ -25,10 +25,11 @@ export interface GuestUserFormData {
 interface GuestUserFormProps {
 	// shared between sign in form and guest user form
 	initialEmail: string;
+	languageCode: LanguageCodeEnum;
 }
 
-export const useGuestUserForm = ({ initialEmail }: GuestUserFormProps) => {
-	const { checkout } = useCheckout();
+export const useGuestUserForm = ({ initialEmail, languageCode }: GuestUserFormProps) => {
+	const { checkout } = useCheckout({ languageCode });
 	const { user } = useUser();
 	const shouldUserRegister = useUserRegisterState();
 	const { setShouldRegisterUser, setSubmitInProgress } = useCheckoutUpdateStateActions();
@@ -118,7 +119,7 @@ export const useGuestUserForm = ({ initialEmail }: GuestUserFormProps) => {
 		void handleSubmit();
 	}, [createAccount, handleSubmit, shouldUserRegister, user, userRegisterDisabled]);
 
-	useCheckoutEmailUpdate({ email });
+	useCheckoutEmailUpdate({ email, languageCode });
 
 	// since we use debounced submit, set update
 	// state as "loading" right away

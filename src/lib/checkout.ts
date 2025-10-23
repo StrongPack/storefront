@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { CheckoutCreateDocument, CheckoutFindDocument, LanguageCodeEnum } from "@/gql/graphql";
+import { CheckoutCreateDocument, CheckoutFindDocument, type LanguageCodeEnum } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 
 export async function getIdFromCookies(channel: string) {
@@ -18,13 +18,13 @@ export async function saveIdToCookie(channel: string, checkoutId: string) {
 	});
 }
 
-export async function find(checkoutId: string) {
+export async function find(checkoutId: string, languageCode: LanguageCodeEnum) {
 	try {
 		const { checkout } = checkoutId
 			? await executeGraphQL(CheckoutFindDocument, {
 					variables: {
 						id: checkoutId,
-						languageCode: LanguageCodeEnum.FaIr,
+						languageCode: languageCode,
 					},
 					cache: "no-cache",
 				})
@@ -36,11 +36,19 @@ export async function find(checkoutId: string) {
 	}
 }
 
-export async function findOrCreate({ channel, checkoutId }: { checkoutId?: string; channel: string }) {
+export async function findOrCreate({
+	channel,
+	checkoutId,
+	languageCode,
+}: {
+	checkoutId?: string;
+	channel: string;
+	languageCode: LanguageCodeEnum;
+}) {
 	if (!checkoutId) {
 		return (await create({ channel })).checkoutCreate?.checkout;
 	}
-	const checkout = await find(checkoutId);
+	const checkout = await find(checkoutId, languageCode);
 	return checkout || (await create({ channel })).checkoutCreate?.checkout;
 }
 

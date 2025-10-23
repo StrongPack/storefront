@@ -1,11 +1,19 @@
 // src/ui/components/nav/components/NavLinks.server.tsx
 import NavLinksClient from "./NavLinks.client";
 import { executeGraphQL } from "@/lib/graphql"; // توجه کن از نسخه server استفاده کن
-import { MenuGetBySlugDocument, LanguageCodeEnum } from "@/gql/graphql";
+import { MenuGetBySlugDocument, type LanguageCodeEnum } from "@/gql/graphql";
 
-export default async function NavLinksServer({ channel, locale }: { channel: string; locale: string }) {
+export default async function NavLinksServer({
+	channel,
+	locale,
+	languageCode,
+}: {
+	channel: string;
+	locale: string;
+	languageCode: LanguageCodeEnum;
+}) {
 	const { menu } = await executeGraphQL(MenuGetBySlugDocument, {
-		variables: { slug: "navbar", channel, languageCode: LanguageCodeEnum.FaIr },
+		variables: { slug: "navbar", channel, languageCode: languageCode },
 		revalidate: 60 * 60 * 24,
 	});
 

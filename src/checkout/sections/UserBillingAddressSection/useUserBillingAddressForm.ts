@@ -16,9 +16,9 @@ import {
 	useAddressListForm,
 } from "@/checkout/sections/AddressList/useAddressListForm";
 import { useCheckoutUpdateStateActions } from "@/checkout/state/updateStateStore";
-
-export const useUserBillingAddressForm = () => {
-	const { checkout } = useCheckout();
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const useUserBillingAddressForm = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
+	const { checkout } = useCheckout({ languageCode });
 	const { billingAddress } = checkout;
 	const { setChangingBillingCountry } = useCheckoutUpdateStateActions();
 
@@ -51,6 +51,7 @@ export const useUserBillingAddressForm = () => {
 		onSubmit,
 		defaultAddress: user?.defaultBillingAddress,
 		checkoutAddress: checkout.billingAddress,
+		languageCode: languageCode,
 	});
 
 	const onChange: ChangeHandler = (event) => {

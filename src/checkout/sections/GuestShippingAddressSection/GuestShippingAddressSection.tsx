@@ -4,12 +4,12 @@ import { AddressForm } from "@/checkout/components/AddressForm";
 import { FormProvider } from "@/checkout/hooks/useForm/FormProvider";
 import { useAvailableShippingCountries } from "@/checkout/hooks/useAvailableShippingCountries";
 import { useGuestShippingAddressForm } from "@/checkout/sections/GuestShippingAddressSection/useGuestShippingAddressForm";
-
-export const GuestShippingAddressSection = () => {
+import { type LanguageCodeEnum } from "@/gql/graphql";
+export const GuestShippingAddressSection = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
 	const t = useTranslations("auth");
-	const { availableShippingCountries } = useAvailableShippingCountries();
+	const { availableShippingCountries } = useAvailableShippingCountries(languageCode);
 
-	const form = useGuestShippingAddressForm();
+	const form = useGuestShippingAddressForm({ languageCode });
 
 	const { handleChange, handleBlur } = form;
 

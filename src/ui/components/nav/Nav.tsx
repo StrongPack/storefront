@@ -8,10 +8,18 @@ import { NavLinks } from "./components/NavLinks";
 import { MobileMenu } from "./components/MobileMenu";
 import { SearchBar } from "./components/SearchBar";
 import { LanguageSwitcherSPA } from "./components/LanguageSwitcher";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 // import { useDir } from "@/ui/context/DirContext";
 
-export const Nav = ({ channel, locale }: { channel: string; locale: string }) => {
+export const Nav = ({
+	channel,
+	locale,
+	languageCode,
+}: {
+	channel: string;
+	locale: string;
+	languageCode: LanguageCodeEnum;
+}) => {
 	// const { isRTL } = useDir();
 
 	// const locale = useLocale();
@@ -24,7 +32,7 @@ export const Nav = ({ channel, locale }: { channel: string; locale: string }) =>
 			aria-label="Main navigation"
 		>
 			<ul className="hidden gap-4 overflow-x-auto whitespace-nowrap md:flex lg:gap-8 lg:px-0">
-				<NavLinks channel={channel} />
+				<NavLinks channel={channel} languageCode={languageCode} />
 			</ul>
 			<div className="ml-auto flex items-center justify-center gap-4 whitespace-nowrap lg:gap-8">
 				<div className="hidden lg:flex">
@@ -50,13 +58,13 @@ export const Nav = ({ channel, locale }: { channel: string; locale: string }) =>
 			</div>
 			<div className={`${isRTL ? "mr-auto" : "ml-auto"} flex items-center`}>
 				<Suspense fallback={<div className="w-6" />}>
-					<CartNavItem channel={channel} />
+					<CartNavItem channel={channel} languageCode={languageCode} />
 				</Suspense>
 			</div>
 			<Suspense>
 				<MobileMenu>
 					<SearchBar channel={channel} locale={locale} />
-					<NavLinks channel={channel} />
+					<NavLinks channel={channel} languageCode={languageCode} />
 				</MobileMenu>
 			</Suspense>
 		</nav>

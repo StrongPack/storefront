@@ -13,11 +13,12 @@ import {
 import { isValidEmail } from "@/checkout/lib/utils/common";
 import { useErrorMessages } from "@/checkout/hooks/useErrorMessages";
 import { useCheckout } from "@/checkout/hooks/useCheckout";
-
+import { type LanguageCodeEnum } from "@/gql/graphql";
 interface SignInProps extends Pick<SignInFormContainerProps, "onSectionChange"> {
 	onSignInSuccess: () => void;
 	onEmailChange: (email: string) => void;
 	email: string;
+	languageCode: LanguageCodeEnum;
 }
 
 export const SignIn: React.FC<SignInProps> = ({
@@ -25,11 +26,12 @@ export const SignIn: React.FC<SignInProps> = ({
 	onSignInSuccess,
 	onEmailChange,
 	email: initialEmail,
+	languageCode,
 }) => {
 	const t = useTranslations("ui");
 	const {
 		checkout: { email: checkoutEmail },
-	} = useCheckout();
+	} = useCheckout({ languageCode });
 	const { errorMessages } = useErrorMessages();
 
 	const form = useSignInForm({
@@ -46,6 +48,7 @@ export const SignIn: React.FC<SignInProps> = ({
 	} = form;
 
 	const { onPasswordResetRequest, passwordResetSent } = usePasswordResetRequest({
+		languageCode,
 		email,
 		shouldAbort: async () => {
 			// @todo we'll use validateField once we fix it because
