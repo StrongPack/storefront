@@ -17,30 +17,32 @@ export default async function NavLinksServer({
 		revalidate: 60 * 60 * 24,
 	});
 
-	const isFa = locale === "fa";
+	const isNotEn = locale !== "en";
 	// داده‌ها رو آماده کنیم برای لایه Client
 	const items =
 		menu?.items
 			?.map((item) => {
 				if (item.category) {
 					const Name =
-						isFa && item.category?.translation?.name ? item.category?.translation?.name : item.category.name;
+						isNotEn && item.category?.translation?.name
+							? item.category?.translation?.name
+							: item.category.name;
 					return { id: item.id, href: `/categories/${item.category.slug}`, label: Name };
 				}
 				if (item.collection) {
 					const Name =
-						isFa && item.collection?.translation?.name
+						isNotEn && item.collection?.translation?.name
 							? item.collection?.translation?.name
 							: item.collection.name;
 					return { id: item.id, href: `/collections/${item.collection.slug}`, label: Name };
 				}
 				if (item.page) {
 					const Title =
-						isFa && item.page?.translation?.title ? item.page?.translation?.title : item.page.title;
+						isNotEn && item.page?.translation?.title ? item.page?.translation?.title : item.page.title;
 					return { id: item.id, href: `/pages/${item.page.slug}`, label: Title };
 				}
 				if (item.url) {
-					const Name = isFa && item.translation?.name ? item.translation?.name : item.name;
+					const Name = isNotEn && item.translation?.name ? item.translation?.name : item.name;
 					return { id: item.id, href: item.url, label: Name };
 				}
 				return null;

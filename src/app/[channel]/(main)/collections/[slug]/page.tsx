@@ -41,10 +41,10 @@ export default async function Page(props: { params: Promise<{ slug: string; chan
 	}
 
 	const { products } = collection;
-	const isFa = locale === "fa";
+	const isNotEn = locale !== "en";
 
 	const translation = collection.translation;
-	const displayName = isFa && translation?.name ? translation.name : collection.name;
+	const displayName = isNotEn && translation?.name ? translation.name : collection.name;
 
 	return (
 		<div className="mx-auto max-w-7xl p-8 pb-16">

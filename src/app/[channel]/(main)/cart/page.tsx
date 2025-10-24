@@ -18,7 +18,7 @@ export default async function Page(props: { params: Promise<{ channel: string }>
 	const { languageCode, locale } = await getChannelConfig(channel);
 	const t = await getTranslations({ locale: locale, namespace: "common" });
 	const checkoutId = await Checkout.getIdFromCookies(channel);
-	const isFa = locale === "fa";
+	const isNotEn = locale !== "en";
 
 	const checkout = await Checkout.find(checkoutId, languageCode);
 
@@ -50,11 +50,11 @@ export default async function Page(props: { params: Promise<{ channel: string }>
 						const product = item.variant?.product as ProductListItemFragment | undefined;
 						const productTranslationName = product?.translation?.name;
 						const displayProductName =
-							isFa && productTranslationName ? productTranslationName : product?.name;
+							isNotEn && productTranslationName ? productTranslationName : product?.name;
 						const category = product?.category;
 						const categoryTranslationName = category?.translation?.name;
 						const displayCategoryName =
-							isFa && categoryTranslationName ? categoryTranslationName : category?.name;
+							isNotEn && categoryTranslationName ? categoryTranslationName : category?.name;
 
 						return (
 							<li key={item.id} className="flex py-4">

@@ -62,15 +62,17 @@ export const SearchBar = ({ channel, locale }: { channel: string; locale: string
 					placeholder={t("search_placeholder")}
 					autoComplete="on"
 					required
-					dir={locale === "fa" ? "rtl" : "ltr"}
+					dir={locale === "fa" || locale === "ar" ? "rtl" : "ltr"}
 					className={`h-10 w-full rounded-md border border-neutral-300 bg-transparent bg-white  text-sm text-black placeholder:text-neutral-500 focus:border-black focus:ring-black ${
-						locale === "fa" ? "text-right" : "text-left"
+						locale === "fa" || locale === "ar" ? "text-right" : "text-left"
 					}`}
 				/>
 			</label>
 			<div
 				// className="absolute inset-y-0 right-0"
-				className={`absolute inset-y-0 ${locale === "fa" ? "left-0 pl-1" : "right-0 pr-1"}`}
+				className={`absolute inset-y-0 ${
+					locale === "fa" || locale === "ar" ? "left-0 pl-1" : "right-0 pr-1"
+				}`}
 			>
 				<button
 					type="submit"

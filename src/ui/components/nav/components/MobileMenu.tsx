@@ -15,7 +15,7 @@ type Props = {
 
 export const MobileMenu = ({ children, locale }: Props) => {
 	const { closeMenu, openMenu, isOpen } = useMobileMenu();
-	const isRTL = locale === "fa";
+	const isRTL = locale === "fa" || locale === "ar";
 
 	return (
 		<>

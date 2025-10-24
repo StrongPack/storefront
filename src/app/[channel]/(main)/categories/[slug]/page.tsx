@@ -38,10 +38,10 @@ export default async function Page(props: { params: Promise<{ slug: string; chan
 	if (!category || !category.products) notFound();
 
 	const { products } = category;
-	const isFa = locale === "fa";
+	const isNotEn = locale !== "en";
 
 	const translation = category.translation;
-	const displayName = isFa && translation?.name ? translation.name : category.name;
+	const displayName = isNotEn && translation?.name ? translation.name : category.name;
 
 	return (
 		<div className="mx-auto max-w-7xl p-8 pb-16">

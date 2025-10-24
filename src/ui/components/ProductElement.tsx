@@ -18,13 +18,13 @@ export async function ProductElement({
 	// console.log(product);
 
 	const { locale } = await getChannelConfig(channel);
-	const isFa = locale === "fa";
+	const isNotEn = locale !== "en";
 
 	const translation = product.translation;
-	const displayName = isFa && translation?.name ? translation.name : product.name;
+	const displayName = isNotEn && translation?.name ? translation.name : product.name;
 
 	const productTranslation = product.category?.translation;
-	const categoryName = isFa && productTranslation?.name ? productTranslation.name : product.category?.name;
+	const categoryName = isNotEn && productTranslation?.name ? productTranslation.name : product.category?.name;
 
 	return (
 		<li data-testid="ProductElement">

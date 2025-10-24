@@ -110,17 +110,17 @@ export default async function Page(props: {
 
 	const firstImage = product.thumbnail;
 
-	const isFa = locale === "fa";
+	const isNotEn = locale !== "en";
 
 	const productTyped = product as ProductListItemFragment;
 	const productTranslation = productTyped.translation;
 
-	const displayName = (isFa && productTranslation?.name) || productTyped.name || product.name;
+	const displayName = (isNotEn && productTranslation?.name) || productTyped.name || product.name;
 	const displaySeoDescription =
-		(isFa && productTranslation?.seoDescription) || productTyped.seoDescription || product.seoDescription;
+		(isNotEn && productTranslation?.seoDescription) || productTyped.seoDescription || product.seoDescription;
 
 	const descriptionJson =
-		(isFa && productTranslation?.description) || productTyped.description || product.description;
+		(isNotEn && productTranslation?.description) || productTyped.description || product.description;
 	const description = descriptionJson ? parser.parse(JSON.parse(descriptionJson)) : null;
 
 	const variants = product.variants;
