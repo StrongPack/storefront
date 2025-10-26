@@ -41,29 +41,35 @@ import createMiddleware from "next-intl/middleware";
 // import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { routing } from "../i18n/routing";
+import { getChannelConfig } from "@/lib/channelConfig";
 
 const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(request: NextRequest) {
-	// 1️⃣ اجرای middleware اصلی next-intl (برای locale)
 	const response = intlMiddleware(request);
 
-	// 2️⃣ بررسی کوکی channel
-	const channel = request.cookies.get("channel")?.value;
+	const existingChannel = request.cookies.get("channel")?.value;
 
-	// اگر کانال وجود نداشت، یک کانال پیش‌فرض ست کن
-	if (!channel) {
-		response.cookies.set("channel", "default-channel", {
+	const currentChannel = existingChannel || "default-channel"; // مقدار پیش‌فرض
+	const { locale } = await getChannelConfig(currentChannel);
+
+	if (!existingChannel) {
+		response.cookies.set("channel", currentChannel, {
 			path: "/",
-			maxAge: 60 * 60 * 24 * 7, // ۱ هفته
+			maxAge: 60 * 60 * 24 * 7, // یک هفته
 		});
 	}
 
-	// 3️⃣ بازگرداندن response ترکیبی
+	if (!request.cookies.get("locale")) {
+		response.cookies.set("locale", locale, {
+			path: "/",
+			maxAge: 60 * 60 * 24 * 7,
+		});
+	}
+
 	return response;
 }
 
-// 4️⃣ مسیرهای قابل‌اعمال شدن
 export const config = {
 	matcher: [
 		"/((?!api|graphql|trpc|_next|_vercel|.*\\..*).*)", // تمام مسیرهای فرانت‌اند

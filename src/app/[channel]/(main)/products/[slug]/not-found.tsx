@@ -1,7 +1,13 @@
+import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
+import { getChannelConfig } from "@/lib/channelConfig";
 
-export default async function NotFound({ params }: { params: Promise<{ locale: string }> }) {
-	const { locale } = await params;
+export default async function NotFound() {
+	const cookieStore = await cookies();
+	// const locale = cookieStore.get("locale")?.value || "en";
+	const channel = cookieStore.get("channel")?.value || "default-channel";
+	const { locale } = await getChannelConfig(channel);
+
 	const t = await getTranslations({ locale, namespace: "common" });
 	return (
 		<div className="mx-auto max-w-7xl px-8 py-16">

@@ -23,62 +23,100 @@ type FooterClientProps = {
 		displayname: string;
 	}[];
 	dir: "rtl" | "ltr";
+	locale: string;
 };
 
 // export default function FooterClient({ footerLinks, channels }: FooterClientProps) {
 
-export const FooterClient = ({ footerLinks, channels, dir }: FooterClientProps) => {
+export const FooterClient = ({ footerLinks, channels, dir, locale }: FooterClientProps) => {
 	// const { dir } = useDir(); // گرفتن جهت سایت: 'rtl' یا 'ltr'
 	// const isRTL = dir === "rtl";
 	// const { dir } = useDir();
 	// const isRTL = dir === "rtl";
 	const t = useTranslations("common");
 	const isRTL = dir === "rtl";
+	const isNotEn = locale !== "en";
+	// console.log(footerLinks);
 
 	return (
 		<footer className="border-t border-neutral-200 bg-neutral-50 text-neutral-700">
 			<div className="mx-auto max-w-7xl px-4 lg:px-8">
-				<div className="grid grid-cols-3 gap-8 py-16">
-					{footerLinks.menu?.items?.map((item) => (
-						<div key={item.id}>
-							<h3 className="text-sm font-semibold text-neutral-900">{item.name}</h3>
-							<ul className="mt-4 space-y-4 [&>li]:text-neutral-500">
-								{item.children?.map((child) => {
-									if (child.category)
-										return (
-											<li key={child.id} className="text-sm">
-												<LinkWithChannel href={`/categories/${child.category.slug}`}>
-													{child.category.name}
-												</LinkWithChannel>
-											</li>
-										);
-									if (child.collection)
-										return (
-											<li key={child.id} className="text-sm">
-												<LinkWithChannel href={`/collections/${child.collection.slug}`}>
-													{child.collection.name}
-												</LinkWithChannel>
-											</li>
-										);
-									if (child.page)
-										return (
-											<li key={child.id} className="text-sm">
-												<LinkWithChannel href={`/pages/${child.page.slug}`}>
-													{child.page.title}
-												</LinkWithChannel>
-											</li>
-										);
-									if (child.url)
-										return (
-											<li key={child.id} className="text-sm">
-												<LinkWithChannel href={child.url}>{child.name}</LinkWithChannel>
-											</li>
-										);
-									return null;
-								})}
-							</ul>
-						</div>
-					))}
+				<div className={`grid grid-cols-1 gap-8 py-16 sm:grid-cols-3 ${isRTL ? "text-right" : "text-left"}`}>
+					{footerLinks.menu?.items?.map((item) => {
+						// انتخاب ترجمه عنوان اصلی منو
+						const displayTitle = isNotEn && item.translation?.name ? item.translation.name : item.name;
+
+						return (
+							<div key={item.id}>
+								<h3 className="text-sm font-semibold text-neutral-900">{displayTitle}</h3>
+								<ul className="mt-4 space-y-4 [&>li]:text-neutral-500">
+									{item.children?.map((child) => {
+										// صفحه
+										if (child.page) {
+											const displayPageTitle =
+												isNotEn && child.page.translation?.title
+													? child.page.translation.title
+													: child.page.title;
+
+											return (
+												<li key={child.id} className="text-sm">
+													<LinkWithChannel href={`/pages/${child.page.slug}`}>
+														{displayPageTitle}
+													</LinkWithChannel>
+												</li>
+											);
+										}
+
+										// مجموعه (Collection)
+										if (child.collection) {
+											const displayCollectionName =
+												isNotEn && child.collection.translation?.name
+													? child.collection.translation.name
+													: child.collection.name;
+
+											return (
+												<li key={child.id} className="text-sm">
+													<LinkWithChannel href={`/collections/${child.collection.slug}`}>
+														{displayCollectionName}
+													</LinkWithChannel>
+												</li>
+											);
+										}
+
+										// دسته‌بندی (Category)
+										if (child.category) {
+											const displayCategoryName =
+												isNotEn && child.category.translation?.name
+													? child.category.translation.name
+													: child.category.name;
+
+											return (
+												<li key={child.id} className="text-sm">
+													<LinkWithChannel href={`/categories/${child.category.slug}`}>
+														{displayCategoryName}
+													</LinkWithChannel>
+												</li>
+											);
+										}
+
+										// لینک سفارشی (URL)
+										if (child.url) {
+											const displayName =
+												isNotEn && child.translation?.name ? child.translation.name : child.name;
+
+											return (
+												<li key={child.id} className="text-sm">
+													<LinkWithChannel href={child.url}>{displayName}</LinkWithChannel>
+												</li>
+											);
+										}
+
+										return null;
+									})}
+								</ul>
+							</div>
+						);
+					})}
 				</div>
 
 				{channels?.length > 0 && (

@@ -44,5 +44,6 @@
 	"view_cart": "عرض السلة",
 	"items_in_cart": "{count, plural, =0 {لا توجد عناصر في السلة} one {# عنصر في السلة} other {# عناصر في السلة}}",
 	"no_items_in_cart": "0 عنصر في السلة",
-	"cart_label": "سلة التسوق"
+	"cart_label": "سلة التسوق",
+	"product_attributes_title": "الخصائص"
 }

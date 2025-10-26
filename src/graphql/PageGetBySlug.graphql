@@ -1,4 +1,4 @@
-query PageGetBySlug($slug: String!) {
+query PageGetBySlug($languageCode: LanguageCodeEnum!, $slug: String!) {
 	page(slug: $slug) {
 		id
 		slug
@@ -6,5 +6,12 @@ query PageGetBySlug($slug: String!) {
 		seoTitle
 		seoDescription
 		content
+		translation(languageCode: $languageCode) {
+			id
+			title
+			seoTitle
+			seoDescription
+			content
+		}
 	}
 }

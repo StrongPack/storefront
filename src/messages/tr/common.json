@@ -44,5 +44,6 @@
 	"view_cart": "Sepeti görüntüle",
 	"items_in_cart": "{count, plural, =0 {Sepette ürün yok} one {Sepette # ürün} other {Sepette # ürün}}",
 	"no_items_in_cart": "Sepette 0 ürün",
-	"cart_label": "Alışveriş Sepeti"
+	"cart_label": "Alışveriş Sepeti",
+	"product_attributes_title": "Özellikler"
 }

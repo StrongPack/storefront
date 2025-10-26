@@ -35,7 +35,9 @@ export default async function Page(props: { params: Promise<{ slug: string; chan
 		revalidate: 60,
 	});
 
-	if (!category || !category.products) notFound();
+	if (!category || !category.products) {
+		notFound();
+	}
 
 	const { products } = category;
 	const isNotEn = locale !== "en";

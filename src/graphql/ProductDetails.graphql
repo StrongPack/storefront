@@ -40,5 +40,19 @@ query ProductDetails($languageCode: LanguageCodeEnum!, $slug: String!, $channel:
 				}
 			}
 		}
+		attributes {
+			values {
+				name
+				translation(languageCode: $languageCode) {
+					name
+				}
+			}
+			attribute {
+				name
+				translation(languageCode: $languageCode) {
+					name
+				}
+			}
+		}
 	}
 }

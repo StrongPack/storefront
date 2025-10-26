@@ -41,10 +41,10 @@ export const FooterServer = async ({
 		displayname: cfg.displayName,
 	}));
 
-	const { dir } = await getChannelConfig(channel);
+	const { dir, locale } = await getChannelConfig(channel);
 
 	// const cookieStore = await cookies();
 	// const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
 
-	return <FooterClient footerLinks={footerLinks} channels={channels} dir={dir} />;
+	return <FooterClient footerLinks={footerLinks} channels={channels} dir={dir} locale={locale} />;
 };

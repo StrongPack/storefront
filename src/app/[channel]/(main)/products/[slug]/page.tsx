@@ -1,6 +1,7 @@
 import edjsHTML from "editorjs-html";
 import { revalidatePath } from "next/cache";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { type ResolvingMetadata, type Metadata } from "next";
 import xss from "xss";
 import { invariant } from "ts-invariant";
@@ -94,7 +95,7 @@ export default async function Page(props: {
 
 	const { channel } = params;
 	const { languageCode, locale } = await getChannelConfig(channel);
-
+	const t = await getTranslations({ locale: locale, namespace: "common" });
 	const { product } = await executeGraphQL(ProductDetailsDocument, {
 		variables: {
 			slug: decodeURIComponent(params.slug),
@@ -248,6 +249,30 @@ export default async function Page(props: {
 						<div className="mt-8">
 							<AddButton disabled={!selectedVariantID || !selectedVariant?.quantityAvailable} />
 						</div>
+
+						{product.attributes?.length ? (
+							<div className="mt-8 space-y-2 text-sm text-neutral-700">
+								<h3 className="mb-2 font-semibold text-neutral-800">{t("product_attributes_title")}</h3>
+								<ul className="list-inside list-disc space-y-1">
+									{product.attributes.map(({ attribute, values }) => {
+										const attrName = attribute.translation?.name || attribute.name;
+
+										const valueNames = values
+											.map((v) => v.translation?.name || v.name)
+											.filter(Boolean)
+											.join(", ");
+
+										return (
+											<li key={attribute.name}>
+												<span className="font-medium">{attrName}: </span>
+												<span>{valueNames}</span>
+											</li>
+										);
+									})}
+								</ul>
+							</div>
+						) : null}
+
 						{description && (
 							<div className="mt-8 space-y-6 text-sm text-neutral-500">
 								{description.map((content) => (
