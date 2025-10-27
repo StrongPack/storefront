@@ -2,6 +2,7 @@
 // import { getLocale } from "next-intl/server";
 import { Footer } from "@/ui/components/Footer";
 import { Header } from "@/ui/components/Header";
+import { WhyUs } from "@/ui/components/WhyUs";
 import { getChannelConfig } from "@/lib/channelConfig";
 
 export const metadata = {
@@ -17,7 +18,7 @@ export default async function RootLayout({
 	params: Promise<{ channel: string }>;
 }) {
 	const { channel } = await params;
-	const { languageCode, locale } = await getChannelConfig(channel);
+	const { languageCode, locale, dir } = await getChannelConfig(channel);
 	// console.log("locale from params:", locale);
 
 	// export default async function RootLayout(props: {
@@ -32,6 +33,7 @@ export default async function RootLayout({
 			<Header channel={channel} locale={locale} languageCode={languageCode} />
 			<div className="flex min-h-[calc(100dvh-64px)] flex-col">
 				<main className="flex-1">{children}</main>
+				<WhyUs dir={dir} />
 				<Footer channel={channel} languageCode={languageCode} />
 			</div>
 		</>

@@ -45,5 +45,36 @@
 	"items_in_cart": "{count, plural, =0 {No items in cart} one {# item in cart} other {# items in cart}}",
 	"no_items_in_cart": "0 items in cart",
 	"cart_label": "Shopping Cart",
-	"product_attributes_title": "Attributes"
+	"product_attributes_title": "Attributes",
+	"why_buy_from_20pack": "Why buy from 20PACK?",
+	"why_us": {
+		"best_price": {
+			"title": "Best Price",
+			"desc": "Offering the lowest market price while maintaining the highest packaging quality."
+		},
+		"multiple_services": {
+			"title": "Multiple Services",
+			"desc": "We handle everything for you in one place, from design to production and printing."
+		},
+		"strong_team": {
+			"title": "Strong Team",
+			"desc": "A professional group of printing and packaging specialists at your service."
+		},
+		"fast_delivery": {
+			"title": "Early Delivery",
+			"desc": "Commitment to delivery time — even earlier than the announced schedule."
+		},
+		"quality_guarantee": {
+			"title": "Production Quality Guarantee",
+			"desc": "Using the best materials and precise control throughout the production process."
+		},
+		"wholesale_retail": {
+			"title": "Wholesale and Retail Sales",
+			"desc": "Special service for corporate wholesale and personal orders."
+		},
+		"free_consult": {
+			"title": "Free Consultation",
+			"desc": "Consult with our experts before ordering and make the best choice."
+		}
+	}
 }

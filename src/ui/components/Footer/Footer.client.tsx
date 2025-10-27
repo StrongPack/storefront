@@ -128,11 +128,100 @@ export const FooterClient = ({ footerLinks, channels, dir, locale }: FooterClien
 					</div>
 				)}
 
-				<div
+				{/* <div
 					className={`flex flex-col border-t border-neutral-200 py-10 sm:flex-row ${
 						isRTL ? "sm:justify-start" : "sm:justify-end"
 					}`}
 				>
+					<a
+						referrerPolicy="origin"
+						target="_blank"
+						href="https://trustseal.enamad.ir/?id=662386&Code=rjSjruE6FYX9LOcZMBLx5JylAAONJbQo"
+					>
+						<Image
+							src="https://trustseal.enamad.ir/logo.aspx?id=662386&Code=rjSjruE6FYX9LOcZMBLx5JylAAONJbQo"
+							alt={t("enamad_alt")}
+							width={86}
+							height={86}
+							referrerPolicy="origin"
+							style={{ cursor: "pointer" }}
+						/>
+					</a>
+				</div> */}
+
+				<div
+					className={`flex flex-col items-center justify-between border-t border-neutral-200 py-10 sm:flex-row`}
+				>
+					{/* 🔹 آیکون‌های شبکه‌های اجتماعی */}
+					<div className="mb-5 flex items-center gap-6 sm:mb-0">
+						{/* تماس تلفنی */}
+						<a
+							href="tel:+982112345678"
+							aria-label="Phone"
+							className="transition-all duration-300 hover:-translate-y-1 hover:scale-110"
+						>
+							<Image
+								src="/icons/phone-solid-full.svg"
+								alt="Phone"
+								width={28}
+								height={28}
+								className="transition duration-200 hover:brightness-0 hover:drop-shadow-[0_0_6px_#007AFF] hover:invert"
+							/>
+						</a>
+
+						{/* واتساپ */}
+						<a
+							href="https://wa.me/989123456789"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="WhatsApp"
+							className="transition-all duration-300 hover:-translate-y-1 hover:scale-110"
+						>
+							<Image
+								src="/icons/whatsapp-brands-solid-full.svg"
+								alt="WhatsApp"
+								width={28}
+								height={28}
+								className="transition duration-200 hover:brightness-0 hover:drop-shadow-[0_0_6px_#25D366] hover:invert"
+							/>
+						</a>
+
+						{/* اینستاگرام */}
+						<a
+							href="https://www.instagram.com/yourpage"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Instagram"
+							className="transition-all duration-300 hover:-translate-y-1 hover:scale-110"
+						>
+							<Image
+								src="/icons/instagram-brands-solid-full.svg"
+								alt="Instagram"
+								width={28}
+								height={28}
+								className="transition duration-200 hover:brightness-0 hover:drop-shadow-[0_0_6px_#E1306C] hover:invert"
+							/>
+						</a>
+
+						{/* تلگرام (اختیاری) */}
+						{/* <a
+							href="https://t.me/yourchannel"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Telegram"
+							className="transition-all duration-300 hover:-translate-y-1 hover:scale-110"
+						>
+							<Image
+								src="/icons/telegram-brands-solid-full.svg"
+								alt="Telegram"
+								width={28}
+								height={28}
+								className="transition duration-200 hover:brightness-0 hover:drop-shadow-[0_0_6px_#0088CC] hover:invert"
+							/>
+						</a> */}
+					</div>
+
+					{/* 🔹 لوگوی اینماد */}
 					<a
 						referrerPolicy="origin"
 						target="_blank"

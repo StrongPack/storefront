@@ -45,5 +45,36 @@
 	"items_in_cart": "{count, plural, =0 {Sepette ürün yok} one {Sepette # ürün} other {Sepette # ürün}}",
 	"no_items_in_cart": "Sepette 0 ürün",
 	"cart_label": "Alışveriş Sepeti",
-	"product_attributes_title": "Özellikler"
+	"product_attributes_title": "Özellikler",
+	"why_buy_from_20pack": "Neden 20PACK’ten alışveriş yapmalısınız?",
+	"why_us": {
+		"best_price": {
+			"title": "En İyi Fiyat",
+			"desc": "Piyasada en düşük fiyatı sunarken, en yüksek ambalaj kalitesini koruyoruz."
+		},
+		"multiple_services": {
+			"title": "Çoklu Hizmetler",
+			"desc": "Tasarım, üretim ve baskı dahil her şeyi sizin için tek bir yerde yapıyoruz."
+		},
+		"strong_team": {
+			"title": "Güçlü Ekip",
+			"desc": "Baskı ve ambalaj alanında uzman profesyonel bir ekip hizmetinizdedir."
+		},
+		"fast_delivery": {
+			"title": "Erken Teslimat",
+			"desc": "Teslimat süresine tam bağlılık; hatta belirtilen zamandan daha erken teslimat."
+		},
+		"quality_guarantee": {
+			"title": "Üretim Kalite Garantisi",
+			"desc": "En iyi malzemelerin kullanılması ve üretim aşamalarının dikkatle kontrol edilmesi."
+		},
+		"wholesale_retail": {
+			"title": "Toptan ve Perakende Satış",
+			"desc": "Şirketlere ve bireysel siparişlere özel toptan satış hizmeti."
+		},
+		"free_consult": {
+			"title": "Ücretsiz Danışmanlık",
+			"desc": "Sipariş öncesi uzmanlarımızla görüşün ve en iyi seçimi yapın."
+		}
+	}
 }

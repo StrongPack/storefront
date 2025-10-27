@@ -41,6 +41,9 @@ importers:
       formik:
         specifier: 2.4.5
         version: 2.4.5(react@19.1.0)
+      he:
+        specifier: 1.2.0
+        version: 1.2.0
       libphonenumber-js:
         specifier: 1.10.58
         version: 1.10.58
@@ -50,6 +53,9 @@ importers:
       lucide-react:
         specifier: 0.358.0
         version: 0.358.0(react@19.1.0)
+      marked:
+        specifier: 16.4.1
+        version: 16.4.1
       next:
         specifier: ^15.0.0
         version: 15.2.4(@babel/core@7.24.9)(@playwright/test@1.50.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -126,6 +132,9 @@ importers:
       '@tailwindcss/typography':
         specifier: 0.5.10
         version: 0.5.10(tailwindcss@3.4.0)
+      '@types/he':
+        specifier: 1.2.3
+        version: 1.2.3
       '@types/lodash-es':
         specifier: 4.17.12
         version: 4.17.12
@@ -1281,6 +1290,9 @@ packages:
 
   '@types/googlepay@0.7.6':
     resolution: {integrity: sha512-5003wG+qvf4Ktf1hC9IJuRakNzQov00+Xf09pAWGJLpdOjUrq0SSLCpXX7pwSeTG9r5hrdzq1iFyZcW7WVyr4g==}
+
+  '@types/he@1.2.3':
+    resolution: {integrity: sha512-q67/qwlxblDzEDvzHhVkwc1gzVWxaNxeyHUBF4xElrvjL11O+Ytze+1fGpBHlr/H9myiBUaUXNnNPmBHxxfAcA==}
 
   '@types/hoist-non-react-statics@3.3.5':
     resolution: {integrity: sha512-SbcrWzkKBw2cdwRTwQAswfpB9g9LJWfjtUeW/jvNwbhC8cpmmNYVePa+ncbUe0rGTQ7G3Ff6mYUN2VMfLVr+Sg==}
@@ -2455,6 +2467,10 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
+  he@1.2.0:
+    resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
+    hasBin: true
+
   header-case@2.0.4:
     resolution: {integrity: sha512-H/vuk5TEEVZwrR0lp2zed9OCo1uAILMlx0JEMgC26rzyJJ3N1v6XkwHHXJQdR2doSjcGPM6OKPYoJgf0plJ11Q==}
 
@@ -2921,6 +2937,11 @@ packages:
   map-cache@0.2.2:
     resolution: {integrity: sha512-8y/eV9QQZCiyn1SprXSrCmqJN0yNRATe+PO8ztwqrvrbdRLA3eYJF0yaR0YayLWkMbsQSKWS9N2gPcGEc4UsZg==}
     engines: {node: '>=0.10.0'}
+
+  marked@16.4.1:
+    resolution: {integrity: sha512-ntROs7RaN3EvWfy3EZi14H4YxmT6A5YvywfhO+0pm+cH/dnSQRmdAmoFIc3B9aiwTehyk7pESH4ofyBY+V5hZg==}
+    engines: {node: '>= 20'}
+    hasBin: true
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -5494,6 +5515,8 @@ snapshots:
 
   '@types/googlepay@0.7.6': {}
 
+  '@types/he@1.2.3': {}
+
   '@types/hoist-non-react-statics@3.3.5':
     dependencies:
       '@types/react': 19.1.0
@@ -7039,6 +7062,8 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
+  he@1.2.0: {}
+
   header-case@2.0.4:
     dependencies:
       capital-case: 1.0.4
@@ -7526,6 +7551,8 @@ snapshots:
       react: 19.1.0
 
   map-cache@0.2.2: {}
+
+  marked@16.4.1: {}
 
   math-intrinsics@1.1.0: {}
 
