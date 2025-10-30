@@ -49,16 +49,23 @@ export default async function Page(props: {
 
 	return (
 		<section className="mx-auto max-w-7xl p-8 pb-16">
-			<h2 className="sr-only">{t("featured_products")}</h2>
-			<ProductList products={products.edges.map((e) => e.node)} channel={channel} />
-			<Pagination
-				locale={locale}
-				pageInfo={{
-					...products.pageInfo,
-					basePathname: `/products`,
-					urlSearchParams: newSearchParams,
-				}}
-			/>
+			{/* <h2 className="sr-only">{t("featured_products")}</h2> */}
+			{/* <h2 className="sr-only">{t("all_product")}</h2> */}
+			{products.edges.length > 0 ? (
+				<>
+					<ProductList products={products.edges.map((e) => e.node)} channel={channel} />
+					<Pagination
+						locale={locale}
+						pageInfo={{
+							...products.pageInfo,
+							basePathname: `/products`,
+							urlSearchParams: newSearchParams,
+						}}
+					/>
+				</>
+			) : (
+				<h1 className="mx-auto pb-8 text-center text-xl font-semibold">{t("nothing_found")}</h1>
+			)}
 		</section>
 	);
 }

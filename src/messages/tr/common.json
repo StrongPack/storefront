@@ -1,16 +1,17 @@
 {
 	"change_currency": "Para birimini değiştir",
+	"change_lang": "Dili Değiştir",
 	"footer_title": "Site Altbilgisi",
 	"sign_in": "Giriş yap",
 	"enamad_alt": "Güven Mührü",
 	"site_name": "20Pack",
 	"welcome": "20Pack Mağazasına hoş geldiniz!",
-	"all_product": "Tümü",
+	"all_product": "tüm ürünler",
 	"Something_went_wrong": "Bir şeyler ters gitti",
 	"Try_again": "Tekrar dene",
 	"Your_Shopping_Cart_is_empty": "Alışveriş sepetiniz boş",
 	"checkout_title": "Ödeme",
-	"featured_products": "Ürün listesi",
+	"featured_products": "öne çıkan ürünler",
 	"search_results_for": "Arama sonuçları",
 	"nothing_found": "Hiçbir şey bulunamadı :(",
 	"processing": "İşleniyor",
@@ -76,5 +77,10 @@
 			"title": "Ücretsiz Danışmanlık",
 			"desc": "Sipariş öncesi uzmanlarımızla görüşün ve en iyi seçimi yapın."
 		}
+	},
+	"our_customers": {
+		"title": "Müşterilerimiz",
+		"subtitle": "Bize güvenen şirketler ve markalar",
+		"description": "Saygın markalar ve öncü kuruluşlarla çalışmaktan gurur duyuyoruz. Müşterilerimizle yakın iş birliğimiz, güvene dayalı özel ve doğru çözümler sunmamızı sağlar."
 	}
 }

@@ -57,52 +57,54 @@ export async function getChannelConfigMap(): Promise<ChannelConfigMap> {
 		let flag: string;
 		let displayName: string;
 
-		switch (ch.slug) {
-			case "default-channel": // ایران
-				locale = "fa";
-				languageCode = LanguageCodeEnum.FaIr;
-				dir = "rtl";
-				flag = "🇮🇷";
-				displayName = "فارسی";
-				break;
-			case "english": // عمومی/انگلیسی
-				locale = "en";
-				languageCode = LanguageCodeEnum.EnUs;
-				dir = "ltr";
-				flag = "🇬🇧";
-				displayName = "English";
-				break;
-			case "turkish": // ترکی
-				locale = "tr";
-				languageCode = LanguageCodeEnum.TrTr;
-				dir = "ltr";
-				flag = "🇹🇷";
-				displayName = "Türkçe";
-				break;
-			case "arabic": // عربی
-				locale = "ar";
-				languageCode = LanguageCodeEnum.ArSa;
-				dir = "rtl";
-				flag = "🇸🇦"; // "🇸🇦" "🇦🇪"
-				displayName = "العربية";
-				break;
-			default: // fallback
-				locale = "en";
-				languageCode = LanguageCodeEnum.EnUs;
-				dir = "ltr";
-				flag = "🇬🇧";
-				displayName = "English";
-		}
+		if (ch.isActive) {
+			switch (ch.slug) {
+				case "default-channel": // ایران
+					locale = "fa";
+					languageCode = LanguageCodeEnum.FaIr;
+					dir = "rtl";
+					flag = "🇮🇷";
+					displayName = "فارسی";
+					break;
+				case "english": // عمومی/انگلیسی
+					locale = "en";
+					languageCode = LanguageCodeEnum.EnUs;
+					dir = "ltr";
+					flag = "🇬🇧";
+					displayName = "English";
+					break;
+				case "turkish": // ترکی
+					locale = "tr";
+					languageCode = LanguageCodeEnum.TrTr;
+					dir = "ltr";
+					flag = "🇹🇷";
+					displayName = "Türkçe";
+					break;
+				case "arabic": // عربی
+					locale = "ar";
+					languageCode = LanguageCodeEnum.ArSa;
+					dir = "rtl";
+					flag = "🇸🇦"; // "🇸🇦" "🇦🇪"
+					displayName = "العربية";
+					break;
+				default:
+					locale = "fa";
+					languageCode = LanguageCodeEnum.FaIr;
+					dir = "rtl";
+					flag = "🇮🇷";
+					displayName = "فارسی";
+			}
 
-		map[ch.slug] = {
-			id: ch.id,
-			locale,
-			languageCode,
-			dir,
-			name: ch.name,
-			flag,
-			displayName,
-		};
+			map[ch.slug] = {
+				id: ch.id,
+				locale,
+				languageCode,
+				dir,
+				name: ch.name,
+				flag,
+				displayName,
+			};
+		}
 	}
 	return map;
 }

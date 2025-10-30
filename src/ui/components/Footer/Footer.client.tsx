@@ -6,7 +6,7 @@
 import Image from "next/image"; // جایگزین برای <img>
 import { useTranslations } from "next-intl";
 import { LinkWithChannel } from "../../atoms/LinkWithChannel";
-import { ChannelSelect } from "../ChannelSelect";
+// import { ChannelSelect } from "../ChannelSelect";
 import type { MenuGetBySlugQuery, LanguageCodeEnum } from "@/gql/graphql";
 // import { useDir } from "@/ui/context/DirContext"; // اضافه کردن
 
@@ -28,7 +28,7 @@ type FooterClientProps = {
 
 // export default function FooterClient({ footerLinks, channels }: FooterClientProps) {
 
-export const FooterClient = ({ footerLinks, channels, dir, locale }: FooterClientProps) => {
+export const FooterClient = ({ footerLinks, dir, locale }: FooterClientProps) => {
 	// const { dir } = useDir(); // گرفتن جهت سایت: 'rtl' یا 'ltr'
 	// const isRTL = dir === "rtl";
 	// const { dir } = useDir();
@@ -117,16 +117,32 @@ export const FooterClient = ({ footerLinks, channels, dir, locale }: FooterClien
 							</div>
 						);
 					})}
+
+					{/* 🗺️ Google Map */}
+					{/* <div className={`relative -top-6 sm:row-span-2`}> */}
+					<div className="overflow-hidden rounded-xl border border-neutral-200 shadow-sm">
+						<iframe
+							title="20 pack Location"
+							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13106.082990104609!2d50.809116090187715!3d34.792838421308176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f93ad076841d0ab%3A0x35746d7177820700!2sShokohieh%20industrial%20town%2C%20Qom%2C%20Qom%20Province%2C%20Iran!5e0!3m2!1sen!2s!4v1761839518405!5m2!1sen!2s"
+							width="100%"
+							height="300"
+							style={{ border: 0 }}
+							allowFullScreen
+							loading="lazy"
+							referrerPolicy="no-referrer-when-downgrade"
+						></iframe>
+					</div>
+					{/* </div> */}
 				</div>
 
-				{channels?.length > 0 && (
+				{/* {channels?.length > 0 && (
 					<div className="mb-4 text-neutral-500">
 						<label className="flex items-center gap-2 text-sm">
-							<span className="text-sm">{t("change_currency")}</span>
-							<ChannelSelect channels={channels} />
+							<span className="text-sm">{t("change_lang")}</span>
+							<ChannelSelect channels={channels} variant="footer" />
 						</label>
 					</div>
-				)}
+				)} */}
 
 				{/* <div
 					className={`flex flex-col border-t border-neutral-200 py-10 sm:flex-row ${

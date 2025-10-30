@@ -13,9 +13,10 @@ type ChannelSelectProps = {
 		languageCode: LanguageCodeEnum;
 		displayname: string;
 	}[];
+	variant?: "footer" | "navbar" | "navbar-mobile";
 };
 
-export const ChannelSelect = ({ channels }: ChannelSelectProps) => {
+export const ChannelSelect = ({ channels, variant = "footer" }: ChannelSelectProps) => {
 	const router = useRouter();
 	const pathname = usePathname();
 
@@ -39,6 +40,19 @@ export const ChannelSelect = ({ channels }: ChannelSelectProps) => {
 		// 	router.refresh();
 		// }
 	};
+
+	let baseClass =
+		"h-10 w-fit rounded-md border border-neutral-300 bg-white px-4 py-2 pr-10 text-sm text-neutral-800 focus:border-black focus:ring-black transition";
+
+	if (variant == "navbar") {
+		baseClass =
+			"h-10 w-fit rounded-md border border-neutral-300 bg-white text-base text-center items-center justify-center  flex focus:border-black focus:ring-black";
+	}
+
+	if (variant == "navbar-mobile") {
+		baseClass =
+			"w-full rounded-md border border-neutral-300 bg-white text-lg py-3 font-medium text-neutral-800 flex  justify-center items-center shadow-sm focus:border-black focus:ring-black";
+	}
 
 	return (
 		// <select
@@ -68,25 +82,19 @@ export const ChannelSelect = ({ channels }: ChannelSelectProps) => {
 		// 	))}
 		// </select>
 
-		<select
-			className="h-10 w-fit rounded-md border border-neutral-300 bg-white px-4 py-2 pr-10 text-sm text-neutral-800 placeholder:text-neutral-500 focus:border-black focus:ring-black"
-			onChange={handleChange}
-			value={currentChannel}
-		>
+		<select className={baseClass} onChange={handleChange} value={currentChannel}>
 			{channels.map((channel) => {
-				// بر اساس جهت زبان ترتیب را مشخص می‌کنیم
-				const optionText =
-					// channel.dir === "rtl"
-					// ?
-					`${channel.flag} ${channel.displayname}`;
-				// : `${channel.displayname} ${channel.flag}`;
+				let optionText = "";
 
+				// if (variant === "navbar-mobile") {
+				//}
+				if (variant == "navbar") {
+					optionText = `${channel.flag}`;
+				} else {
+					optionText = `${channel.flag} ${channel.displayname}`;
+				}
 				return (
-					<option
-						key={channel.id}
-						value={channel.slug}
-						dir={channel.dir} // جهت را هم ست می‌کنیم تا مرورگر درست نمایش دهد
-					>
+					<option key={channel.id} value={channel.slug} dir={channel.dir}>
 						{optionText}
 					</option>
 				);

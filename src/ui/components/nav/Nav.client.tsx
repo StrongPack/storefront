@@ -6,21 +6,37 @@ import { Suspense } from "react";
 // import CartNavItemClient from "./components/CartNavItem.client"; // Add this import
 // import { UserMenuContainer } from "./components/UserMenu/UserMenuContainer";
 // import { SearchBar } from "./components/SearchBar";
+import { ChannelSelect } from "../ChannelSelect";
 import { MobileMenu } from "./components/MobileMenu";
+import type { LanguageCodeEnum } from "@/gql/graphql";
+
 // import { NavLinks } from "./components/NavLinks";
 
 // export default function NavClient({ channel: string, locale }) {
 
 // export const NavClient = ({ channel, locale }: { channel: string; locale: string }) => {
 
+type ChannelsProps = {
+	id: string;
+	slug: string;
+	name: string;
+	flag: string;
+	dir: "ltr" | "rtl";
+	locale: string;
+	languageCode: LanguageCodeEnum;
+	displayname: string;
+}[];
+
 export default function NavClient({
+	channels,
 	locale,
 	// lineCount,
 	NavLinks,
 	CartNavItem,
 	UserMenu,
 }: {
-	channel: string;
+	channels: ChannelsProps;
+	// channel: string;
 	locale: string;
 	// lineCount: number;
 	NavLinks: React.ReactNode;
@@ -78,6 +94,7 @@ export default function NavClient({
 			<div className="hidden items-center gap-4 whitespace-nowrap lg:flex lg:gap-8">
 				<div className="hidden lg:flex">{/* <SearchBar channel={channel} locale={locale} /> */}</div>
 				{/* <LanguageSwitcherSPA /> */}
+				{channels?.length > 0 && <ChannelSelect channels={channels} variant="navbar" />}
 				<Suspense fallback={<div className="w-6" />}>{CartNavItem}</Suspense>
 				<Suspense fallback={<div className="w-8" />}>{UserMenu}</Suspense>
 			</div>
@@ -105,6 +122,7 @@ export default function NavClient({
 						{/* 🔹 بخش پایین - دکمه‌های تمام‌صفحه‌ای */}
 						<div className="flex flex-1 flex-col justify-center gap-3 border-t border-gray-200 p-4">
 							{/* <LanguageSwitcherSPA /> */}
+							{channels?.length > 0 && <ChannelSelect channels={channels} variant="navbar-mobile" />}
 							{CartNavItem}
 							{UserMenu}
 						</div>

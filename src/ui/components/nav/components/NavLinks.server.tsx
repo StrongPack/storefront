@@ -18,6 +18,7 @@ export default async function NavLinksServer({
 	});
 
 	const isNotEn = locale !== "en";
+
 	// داده‌ها رو آماده کنیم برای لایه Client
 	const items =
 		menu?.items
@@ -36,11 +37,17 @@ export default async function NavLinksServer({
 							: item.collection.name;
 					return { id: item.id, href: `/collections/${item.collection.slug}`, label: Name };
 				}
-				if (item.page) {
+
+				if (item.page && item.page.title == "Blog") {
+					const Title =
+						isNotEn && item.page?.translation?.title ? item.page?.translation?.title : item.page.title;
+					return { id: item.id, href: `/pages`, label: Title };
+				} else if (item.page) {
 					const Title =
 						isNotEn && item.page?.translation?.title ? item.page?.translation?.title : item.page.title;
 					return { id: item.id, href: `/pages/${item.page.slug}`, label: Title };
 				}
+
 				if (item.url) {
 					const Name = isNotEn && item.translation?.name ? item.translation?.name : item.name;
 					return { id: item.id, href: item.url, label: Name };

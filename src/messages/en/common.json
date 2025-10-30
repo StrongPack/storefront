@@ -1,16 +1,17 @@
 {
 	"change_currency": "Change currency",
+	"change_lang": "Change Language",
 	"footer_title": "Site Footer",
 	"sign_in": "Sign In",
 	"enamad_alt": "Trust Seal",
 	"site_name": "20Pack",
 	"welcome": "Welcome to 20Pack Store!",
-	"all_product": "All",
+	"all_product": "All Products",
 	"Something_went_wrong": "Something went wrong",
 	"Try_again": "Try again",
 	"Your_Shopping_Cart_is_empty": "Your Shopping Cart is empty",
 	"checkout_title": "Checkout",
-	"featured_products": "Product list",
+	"featured_products": "Featured Products",
 	"search_results_for": "Search results for",
 	"nothing_found": "Nothing found :(",
 	"processing": "Processing",
@@ -76,5 +77,10 @@
 			"title": "Free Consultation",
 			"desc": "Consult with our experts before ordering and make the best choice."
 		}
+	},
+	"our_customers": {
+		"title": "Our Customers",
+		"subtitle": "Companies and brands that trust us",
+		"description": "We are proud to collaborate with reputable brands and leading organizations. Our close partnerships enable us to deliver tailored, precise, and trust-based solutions."
 	}
 }

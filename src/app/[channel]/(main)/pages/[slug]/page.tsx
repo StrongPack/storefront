@@ -107,7 +107,18 @@ export default async function Page(props: { params: Promise<{ slug: string; chan
 				</div>
 			)} */}
 
-			<article className="prose" dangerouslySetInnerHTML={{ __html: finalHtml }} />
+			{/* <article className="prose" dangerouslySetInnerHTML={{ __html: finalHtml }} /> */}
+			{/* <article
+				className="prose text-justify leading-relaxed"
+				dangerouslySetInnerHTML={{ __html: finalHtml }}
+			/> */}
+
+			<article
+				dir={isNotEn ? "rtl" : "ltr"}
+				// className="prose text-justify leading-relaxed "
+				className="prose prose-lg max-w-none text-justify leading-relaxed"
+				dangerouslySetInnerHTML={{ __html: finalHtml }}
+			/>
 		</div>
 	);
 }

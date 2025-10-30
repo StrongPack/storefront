@@ -10,17 +10,41 @@ fragment MenuItem on MenuItem {
 		id
 		slug
 		name
-
+		backgroundImage {
+			url
+			alt
+		}
 		translation(languageCode: $languageCode) {
 			id
 			name
+		}
+		children(first: 10, last: 10) {
+			totalCount
+			edges {
+				node {
+					name
+					id
+					slug
+					backgroundImage {
+						url
+						alt
+					}
+					translation(languageCode: $languageCode) {
+						id
+						name
+					}
+				}
+			}
 		}
 	}
 	collection {
 		id
 		name
 		slug
-
+		backgroundImage {
+			url
+			alt
+		}
 		translation(languageCode: $languageCode) {
 			id
 			name
@@ -30,10 +54,14 @@ fragment MenuItem on MenuItem {
 		id
 		title
 		slug
-
+		created
 		translation(languageCode: $languageCode) {
 			id
 			title
+		}
+		metadata {
+			key
+			value
 		}
 	}
 	url

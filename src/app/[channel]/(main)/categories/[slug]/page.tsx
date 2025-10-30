@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { type ResolvingMetadata, type Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { ProductListByCategoryDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { ProductList } from "@/ui/components/ProductList";
@@ -29,6 +30,7 @@ export default async function Page(props: { params: Promise<{ slug: string; chan
 	const { channel, slug } = params;
 
 	const { languageCode, locale } = await getChannelConfig(channel);
+	const t = await getTranslations({ locale: locale, namespace: "common" });
 
 	const { category } = await executeGraphQL(ProductListByCategoryDocument, {
 		variables: { slug, channel, languageCode },
@@ -47,8 +49,14 @@ export default async function Page(props: { params: Promise<{ slug: string; chan
 
 	return (
 		<div className="mx-auto max-w-7xl p-8 pb-16">
-			<h1 className="pb-8 text-xl font-semibold">{displayName}</h1>
-			<ProductList products={products.edges.map((e) => e.node)} channel={channel} />
+			{products.edges.length > 0 ? (
+				<>
+					<h1 className="pb-8 text-xl font-semibold">{displayName}</h1>
+					<ProductList products={products.edges.map((e) => e.node)} channel={channel} />
+				</>
+			) : (
+				<h1 className="mx-auto pb-8 text-center text-xl font-semibold">{t("nothing_found")}</h1>
+			)}
 		</div>
 	);
 }

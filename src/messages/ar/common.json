@@ -1,16 +1,17 @@
 {
 	"change_currency": "تغيير العملة",
+	"change_lang": "تغيير اللغة",
 	"footer_title": "تذييل الموقع",
 	"sign_in": "تسجيل الدخول",
 	"enamad_alt": "ختم الثقة",
 	"site_name": "20Pack",
 	"welcome": "مرحبًا بك في متجر 20Pack!",
-	"all_product": "الكل",
+	"all_product": "جميع المنتجات",
 	"Something_went_wrong": "حدث خطأ ما",
 	"Try_again": "حاول مرة أخرى",
 	"Your_Shopping_Cart_is_empty": "سلة التسوق الخاصة بك فارغة",
 	"checkout_title": "إنهاء الشراء",
-	"featured_products": "قائمة المنتجات",
+	"featured_products": "المنتجات المميزة",
 	"search_results_for": "نتائج البحث عن",
 	"nothing_found": "لم يتم العثور على شيء :(",
 	"processing": "جارٍ المعالجة",
@@ -76,5 +77,10 @@
 			"title": "استشارة مجانية",
 			"desc": "استشر متخصصينا قبل الطلب واتخذ أفضل خيار."
 		}
+	},
+	"our_customers": {
+		"title": "عملاؤنا",
+		"subtitle": "الشركات والعلامات التجارية التي تثق بنا",
+		"description": "نفتخر بالتعاون مع العلامات التجارية المرموقة والمؤسسات الرائدة. تعاوننا الوثيق مع عملائنا يمكّننا من تقديم حلول مخصصة ودقيقة قائمة على الثقة."
 	}
 }

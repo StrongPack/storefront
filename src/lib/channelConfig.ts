@@ -6,13 +6,13 @@ export async function getChannelConfig(slug: string) {
 	// console.log(map);
 	// اگر map خالی بود یا کانال خواسته‌شده پیدا نشد، fallback بده
 	const fallback = {
-		id: "1",
-		locale: "en",
-		languageCode: LanguageCodeEnum.EnUs,
-		dir: "ltr",
-		name: "English",
-		flag: "🇬🇧",
-		displayName: "English",
+		id: "Q2hhbm5lbDoz",
+		name: "Persian",
+		locale: "fa",
+		languageCode: LanguageCodeEnum.FaIr,
+		dir: "rtl",
+		flag: "🇮🇷",
+		displayName: "فارسی",
 	};
 
 	return map?.[slug] ?? map?.["default-channel"] ?? fallback;

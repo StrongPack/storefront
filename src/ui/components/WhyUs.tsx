@@ -2,10 +2,20 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 
 export const WhyUs = ({ dir }: { dir: string }) => {
 	const t = useTranslations("common");
 	const isRTL = dir === "rtl";
+	const [isMobile, setIsMobile] = useState(false);
+
+	// تشخیص موبایل برای غیرفعال‌سازی انیمیشن در نمایش موبایل
+	useEffect(() => {
+		const handleResize = () => setIsMobile(window.innerWidth < 640);
+		handleResize();
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
 
 	const reasonKeys = [
 		"best_price",
@@ -64,37 +74,68 @@ export const WhyUs = ({ dir }: { dir: string }) => {
 					{t("why_buy_from_20pack")}
 				</h2>
 
-				<div
-					className={`
-						flex gap-6
-						${isRTL ? "animate-scroll-rtl" : "animate-scroll-ltr"}
-						hover:[animation-play-state:paused]`}
-				>
-					{loopData.map((reason, i) => (
-						<div key={i} className="group min-w-[200px] max-w-[200px] flex-shrink-0">
-							<div className="flex h-[260px] flex-col justify-between rounded-xl bg-white p-5 shadow-sm transition-all duration-300 hover:scale-[1.03] hover:shadow-lg">
-								<div className="mx-auto flex items-center justify-center p-4">
+				{/* نسخه موبایل: گرید دو ستونه و بدون انیمیشن */}
+				{isMobile ? (
+					<div className="grid grid-cols-2 gap-4 sm:hidden">
+						{reasonKeys.map((reason, i) => (
+							<div
+								key={i}
+								className="flex flex-col justify-between rounded-xl bg-white p-4 shadow-sm transition-transform active:scale-[0.97]"
+							>
+								<div className="mx-auto flex items-center justify-center p-2">
 									<Image
 										src={`/reasons/${reason}.png`}
 										alt={t(`why_us.${reason}.title`)}
-										width={70}
-										height={70}
-										className="transition-transform duration-500 group-hover:-rotate-3 group-hover:scale-110"
+										width={60}
+										height={60}
+										className="transition-transform duration-500 active:scale-105"
 									/>
 								</div>
 
-								<div className="mt-3 flex-grow">
-									<h3 className="mb-2 text-center text-base font-semibold text-neutral-900">
+								<div className="mt-2 flex-grow">
+									<h3 className="mb-1 text-center text-sm font-semibold text-neutral-900">
 										{t(`why_us.${reason}.title`)}
 									</h3>
-									<p className="break-words text-center text-sm leading-relaxed text-neutral-600">
+									<p className="text-center text-[13px] leading-relaxed text-neutral-600">
 										{t(`why_us.${reason}.desc`)}
 									</p>
 								</div>
 							</div>
-						</div>
-					))}
-				</div>
+						))}
+					</div>
+				) : (
+					<div
+						className={`
+						flex gap-6
+						${isRTL ? "animate-scroll-rtl" : "animate-scroll-ltr"}
+						hover:[animation-play-state:paused]`}
+					>
+						{loopData.map((reason, i) => (
+							<div key={i} className="group min-w-[200px] max-w-[200px] flex-shrink-0">
+								<div className="flex h-[260px] flex-col justify-between rounded-xl bg-white p-5 shadow-sm transition-all duration-300 hover:scale-[1.03] hover:shadow-lg">
+									<div className="mx-auto flex items-center justify-center p-4">
+										<Image
+											src={`/reasons/${reason}.png`}
+											alt={t(`why_us.${reason}.title`)}
+											width={70}
+											height={70}
+											className="transition-transform duration-500 group-hover:-rotate-3 group-hover:scale-110"
+										/>
+									</div>
+
+									<div className="mt-3 flex-grow">
+										<h3 className="mb-2 text-center text-base font-semibold text-neutral-900">
+											{t(`why_us.${reason}.title`)}
+										</h3>
+										<p className="break-words text-center text-sm leading-relaxed text-neutral-600">
+											{t(`why_us.${reason}.desc`)}
+										</p>
+									</div>
+								</div>
+							</div>
+						))}
+					</div>
+				)}
 			</div>
 		</section>
 	);

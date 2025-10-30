@@ -23,6 +23,8 @@ import NavLinksServer from "./components/NavLinks.server";
 import { CartNavItem } from "./components/CartNavItem.server";
 import UserMenuContainer from "./components/UserMenu/UserMenuContainer";
 import { type LanguageCodeEnum } from "@/gql/graphql";
+import { getAllChannelConfigs } from "@/lib/channelConfig";
+
 export default async function NavServer({
 	channel,
 	locale,
@@ -42,9 +44,24 @@ export default async function NavServer({
 	// const checkout = checkoutId ? await Checkout.find(checkoutId) : null;
 	// const lineCount = checkout ? checkout.lines?.reduce((total, line) => total + line.quantity, 0) : 0;
 
+	const channelMap = await getAllChannelConfigs();
+
+	// ۲️⃣ تبدیل map به آرایه برای props
+	const channels = Object.entries(channelMap).map(([slug, cfg]) => ({
+		id: cfg.id,
+		slug,
+		name: cfg.name,
+		flag: cfg.flag,
+		locale: cfg.locale,
+		dir: cfg.dir,
+		languageCode: cfg.languageCode,
+		displayname: cfg.displayName,
+	}));
+
 	return (
 		<NavClient
-			channel={channel}
+			channels={channels}
+			// channel={channel}
 			locale={locale}
 			NavLinks={<NavLinksServer channel={channel} locale={locale} languageCode={languageCode} />}
 			CartNavItem={<CartNavItem channel={channel} languageCode={languageCode} />}
