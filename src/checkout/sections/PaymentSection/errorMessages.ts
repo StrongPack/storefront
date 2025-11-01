@@ -1,5 +1,5 @@
 export const apiErrorMessages = {
-	somethingWentWrong: "Sorry, something went wrong. Please try again in a moment.",
+	somethingWentWrong: "Sorry, something went wrong. Please try again in a moment",
 	requestPasswordResetEmailNotFoundError: "User with provided email has not been found",
 	requestPasswordResetEmailInactiveError: "User account with provided email is inactive",
 	checkoutShippingUpdateCountryAreaRequiredError: "Please select country area for shipping address",
@@ -30,5 +30,5 @@ export const apiErrorMessages = {
 	checkoutShippingUpdatePhoneInvalidError: "Invalid phone number was provided for shipping address",
 	checkoutBillingUpdatePostalCodeInvalidError: "Invalid postal code was provided for billing address",
 	checkoutDeliveryMethodUpdatePostalCodeInvalidError: "Invalid postal code was provided for shipping address",
-	checkoutDeliveryMethodUpdatePromoCodeInvalidError: "Please provide a valid discount code.",
+	checkoutDeliveryMethodUpdatePromoCodeInvalidError: "Please provide a valid discount code",
 };

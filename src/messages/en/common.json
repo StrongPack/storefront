@@ -22,9 +22,9 @@
 	"no_orders": "No orders found",
 	"cart_title": "Your Shopping Cart",
 	"cart_empty_title": "Your Shopping Cart is empty",
-	"cart_empty_description": "Looks like you haven’t added any items to the cart yet.",
+	"cart_empty_description": "Looks like you haven’t added any items to the cart yet",
 	"cart_empty_title_new": "Your cart is empty",
-	"cart_empty_description_new": "Add anything to the cart to continue.",
+	"cart_empty_description_new": "Add anything to the cart to continue",
 	"cart_explore_products": "Explore products",
 	"cart_total_label": "Your Total",
 	"cart_shipping_info": "Shipping will be calculated in the next step",
@@ -36,8 +36,8 @@
 	"loading": "Loading...",
 	"variants_legend": "Variants",
 	"next_page": "Next page",
-	"draft_mode_message": "You&apos;re in draft mode. Requests are not cached.",
-	"draft_mode_disable_link": "Disable.",
+	"draft_mode_message": "You&apos;re in draft mode. Requests are not cached",
+	"draft_mode_disable_link": "Disable",
 	"out_of_stock": "Out of stock",
 	"search_label": "search for products",
 	"search_placeholder": "Search for products...",
@@ -51,36 +51,39 @@
 	"why_us": {
 		"best_price": {
 			"title": "Best Price",
-			"desc": "Offering the lowest market price while maintaining the highest packaging quality."
+			"desc": "Offering the lowest market price while maintaining the highest packaging quality"
 		},
 		"multiple_services": {
 			"title": "Multiple Services",
-			"desc": "We handle everything for you in one place, from design to production and printing."
+			"desc": "We handle everything for you in one place, from design to production and printing"
 		},
 		"strong_team": {
 			"title": "Strong Team",
-			"desc": "A professional group of printing and packaging specialists at your service."
+			"desc": "A professional group of printing and packaging specialists at your service"
 		},
 		"fast_delivery": {
 			"title": "Early Delivery",
-			"desc": "Commitment to delivery time — even earlier than the announced schedule."
+			"desc": "Commitment to delivery time — even earlier than the announced schedule"
 		},
 		"quality_guarantee": {
 			"title": "Production Quality Guarantee",
-			"desc": "Using the best materials and precise control throughout the production process."
+			"desc": "Using the best materials and precise control throughout the production process"
 		},
 		"wholesale_retail": {
 			"title": "Wholesale and Retail Sales",
-			"desc": "Special service for corporate wholesale and personal orders."
+			"desc": "Special service for corporate wholesale and personal orders"
 		},
 		"free_consult": {
 			"title": "Free Consultation",
-			"desc": "Consult with our experts before ordering and make the best choice."
+			"desc": "Consult with our experts before ordering and make the best choice"
 		}
 	},
 	"our_customers": {
 		"title": "Our Customers",
 		"subtitle": "Companies and brands that trust us",
-		"description": "We are proud to collaborate with reputable brands and leading organizations. Our close partnerships enable us to deliver tailored, precise, and trust-based solutions."
-	}
+		"description": "We are proud to collaborate with reputable brands and leading organizations. Our close partnerships enable us to deliver tailored, precise, and trust-based solutions"
+	},
+	"blog_articles": "Blog Articles",
+	"read_the_full_article": "Click to read the full article",
+	"read_more": "Read more"
 }

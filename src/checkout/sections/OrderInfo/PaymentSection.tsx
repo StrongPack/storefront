@@ -39,7 +39,7 @@ export const PaymentSection = ({ languageCode }: { languageCode: LanguageCodeEnu
 					{paymentStatus === "paidInFull" && <SuccessMessage message="We've received your payment" />}
 
 					{paymentStatus === "overpaid" && (
-						<ErrorMessage message="Your order has been paid more than owed. This may be an error during payment. Contact your shop staff for help." />
+						<ErrorMessage message="Your order has been paid more than owed. This may be an error during payment. Contact your shop staff for help" />
 					)}
 				</div>
 			</div>

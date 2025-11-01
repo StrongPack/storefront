@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
-// import { getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { MenuGetBySlugDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 import { getChannelConfig } from "@/lib/channelConfig";
@@ -18,7 +18,7 @@ export default async function Page(props: { params: Promise<{ channel: string }>
 
 	const isRTL = dir === "rtl";
 	const isNotEn = locale !== "en";
-	// const t = await getTranslations({ locale: locale, namespace: "common" });
+	const t = await getTranslations({ locale: locale, namespace: "common" });
 
 	const PageLinks = await executeGraphQL(MenuGetBySlugDocument, {
 		variables: { slug: "blog", channel, languageCode: languageCode },
@@ -36,7 +36,7 @@ export default async function Page(props: { params: Promise<{ channel: string }>
 	return (
 		<section className="mx-auto max-w-7xl px-6 py-16 md:px-8">
 			<h1 className={`mb-12 text-3xl font-bold ${isRTL ? "text-right" : "text-left"} text-gray-800`}>
-				{isNotEn ? "مقالات و بلاگ‌ها" : "Blog Articles"}
+				{t("blog_articles")}
 			</h1>
 
 			<div className={`grid gap-10 sm:grid-cols-2 lg:grid-cols-3 ${isRTL ? "text-right" : "text-left"}`}>
@@ -57,9 +57,7 @@ export default async function Page(props: { params: Promise<{ channel: string }>
 
 					// گرفتن خلاصه از metadata یا ساخت دستی برای طراحی زیبا
 					const summaryMeta = page.metadata?.find((meta) => meta.key === "summary");
-					const summary =
-						summaryMeta?.value ??
-						(isNotEn ? "برای مطالعه‌ی کامل مقاله کلیک کنید." : "Click to read the full article.");
+					const summary = summaryMeta?.value ?? t("read_the_full_article");
 
 					return (
 						<LinkWithChannel
@@ -95,7 +93,7 @@ export default async function Page(props: { params: Promise<{ channel: string }>
 										isRTL ? "flex-row-reverse justify-start" : "justify-end"
 									}`}
 								>
-									{isNotEn ? "ادامه مطلب ←" : "Read more →"}
+									{isRTL ? t("read_more") + " ←" : t("read_more") + " →"}
 								</p>
 							</div>
 						</LinkWithChannel>

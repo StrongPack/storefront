@@ -5,6 +5,7 @@ import { usePayments } from "@/checkout/sections/PaymentSection/usePayments";
 import { useCheckoutUpdateState } from "@/checkout/state/updateStateStore";
 import { type LanguageCodeEnum } from "@/gql/graphql";
 export const PaymentMethods = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
+	console.log("paymentMethods");
 	const { availablePaymentGateways, fetching } = usePayments({ languageCode });
 	const {
 		changingBillingCountry,

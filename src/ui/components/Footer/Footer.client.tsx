@@ -52,7 +52,18 @@ export const FooterClient = ({ footerLinks, dir, locale }: FooterClientProps) =>
 								<ul className="mt-4 space-y-4 [&>li]:text-neutral-500">
 									{item.children?.map((child) => {
 										// صفحه
-										if (child.page) {
+										if (child.page && child.page.title == "Blog") {
+											const displayPageTitle =
+												isNotEn && child.page.translation?.title
+													? child.page.translation.title
+													: child.page.title;
+
+											return (
+												<li key={child.id} className="text-sm">
+													<LinkWithChannel href={`/pages`}>{displayPageTitle}</LinkWithChannel>
+												</li>
+											);
+										} else if (child.page) {
 											const displayPageTitle =
 												isNotEn && child.page.translation?.title
 													? child.page.translation.title

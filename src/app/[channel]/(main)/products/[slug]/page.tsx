@@ -276,7 +276,11 @@ export default async function Page(props: {
 						{description && (
 							<div className="mt-8 space-y-6 text-sm text-neutral-500">
 								{description.map((content) => (
-									<div key={content} dangerouslySetInnerHTML={{ __html: xss(content) }} />
+									<div
+										key={content}
+										className="text-justify"
+										dangerouslySetInnerHTML={{ __html: xss(content) }}
+									/>
 								))}
 							</div>
 						)}

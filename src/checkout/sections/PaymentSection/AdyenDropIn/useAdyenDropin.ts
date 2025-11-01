@@ -110,7 +110,7 @@ export const useAdyenDropin = (props: AdyenDropinProps) => {
 					return;
 				case "Error":
 					adyenCheckoutSubmitParams?.component.setStatus("error");
-					showCustomErrors([{ message: "There was an error processing your payment." }]);
+					showCustomErrors([{ message: "There was an error processing your payment" }]);
 					return;
 				case "Refused":
 					setCurrentTransactionId(undefined);

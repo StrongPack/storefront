@@ -4,16 +4,16 @@
 	"unique": "مقدار باید یکتا باشد",
 	"emailInvalid": "ایمیل باید معتبر باشد",
 	"passwordAtLeastCharacters": "رمز عبور باید حداقل ۸ کاراکتر باشد",
-	"passwordTooShort": "رمز عبور وارد شده کوتاه است. حداقل ۸ کاراکتر.",
-	"passwordTooSimilar": "رمز عبور وارد شده بسیار مشابه رمز قبلی است.",
-	"passwordTooCommon": "رمز عبور بسیار رایج است. از مورد پیچیده‌تری استفاده کنید.",
-	"passwordInvalid": "رمز عبور نامعتبر است.",
-	"quantityGreaterThanLimit": "تعداد انتخاب‌شده بیش از حد مجاز است.",
-	"insufficientStock": "موجودی کافی برای این آیتم وجود ندارد.",
-	"invalidCredentials": "اطلاعات ورود نامعتبر است.",
+	"passwordTooShort": "رمز عبور وارد شده کوتاه است. حداقل ۸ کاراکتر",
+	"passwordTooSimilar": "رمز عبور وارد شده بسیار مشابه رمز قبلی است",
+	"passwordTooCommon": "رمز عبور بسیار رایج است. از مورد پیچیده‌تری استفاده کنید",
+	"passwordInvalid": "رمز عبور نامعتبر است",
+	"quantityGreaterThanLimit": "تعداد انتخاب‌شده بیش از حد مجاز است",
+	"insufficientStock": "موجودی کافی برای این آیتم وجود ندارد",
+	"invalidCredentials": "اطلاعات ورود نامعتبر است",
 	"missingFields": "فیلدهای ناقص در فرم آدرس: ",
 
-	"somethingWentWrong": "متأسفیم، مشکلی پیش آمد. لطفاً بعداً دوباره تلاش کنید.",
+	"somethingWentWrong": "متأسفیم، مشکلی پیش آمد. لطفاً بعداً دوباره تلاش کنید",
 	"requestPasswordResetEmailNotFoundError": "کاربری با این ایمیل یافت نشد",
 	"requestPasswordResetEmailInactiveError": "حساب کاربری با این ایمیل غیرفعال است",
 	"checkoutShippingUpdateCountryAreaRequiredError": "لطفاً استان/منطقه آدرس ارسال را انتخاب کنید",
@@ -43,5 +43,5 @@
 	"checkoutShippingUpdatePhoneInvalidError": "شماره تلفن آدرس ارسال نامعتبر است",
 	"checkoutBillingUpdatePostalCodeInvalidError": "کدپستی آدرس صورتحساب نامعتبر است",
 	"checkoutDeliveryMethodUpdatePostalCodeInvalidError": "کدپستی آدرس ارسال نامعتبر است",
-	"checkoutDeliveryMethodUpdatePromoCodeInvalidError": "لطفاً یک کد تخفیف معتبر وارد کنید."
+	"checkoutDeliveryMethodUpdatePromoCodeInvalidError": "لطفاً یک کد تخفیف معتبر وارد کنید"
 }

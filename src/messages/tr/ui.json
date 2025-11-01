@@ -9,7 +9,7 @@
 	"deleteAddress": "Delete address",
 	"createAddress": "Create address",
 	"editAddress": "Edit address",
-	"noSavedAddresses": "You currently have no saved addresses.",
+	"noSavedAddresses": "You currently have no saved addresses",
 	"addAddress": "Add address",
 	"userAddresses": "user addresses",
 	"signIn": "Sign in",

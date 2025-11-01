@@ -1,6 +1,6 @@
 {
-	"page_not_found_text": "We couldn&apos;t fetch information about your checkout. Go back to the store and try again.",
+	"page_not_found_text": "We couldn&apos;t fetch information about your checkout. Go back to the store and try again",
 	"go_back_button": "Go back to store",
 	"order_confirmed_title": "Order {{number}} confirmed",
-	"order_confirmed_text": "Thank you for placing your order. We&apos;ve received it and we will contact you as soon as your package is shipped. A confirmation email has been sent to {{email}}."
+	"order_confirmed_text": "Thank you for placing your order. We&apos;ve received it and we will contact you as soon as your package is shipped. A confirmation email has been sent to {{email}}"
 }

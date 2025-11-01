@@ -7,6 +7,7 @@ import { type ParsedPaymentGateways } from "@/checkout/sections/PaymentSection/t
 import { getFilteredPaymentGateways } from "@/checkout/sections/PaymentSection/utils";
 import { type LanguageCodeEnum } from "@/gql/graphql";
 export const usePaymentGatewaysInitialize = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
+	console.log("[PaymentGateways] Hook initialized");
 	const {
 		checkout: { billingAddress },
 	} = useCheckout({ languageCode });
@@ -14,12 +15,20 @@ export const usePaymentGatewaysInitialize = ({ languageCode }: { languageCode: L
 		checkout: { id: checkoutId, availablePaymentGateways },
 	} = useCheckout({ languageCode });
 
-	const billingCountry = billingAddress?.country.code as MightNotExist<CountryCode>;
+	console.log("[PaymentGateways] Initial state:", {
+		checkoutId,
+		hasAvailableGateways: availablePaymentGateways?.length > 0,
+		availableGatewayIds: availablePaymentGateways?.map((g) => g.id),
+		billingAddress,
+	});
 
+	const billingCountry = billingAddress?.country.code as MightNotExist<CountryCode>;
+	console.log(billingCountry);
 	const [gatewayConfigs, setGatewayConfigs] = useState<ParsedPaymentGateways>([]);
 	const previousBillingCountry = useRef(billingCountry);
-
+	console.log(previousBillingCountry);
 	const [{ fetching }, paymentGatewaysInitialize] = usePaymentGatewaysInitializeMutation();
+	console.log(fetching);
 
 	const onSubmit = useSubmit<{}, typeof paymentGatewaysInitialize>(
 		useMemo(
