@@ -43,21 +43,29 @@ export const usePaymentGatewaysInitialize = ({ languageCode }: { languageCode: L
 				// },
 				onSubmit: paymentGatewaysInitialize,
 				parse: () => {
-					// console.log("[PaymentGateways] Raw gateways:", availablePaymentGateways);
-					const filteredGateways = getFilteredPaymentGateways(availablePaymentGateways);
-					// console.log("[PaymentGateways] Filtered gateways:", filteredGateways);
+					// // console.log("[PaymentGateways] Raw gateways:", availablePaymentGateways);
+					// const filteredGateways = getFilteredPaymentGateways(availablePaymentGateways);
+					// // console.log("[PaymentGateways] Filtered gateways:", filteredGateways);
 
-					const mappedGateways = filteredGateways.map(({ config, id }) => {
-						// console.log("[PaymentGateways] Gateway details:", { id, config });
-						return {
-							id,
-							data: config,
-						};
-					});
+					// const mappedGateways = filteredGateways.map(({ config, id }) => {
+					// 	// console.log("[PaymentGateways] Gateway details:", { id, config });
+					// 	return {
+					// 		id,
+					// 		data: config,
+					// 	};
+					// });
+
+					// return {
+					// 	checkoutId,
+					// 	paymentGateways: mappedGateways,
+					// };
 
 					return {
 						checkoutId,
-						paymentGateways: mappedGateways,
+						paymentGateways: getFilteredPaymentGateways(availablePaymentGateways).map(({ config, id }) => ({
+							id,
+							data: config,
+						})),
 					};
 				},
 				onSuccess: ({ data }) => {
