@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { type Checkout, useCheckoutQuery } from "@/checkout/graphql";
 import { extractCheckoutIdFromUrl } from "@/checkout/lib/utils/url";
 import { useCheckoutUpdateStateActions } from "@/checkout/state/updateStateStore";
-import { LanguageCodeEnum } from "@/gql/graphql";
+import { type LanguageCodeEnum } from "@/gql/graphql";
 interface UseCheckoutProps {
 	pause?: boolean;
 	languageCode: LanguageCodeEnum;
@@ -12,7 +12,7 @@ export const useCheckout = ({ pause = false, languageCode }: UseCheckoutProps) =
 	const id = useMemo(() => extractCheckoutIdFromUrl(), []);
 	const { setLoadingCheckout } = useCheckoutUpdateStateActions();
 
-	const langSafe = languageCode ?? LanguageCodeEnum.FaIr;
+	// const langSafe = languageCode ?? LanguageCodeEnum.FaIr;
 
 	// // شناسایی فایل فراخوانی (stack trace)
 	// const err = new Error();
@@ -31,7 +31,7 @@ export const useCheckout = ({ pause = false, languageCode }: UseCheckoutProps) =
 	// }
 
 	const [{ data, fetching, stale }, refetch] = useCheckoutQuery({
-		variables: { id, languageCode: langSafe },
+		variables: { id, languageCode: languageCode },
 		pause: pause,
 	});
 
