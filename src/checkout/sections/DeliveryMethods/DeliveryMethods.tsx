@@ -31,6 +31,21 @@ export const DeliveryMethods: React.FC<CommonSectionProps> = ({ collapsed, local
 		return `${min}-${max} ${t("businessDaysRange")}`;
 	};
 
+	// console.log(checkout, collapsed);
+
+	// const err = new Error();
+	// const stackLines = (err.stack || "")
+	// 	.split("\n")
+	// 	.filter((l) => !l.includes("node_modules")) // خطوط داخلی React حذف شود
+	// 	.slice(2, 100) // چند خط کافی است
+	// 	.map((l) => l.trim());
+
+	// console.groupCollapsed(`[useCheckout] checkout`, "color:#00bfff");
+	// console.log("stack trace:\n", stackLines.join("\n"));
+	// console.groupEnd();
+
+	// console.log(authenticated, shippingAddress, updateState);
+
 	if (!checkout?.isShippingRequired || collapsed) {
 		return null;
 	}

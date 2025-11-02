@@ -7,7 +7,6 @@ import { type ParsedPaymentGateways } from "@/checkout/sections/PaymentSection/t
 import { getFilteredPaymentGateways } from "@/checkout/sections/PaymentSection/utils";
 import { type LanguageCodeEnum } from "@/gql/graphql";
 export const usePaymentGatewaysInitialize = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
-	console.log("[PaymentGateways] Hook initialized");
 	const {
 		checkout: { billingAddress },
 	} = useCheckout({ languageCode });
@@ -15,20 +14,19 @@ export const usePaymentGatewaysInitialize = ({ languageCode }: { languageCode: L
 		checkout: { id: checkoutId, availablePaymentGateways },
 	} = useCheckout({ languageCode });
 
-	console.log("[PaymentGateways] Initial state:", {
-		checkoutId,
-		hasAvailableGateways: availablePaymentGateways?.length > 0,
-		availableGatewayIds: availablePaymentGateways?.map((g) => g.id),
-		billingAddress,
-	});
+	// console.log("[PaymentGateways] Initial state:", {
+	// 	checkoutId,
+	// 	hasAvailableGateways: availablePaymentGateways?.length > 0,
+	// 	availableGatewayIds: availablePaymentGateways?.map((g) => g.id),
+	// 	billingAddress,
+	// });
 
 	const billingCountry = billingAddress?.country.code as MightNotExist<CountryCode>;
-	console.log(billingCountry);
+
 	const [gatewayConfigs, setGatewayConfigs] = useState<ParsedPaymentGateways>([]);
 	const previousBillingCountry = useRef(billingCountry);
-	console.log(previousBillingCountry);
+
 	const [{ fetching }, paymentGatewaysInitialize] = usePaymentGatewaysInitializeMutation();
-	console.log(fetching);
 
 	const onSubmit = useSubmit<{}, typeof paymentGatewaysInitialize>(
 		useMemo(
@@ -37,17 +35,34 @@ export const usePaymentGatewaysInitialize = ({ languageCode }: { languageCode: L
 				hideAlerts: true,
 				scope: "paymentGatewaysInitialize",
 				shouldAbort: () => !availablePaymentGateways.length,
+				// shouldAbort: () => false, // فقط برای دیباگ موقت
+				// shouldAbort: () => {
+				// 	const abort = !availablePaymentGateways.length;
+				// 	console.log("[PaymentGateways] shouldAbort", abort, availablePaymentGateways);
+				// 	return abort;
+				// },
 				onSubmit: paymentGatewaysInitialize,
-				parse: () => ({
-					checkoutId,
-					paymentGateways: getFilteredPaymentGateways(availablePaymentGateways).map(({ config, id }) => ({
-						id,
-						data: config,
-					})),
-				}),
+				parse: () => {
+					// console.log("[PaymentGateways] Raw gateways:", availablePaymentGateways);
+					const filteredGateways = getFilteredPaymentGateways(availablePaymentGateways);
+					// console.log("[PaymentGateways] Filtered gateways:", filteredGateways);
+
+					const mappedGateways = filteredGateways.map(({ config, id }) => {
+						// console.log("[PaymentGateways] Gateway details:", { id, config });
+						return {
+							id,
+							data: config,
+						};
+					});
+
+					return {
+						checkoutId,
+						paymentGateways: mappedGateways,
+					};
+				},
 				onSuccess: ({ data }) => {
 					const parsedConfigs = (data.gatewayConfigs || []) as ParsedPaymentGateways;
-
+					// console.log(parsedConfigs);
 					if (!parsedConfigs.length) {
 						throw new Error("No available payment gateways");
 					}

@@ -1,12 +1,12 @@
 // "use client";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 // import Link from "next/link";
 import { invariant } from "ts-invariant";
 import { getTranslations } from "next-intl/server";
 import { RootWrapper } from "./pageWrapper";
-import { getChannelConfig } from "@/lib/channelConfig";
+// import { getChannelConfig } from "@/lib/channelConfig";
 import { Logo } from "@/ui/components/Logo";
-
+import { getInitialLocaleServer } from "@/lib/getInitialLocaleServer";
 export const metadata = {
 	title: "Checkout · 20pack",
 };
@@ -14,9 +14,7 @@ export const metadata = {
 export default async function CheckoutPage(props: {
 	searchParams: Promise<{ checkout?: string; order?: string }>;
 }) {
-	const cookieStore = await cookies();
-	const channel = cookieStore.get("channel")?.value ?? "default-channel";
-	const { languageCode, locale } = await getChannelConfig(channel);
+	const { languageCode, locale } = await getInitialLocaleServer();
 
 	const t = await getTranslations({ locale, namespace: "common" });
 	const searchParams = await props.searchParams;

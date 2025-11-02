@@ -1,12 +1,15 @@
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
-import { getChannelConfig } from "@/lib/channelConfig";
+// import { getChannelConfig } from "@/lib/channelConfig";
+import { getInitialLocaleServer } from "@/lib/getInitialLocaleServer";
 
 export default async function NotFound() {
-	const cookieStore = await cookies();
-	// const locale = cookieStore.get("locale")?.value || "en";
-	const channel = cookieStore.get("channel")?.value || "default-channel";
-	const { locale } = await getChannelConfig(channel);
+	// const cookieStore = await cookies();
+	// // const locale = cookieStore.get("locale")?.value || "en";
+	// const channel = cookieStore.get("channel")?.value || "default-channel";
+	// const { locale } = await getChannelConfig(channel);
+
+	const { locale } = await getInitialLocaleServer();
 
 	const t = await getTranslations({ locale, namespace: "common" });
 	return (

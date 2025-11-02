@@ -141,8 +141,13 @@ export const getAddressValidationRulesVariables = (
 	autoSave
 		? {
 				checkRequiredFields: false,
-		  }
-		: {};
+				checkFieldsFormat: false, // 🚫 غیرفعال کردن بررسی فرمت (کد پستی)
+				enableFieldsNormalization: false, // ✅ جلوگیری از نرمال‌سازی اجباری حروف
+			}
+		: {
+				checkFieldsFormat: false,
+				enableFieldsNormalization: false,
+			};
 
 export const addressFieldsOrder: AddressField[] = [
 	"firstName",

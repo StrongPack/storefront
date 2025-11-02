@@ -22,7 +22,9 @@ export const getFilteredPaymentGateways = (
 	}
 
 	// we want to use only payment apps, not plugins
-	return compact(paymentGateways).filter(({ id }) => supportedPaymentGateways.includes(id));
+	// return compact(paymentGateways).filter(({ id }) => supportedPaymentGateways.includes(id));
+
+	return compact(paymentGateways);
 };
 
 export const getUrlForTransactionInitialize = () => getUrl({ query: { processingPayment: true } });

@@ -5,7 +5,6 @@ import { usePayments } from "@/checkout/sections/PaymentSection/usePayments";
 import { useCheckoutUpdateState } from "@/checkout/state/updateStateStore";
 import { type LanguageCodeEnum } from "@/gql/graphql";
 export const PaymentMethods = ({ languageCode }: { languageCode: LanguageCodeEnum }) => {
-	console.log("paymentMethods");
 	const { availablePaymentGateways, fetching } = usePayments({ languageCode });
 	const {
 		changingBillingCountry,
@@ -21,11 +20,11 @@ export const PaymentMethods = ({ languageCode }: { languageCode: LanguageCodeEnu
 	if (changingBillingCountry || fetching || checkoutDeliveryMethodUpdate === "loading") {
 		return <PaymentSectionSkeleton />;
 	}
-
 	return (
 		<div className="gap-y-8">
 			{gatewaysWithDefinedComponent.map((gateway) => {
 				const Component = paymentMethodToComponent[gateway.id];
+
 				return (
 					<Component
 						key={gateway.id}

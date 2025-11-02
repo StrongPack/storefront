@@ -1,10 +1,11 @@
 import { type ReactNode } from "react";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 // import { getLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { AuthProvider } from "@/ui/components/AuthProvider";
 import { getMessages } from "@/lib/getMessages";
-import { getChannelConfig } from "@/lib/channelConfig";
+// import { getChannelConfig } from "@/lib/channelConfig";
+import { getInitialLocaleServer } from "@/lib/getInitialLocaleServer";
 
 export const metadata = {
 	title: "Checkout · 20pack",
@@ -28,9 +29,11 @@ interface CheckoutLayoutProps {
 export default async function RootLayout({ children }: CheckoutLayoutProps) {
 	// اینجا کانال را از context یا از default-channel دریافت می‌کنیم:
 
-	const cookieStore = await cookies();
-	const channel = cookieStore.get("channel")?.value ?? "default-channel";
-	const { locale, dir } = await getChannelConfig(channel);
+	// const cookieStore = await cookies();
+	// const channel = cookieStore.get("channel")?.value ?? "default-channel";
+	// const { locale, dir } = await getChannelConfig(channel);
+
+	const { locale, dir } = await getInitialLocaleServer();
 
 	const messages = await getMessages(locale);
 
