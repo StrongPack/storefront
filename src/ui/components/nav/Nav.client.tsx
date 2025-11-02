@@ -32,8 +32,8 @@ export default function NavClient({
 	locale,
 	// lineCount,
 	NavLinks,
-	CartNavItem,
-	UserMenu,
+	// CartNavItem,
+	// UserMenu,
 }: {
 	channels: ChannelsProps;
 	// channel: string;
@@ -95,8 +95,8 @@ export default function NavClient({
 				<div className="hidden lg:flex">{/* <SearchBar channel={channel} locale={locale} /> */}</div>
 				{/* <LanguageSwitcherSPA /> */}
 				{channels?.length > 0 && <ChannelSelect channels={channels} variant="navbar" />}
-				<Suspense fallback={<div className="w-6" />}>{CartNavItem}</Suspense>
-				<Suspense fallback={<div className="w-8" />}>{UserMenu}</Suspense>
+				{/* <Suspense fallback={<div className="w-6" />}>{CartNavItem}</Suspense> */}
+				{/* <Suspense fallback={<div className="w-8" />}>{UserMenu}</Suspense> */}
 			</div>
 
 			{/* منوی موبایل */}
@@ -123,8 +123,8 @@ export default function NavClient({
 						<div className="flex flex-1 flex-col justify-center gap-3 border-t border-gray-200 p-4">
 							{/* <LanguageSwitcherSPA /> */}
 							{channels?.length > 0 && <ChannelSelect channels={channels} variant="navbar-mobile" />}
-							{CartNavItem}
-							{UserMenu}
+							{/* {CartNavItem} */}
+							{/* {UserMenu} */}
 						</div>
 					</div>
 				</MobileMenu>

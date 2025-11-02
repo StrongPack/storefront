@@ -13,7 +13,7 @@ export const useCheckoutComplete = (languageCode: LanguageCodeEnum) => {
 	const onCheckoutComplete = useSubmit<{}, typeof checkoutComplete>(
 		useMemo(
 			() => ({
-				languageCode,
+				languageCode: languageCode,
 				parse: () => ({
 					checkoutId,
 				}),
@@ -32,7 +32,7 @@ export const useCheckoutComplete = (languageCode: LanguageCodeEnum) => {
 					}
 				},
 			}),
-			[checkoutComplete, checkoutId],
+			[checkoutComplete, checkoutId, languageCode],
 		),
 	);
 	return { completingCheckout: fetching, onCheckoutComplete };

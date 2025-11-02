@@ -17,7 +17,7 @@ export const useCheckoutEmailUpdate = ({ email, languageCode }: CheckoutEmailUpd
 	const onSubmit = useSubmit<CheckoutEmailUpdateFormData, typeof updateEmail>(
 		useMemo(
 			() => ({
-				languageCode,
+				languageCode: languageCode,
 				scope: "checkoutEmailUpdate",
 				onSubmit: updateEmail,
 				shouldAbort: async ({ formData: { email } }) => {
@@ -28,7 +28,7 @@ export const useCheckoutEmailUpdate = ({ email, languageCode }: CheckoutEmailUpd
 				},
 				parse: ({ languageCode, checkoutId, email }) => ({ languageCode, checkoutId, email }),
 			}),
-			[updateEmail],
+			[updateEmail, languageCode],
 		),
 	);
 
@@ -41,5 +41,5 @@ export const useCheckoutEmailUpdate = ({ email, languageCode }: CheckoutEmailUpd
 			previousEmail.current = email;
 			void debouncedSubmit({ email, languageCode });
 		}
-	}, [debouncedSubmit, email]);
+	}, [debouncedSubmit, email, languageCode]);
 };

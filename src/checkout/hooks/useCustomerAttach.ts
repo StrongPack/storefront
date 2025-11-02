@@ -13,7 +13,7 @@ export const useCustomerAttach = (languageCode: LanguageCodeEnum) => {
 	const onSubmit = useSubmit<{}, typeof customerAttach>(
 		useMemo(
 			() => ({
-				languageCode,
+				languageCode: languageCode,
 				hideAlerts: true,
 				scope: "checkoutCustomerAttach",
 				shouldAbort: () =>
@@ -33,7 +33,15 @@ export const useCustomerAttach = (languageCode: LanguageCodeEnum) => {
 					}
 				},
 			}),
-			[authenticated, checkout?.user?.id, customerAttach, fetchingCheckout, fetchingCustomerAttach, refetch],
+			[
+				authenticated,
+				checkout?.user?.id,
+				customerAttach,
+				fetchingCheckout,
+				fetchingCustomerAttach,
+				refetch,
+				languageCode,
+			],
 		),
 	);
 

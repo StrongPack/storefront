@@ -40,7 +40,7 @@ export const AdyenDropIn: FC<AdyenDropinProps> = ({ config, languageCode }) => {
 		if (dropinContainerElRef.current && !dropinComponentRef.current) {
 			void createAdyenCheckoutInstance(dropinContainerElRef.current, config.data);
 		}
-	}, []);
+	}, [config.data, createAdyenCheckoutInstance]);
 
 	return <div ref={dropinContainerElRef} />;
 };

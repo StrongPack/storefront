@@ -133,7 +133,7 @@ export const useAdyenDropin = (props: AdyenDropinProps) => {
 	>(
 		useMemo(
 			() => ({
-				languageCode,
+				languageCode: languageCode,
 				onSubmit: transactionInitialize,
 				onError: () => {
 					showCustomErrors([{ message: commonErrorMessages.somethingWentWrong }]);
@@ -166,6 +166,7 @@ export const useAdyenDropin = (props: AdyenDropinProps) => {
 				handlePaymentResult,
 				showCustomErrors,
 				transactionInitialize,
+				languageCode,
 			],
 		),
 	);
@@ -173,7 +174,7 @@ export const useAdyenDropin = (props: AdyenDropinProps) => {
 	const onTransactionProccess = useSubmit<TransactionProcessMutationVariables, typeof transactionProcess>(
 		useMemo(
 			() => ({
-				languageCode,
+				languageCode: languageCode,
 				onSubmit: transactionProcess,
 				onError: () => {
 					// will tell the processing screen to disappear
@@ -214,6 +215,7 @@ export const useAdyenDropin = (props: AdyenDropinProps) => {
 				setIsProcessingPayment,
 				showCustomErrors,
 				transactionProcess,
+				languageCode,
 			],
 		),
 	);

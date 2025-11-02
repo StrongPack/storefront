@@ -81,13 +81,13 @@ export const usePaymentGatewaysInitialize = ({ languageCode }: { languageCode: L
 					console.log({ errors });
 				},
 			}),
-			[availablePaymentGateways, checkoutId, paymentGatewaysInitialize],
+			[availablePaymentGateways, checkoutId, paymentGatewaysInitialize, languageCode],
 		),
 	);
 
 	useEffect(() => {
 		void onSubmit();
-	}, []);
+	}, [onSubmit]);
 
 	useEffect(() => {
 		if (billingCountry !== previousBillingCountry.current) {

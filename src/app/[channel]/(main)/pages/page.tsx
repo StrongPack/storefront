@@ -7,8 +7,8 @@ import { getChannelConfig } from "@/lib/channelConfig";
 import { LinkWithChannel } from "@/ui/atoms/LinkWithChannel";
 
 export const metadata = {
-	title: "Blogs · Saleor Storefront example",
-	description: "All Blogs in Saleor Storefront example",
+	title: "20pack",
+	description: "20pack",
 };
 
 export default async function Page(props: { params: Promise<{ channel: string }> }) {
@@ -77,9 +77,10 @@ export default async function Page(props: { params: Promise<{ channel: string }>
 							</div>
 
 							{/* متن مقاله */}
-							<div className="p-5">
+							<div className="flex flex-col items-stretch p-5 text-justify leading-relaxed">
+								{/* <div className="p-5"> */}
 								{/* <h2 className="truncate text-lg font-semibold text-gray-900">{displayTitle}</h2> */}
-								<h2 className="whitespace-normal break-words text-lg font-semibold text-gray-900">
+								<h2 className="mb-1 whitespace-normal break-words text-lg font-semibold text-gray-900">
 									{displayTitle}
 								</h2>
 
@@ -89,7 +90,7 @@ export default async function Page(props: { params: Promise<{ channel: string }>
 								<p className="mt-3 line-clamp-3 text-sm text-gray-700">{summary}</p>
 
 								<p
-									className={`text-primary-600 group-hover:text-primary-800 mt-4 flex items-center gap-1 text-sm font-semibold ${
+									className={`text-primary-600 group-hover:text-primary-800 mt-4 flex items-center gap-1 text-sm font-semibold transition-colors ${
 										isRTL ? "flex-row-reverse justify-start" : "justify-end"
 									}`}
 								>

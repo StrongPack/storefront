@@ -14,8 +14,8 @@ import { ProductsPerPage } from "@/app/config";
 import { getChannelConfig } from "@/lib/channelConfig";
 
 export const metadata = {
-	title: "Search products · 20pack",
-	description: "Search products in 20pack",
+	title: "20Pack",
+	description: "20Pack",
 };
 
 export default async function Page(props: {

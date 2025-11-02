@@ -8,8 +8,8 @@ import { getMessages } from "@/lib/getMessages";
 import { getInitialLocaleServer } from "@/lib/getInitialLocaleServer";
 
 export const metadata = {
-	title: "Checkout · 20pack",
-	description: "Localized checkout flow with Saleor.",
+	title: "20Pack",
+	description: "20Pack",
 };
 
 // export default function RootLayout(props: { children: ReactNode }) {

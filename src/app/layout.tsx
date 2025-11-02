@@ -14,7 +14,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "20Pack",
-	description: "Multilingual storefront with RTL/LTR",
+	description: "20pack",
 
 	manifest: "/site.webmanifest",
 	icons: {

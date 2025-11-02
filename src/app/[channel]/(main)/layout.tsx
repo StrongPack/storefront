@@ -8,7 +8,7 @@ import { getChannelConfig } from "@/lib/channelConfig";
 
 export const metadata = {
 	title: "20pack",
-	description: "Starter pack for building performant e-commerce experiences with Saleor.",
+	description: "20pack.",
 };
 
 export default async function RootLayout({

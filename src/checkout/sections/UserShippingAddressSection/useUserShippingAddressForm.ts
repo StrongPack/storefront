@@ -40,7 +40,7 @@ export const useUserShippingAddressForm = ({ languageCode }: { languageCode: Lan
 				}),
 				onSuccess: ({ formHelpers: { resetForm }, formData }) => resetForm({ values: formData }),
 			}),
-			[checkoutShippingAddressUpdate, shippingAddress],
+			[checkoutShippingAddressUpdate, shippingAddress, languageCode],
 		),
 	);
 

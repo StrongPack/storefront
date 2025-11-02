@@ -9,7 +9,7 @@ import { CollectionCategorySliderSplit } from "@/ui/components/nav/components/Co
 
 export const metadata = {
 	title: "20pack",
-	description: "Storefront.",
+	description: "20pack",
 };
 
 export default async function Page({ params }: { params: Promise<{ channel: string }> }) {

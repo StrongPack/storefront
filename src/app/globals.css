@@ -31,3 +31,19 @@ body {
 .animate-scroll-rtl {
 	animation: scroll-rtl 40s linear infinite;
 }
+
+@keyframes wiggle {
+	0%,
+	100% {
+		transform: rotate(-8deg);
+	}
+	50% {
+		transform: rotate(8deg);
+	}
+}
+
+@layer utilities {
+	.animate-wiggle {
+		animation: wiggle 0.4s ease-in-out infinite;
+	}
+}

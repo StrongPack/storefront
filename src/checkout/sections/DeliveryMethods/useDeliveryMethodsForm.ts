@@ -60,7 +60,7 @@ export const useDeliveryMethodsForm = (
 					return setValues({ selectedMethodId });
 				},
 			}),
-			[checkout.deliveryMethod?.id, updateDeliveryMethod],
+			[checkout.deliveryMethod?.id, updateDeliveryMethod, languageCode],
 		),
 	);
 

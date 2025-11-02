@@ -11,8 +11,8 @@ import { getChannelConfig } from "@/lib/channelConfig";
 // import { channel } from "diagnostics_channel";
 
 export const metadata = {
-	title: "Products · Saleor Storefront example",
-	description: "All products in Saleor Storefront example",
+	title: "20pack",
+	description: "20pack",
 };
 
 export default async function Page(props: {

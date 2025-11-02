@@ -42,12 +42,20 @@ export async function ProductElement({
 						/>
 					)}
 					<div className="mt-2 flex justify-between">
-						<div>
+						{/* <div>
 							<h3 className="mt-1 text-sm font-semibold text-neutral-900">{displayName}</h3>
 							<p className="mt-1 text-sm text-neutral-500" data-testid="ProductElement_Category">
 								{categoryName}
 							</p>
+						</div> */}
+						<div className="flex flex-col items-stretch text-justify leading-relaxed">
+							<h3 className="mt-1 text-sm font-semibold text-neutral-900">{displayName}</h3>
+
+							<p className="mt-1 text-sm text-neutral-500" data-testid="ProductElement_Category">
+								{categoryName}
+							</p>
 						</div>
+
 						<p className="mt-1 text-sm font-medium text-neutral-900" data-testid="ProductElement_PriceRange">
 							{formatMoneyRange(
 								{

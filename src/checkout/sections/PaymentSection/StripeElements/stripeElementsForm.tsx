@@ -179,6 +179,7 @@ export function CheckoutForm({ languageCode }: { languageCode: LanguageCodeEnum 
 		showCustomErrors,
 		stripe,
 		validationState,
+		t,
 	]);
 
 	return (

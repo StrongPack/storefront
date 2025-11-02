@@ -1,4 +1,5 @@
 import edjsHTML from "editorjs-html";
+import Image from "next/image"; // جایگزین برای <img>
 import { revalidatePath } from "next/cache";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -6,7 +7,7 @@ import { type ResolvingMetadata, type Metadata } from "next";
 import xss from "xss";
 import { invariant } from "ts-invariant";
 import { type WithContext, type Product } from "schema-dts";
-import { AddButton } from "./AddButton";
+// import { AddButton } from "./AddButton";
 import { VariantSelector } from "@/ui/components/VariantSelector";
 import { ProductImageWrapper } from "@/ui/atoms/ProductImageWrapper";
 import { executeGraphQL } from "@/lib/graphql";
@@ -229,7 +230,10 @@ export default async function Page(props: {
 				</div>
 				<div className="flex flex-col pt-6 sm:col-span-1 sm:px-6 sm:pt-0 lg:col-span-3 lg:pt-16">
 					<div>
-						<h1 className="mb-4 flex-auto text-3xl font-medium tracking-tight text-neutral-900">
+						{/* <h1 className="mb-4 flex-auto text-3xl font-medium tracking-tight text-neutral-900">
+							{displayName}
+						</h1> */}
+						<h1 className="mb-4 flex-auto text-justify text-3xl font-medium tracking-tight text-neutral-900">
 							{displayName}
 						</h1>
 						<p className="mb-8 text-sm " data-testid="ProductElement_Price">
@@ -246,9 +250,27 @@ export default async function Page(props: {
 							/>
 						)}
 						<AvailabilityMessage isAvailable={isAvailable} />
-						<div className="mt-8">
+						{/* <div className="mt-8">
 							<AddButton disabled={!selectedVariantID || !selectedVariant?.quantityAvailable} />
-						</div>
+						</div> */}
+
+						{/* <div className="mt-8 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-center text-base font-semibold text-amber-800 shadow-sm transition hover:border-amber-400 hover:bg-amber-100 hover:shadow-md">
+							{t("contact_for_price")}
+						</div> */}
+
+						<a
+							href="tel:+982112345678"
+							className="mt-8 flex items-center justify-center gap-3 rounded-lg border border-amber-300 bg-amber-50 px-6 py-3 text-lg font-semibold text-amber-800 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-400 hover:bg-amber-100 hover:shadow-md"
+						>
+							<Image
+								src="/icons/phone-solid-full.svg"
+								alt="Contact phone"
+								width={22}
+								height={22}
+								className="animate-wiggle group-hover:animate-wiggle transition-transform duration-300"
+							/>
+							<span className="block text-justify">{t("contact_for_price")}</span>
+						</a>
 
 						{product.attributes?.length ? (
 							<div className="mt-8 space-y-2 text-sm text-neutral-700">

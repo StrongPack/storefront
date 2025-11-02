@@ -8,7 +8,7 @@ import { RootWrapper } from "./pageWrapper";
 import { Logo } from "@/ui/components/Logo";
 import { getInitialLocaleServer } from "@/lib/getInitialLocaleServer";
 export const metadata = {
-	title: "Checkout · 20pack",
+	title: "20Pack",
 };
 
 export default async function CheckoutPage(props: {

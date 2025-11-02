@@ -97,8 +97,8 @@ export default async function Page(props: { params: Promise<{ slug: string; chan
 	// const contentHtml = content ? parser.parse(JSON.parse(content)) : null;
 
 	return (
-		<div className="mx-auto max-w-7xl p-8 pb-16">
-			<h1 className="text-3xl font-semibold">{contentTitle}</h1>
+		<div className="mx-auto max-w-7xl p-8 pb-16 text-justify leading-relaxed">
+			<h1 className="mb-6 text-3xl font-semibold tracking-tight text-neutral-900">{contentTitle}</h1>
 			{/* {contentHtml && (
 				<div className="prose">
 					{contentHtml.map((content) => (

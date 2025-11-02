@@ -9,7 +9,7 @@ import { LinkWithChannel } from "@/ui/atoms/LinkWithChannel";
 import { getChannelConfig } from "@/lib/channelConfig";
 
 export const metadata = {
-	title: "Shopping Cart · Saleor Storefront example",
+	title: "20pack",
 };
 
 export default async function Page(props: { params: Promise<{ channel: string }> }) {
