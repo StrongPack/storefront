@@ -60,19 +60,52 @@ export const CollectionCategorySliderSplit = ({
 										className="absolute inset-0"
 									>
 										<LinkWithChannel href={item.href} className="relative block h-full w-full">
+											{/* 										
 											<Image
 												src={item.image || "/images/placeholder-category.png"}
 												alt={item.label}
 												fill
 												className="rounded-xl object-cover"
+											/> */}
+
+											{/* 👇 پس‌زمینه بلور شده */}
+											<Image
+												src={item.image || "/images/placeholder-category.png"}
+												alt={item.label}
+												fill
+												className="absolute inset-0 scale-110 object-cover blur-md brightness-90"
+												aria-hidden // تصویر پس‌زمینه است
 											/>
+
+											{/* 👇 تصویر اصلی در وسط */}
+											{/* <div className="relative flex h-full w-full items-center justify-center">
+												<Image
+													src={item.image || "/images/placeholder-category.png"}
+													alt={item.label}
+													width={512}
+													height={512}
+													className="z-10 object-contain"
+												/>
+											</div> */}
+
+											<div className="relative flex h-full w-full items-center justify-center overflow-hidden">
+												<Image
+													src={item.image || "/images/placeholder-category.png"}
+													alt={item.label}
+													width={600}
+													height={600}
+													className="z-10 max-h-full object-contain"
+													style={{ maxHeight: "100%", height: "auto", width: "auto" }}
+												/>
+											</div>
+
 											<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
 											<motion.p
 												initial={{ y: 20, opacity: 0 }}
 												animate={{ y: 0, opacity: 1 }}
 												exit={{ y: -10, opacity: 0 }}
 												transition={{ duration: 0.4 }}
-												className="absolute bottom-5 w-full text-center text-lg font-semibold text-white drop-shadow-lg md:text-xl"
+												className="absolute bottom-5 z-20 w-full text-center text-lg font-semibold text-white drop-shadow-lg  md:text-xl"
 											>
 												{item.label}
 											</motion.p>
@@ -83,7 +116,7 @@ export const CollectionCategorySliderSplit = ({
 					</AnimatePresence>
 
 					{/* نقاط (Indicators) */}
-					<div className="absolute inset-x-0 bottom-3 flex justify-center gap-2">
+					<div className="absolute inset-x-0 bottom-3 z-30 flex justify-center gap-2">
 						{sliderItems.map((_, index) => (
 							<button
 								key={index}
@@ -120,19 +153,51 @@ export const CollectionCategorySliderSplit = ({
 										className="absolute inset-0"
 									>
 										<LinkWithChannel href={item.href} className="relative block h-full w-full">
-											<Image
+											{/* <Image
 												src={item.image || "/images/placeholder-category.png"}
 												alt={item.label}
 												fill
 												className="object-cover"
+											/> */}
+
+											{/* پس‌زمینه بلور */}
+											<Image
+												src={item.image || "/images/placeholder-category.png"}
+												alt={item.label}
+												fill
+												className="absolute inset-0 scale-110 object-cover blur-md brightness-90"
+												aria-hidden
 											/>
+
+											{/* تصویر اصلی */}
+											{/* <div className="relative flex h-full w-full items-center justify-center">
+												<Image
+													src={item.image || "/images/placeholder-category.png"}
+													alt={item.label}
+													width={256}
+													height={256}
+													className="z-10 object-contain"
+												/>
+											</div> */}
+
+											<div className="relative flex h-full w-full items-center justify-center overflow-hidden">
+												<Image
+													src={item.image || "/images/placeholder-category.png"}
+													alt={item.label}
+													width={256}
+													height={256}
+													className="z-10 max-h-full object-contain"
+													style={{ maxHeight: "100%", height: "auto", width: "auto" }}
+												/>
+											</div>
+
 											<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
 											<motion.p
 												initial={{ y: 20, opacity: 0 }}
 												animate={{ y: 0, opacity: 1 }}
 												exit={{ y: -10, opacity: 0 }}
 												transition={{ duration: 0.4 }}
-												className="absolute bottom-4 w-full text-center text-base font-semibold text-white drop-shadow"
+												className="absolute bottom-4 z-20 w-full text-center text-base font-semibold text-white  drop-shadow"
 											>
 												{item.label}
 											</motion.p>
@@ -142,7 +207,7 @@ export const CollectionCategorySliderSplit = ({
 						)}
 					</AnimatePresence>
 
-					<div className="absolute inset-x-0 bottom-2 flex justify-center gap-2">
+					<div className="absolute inset-x-0 bottom-3  z-[50] flex justify-center gap-2">
 						{sliderItems.map((_, index) => (
 							<button
 								key={index}

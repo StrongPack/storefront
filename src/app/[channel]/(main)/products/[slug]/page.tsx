@@ -259,7 +259,7 @@ export default async function Page(props: {
 						</div> */}
 
 						<a
-							href="tel:+982112345678"
+							href="tel:+989011443374"
 							className="mt-8 flex items-center justify-center gap-3 rounded-lg border border-amber-300 bg-amber-50 px-6 py-3 text-lg font-semibold text-amber-800 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-400 hover:bg-amber-100 hover:shadow-md"
 						>
 							<Image
