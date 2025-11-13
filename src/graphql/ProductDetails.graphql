@@ -17,6 +17,12 @@ query ProductDetails($languageCode: LanguageCodeEnum!, $slug: String!, $channel:
 			url
 			alt
 		}
+		media {
+			id
+			url
+			alt
+			sortOrder
+		}
 		category {
 			id
 			name

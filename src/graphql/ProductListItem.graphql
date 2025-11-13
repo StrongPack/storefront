@@ -40,4 +40,10 @@ fragment ProductListItem on Product {
 		url
 		alt
 	}
+	media {
+		id
+		url
+		alt
+		sortOrder
+	}
 }

@@ -8,8 +8,8 @@ import xss from "xss";
 import { invariant } from "ts-invariant";
 import { type WithContext, type Product } from "schema-dts";
 // import { AddButton } from "./AddButton";
+import ProductImageSlider from "./ProductImageSlider";
 import { VariantSelector } from "@/ui/components/VariantSelector";
-import { ProductImageWrapper } from "@/ui/atoms/ProductImageWrapper";
 import { executeGraphQL } from "@/lib/graphql";
 import { getChannelConfig } from "@/lib/channelConfig";
 import { formatMoney, formatMoneyRange } from "@/lib/utils";
@@ -97,6 +97,7 @@ export default async function Page(props: {
 	const { channel } = params;
 	const { languageCode, locale } = await getChannelConfig(channel);
 	const t = await getTranslations({ locale: locale, namespace: "common" });
+	const t2 = await getTranslations({ locale: locale, namespace: "orders" });
 	const { product } = await executeGraphQL(ProductDetailsDocument, {
 		variables: {
 			slug: decodeURIComponent(params.slug),
@@ -110,7 +111,8 @@ export default async function Page(props: {
 		notFound();
 	}
 
-	const firstImage = product.thumbnail;
+	// const firstImage = product.thumbnail;
+	// const hasImages = Array.isArray(product.media) && product.media.length > 0;
 
 	const isNotEn = locale !== "en";
 
@@ -209,36 +211,33 @@ export default async function Page(props: {
 	};
 
 	return (
-		<section className="mx-auto grid max-w-7xl p-8">
+		<section className="mx-auto grid max-w-7xl p-4 sm:p-6 md:p-8 lg:p-8">
 			<script
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{
 					__html: JSON.stringify(productJsonLd),
 				}}
 			/>
-			<form className="grid gap-2 sm:grid-cols-2 lg:grid-cols-8" action={addItem}>
-				<div className="md:col-span-1 lg:col-span-5">
-					{firstImage && (
-						<ProductImageWrapper
-							priority={true}
-							alt={firstImage.alt ?? ""}
-							width={1024}
-							height={1024}
-							src={firstImage.url}
-						/>
-					)}
+			<form className="grid grid-cols-1 gap-4 md:grid-cols-8 lg:grid-cols-8" action={addItem}>
+				<div className="order-1 sm:order-1 md:order-1 md:col-span-4 lg:order-1 lg:col-span-5">
+					<ProductImageSlider
+						images={product.media ?? []}
+						fallback={product.thumbnail ?? undefined}
+						displayName={displayName}
+					/>
 				</div>
-				<div className="flex flex-col pt-6 sm:col-span-1 sm:px-6 sm:pt-0 lg:col-span-3 lg:pt-16">
+				<div className="order-2 flex flex-col pt-6 sm:order-2 sm:px-6 sm:pt-0 md:order-2 md:col-span-4 lg:order-2 lg:col-span-3 lg:pt-16">
 					<div>
-						{/* <h1 className="mb-4 flex-auto text-3xl font-medium tracking-tight text-neutral-900">
-							{displayName}
-						</h1> */}
-						<h1 className="mb-4 flex-auto text-justify text-3xl font-medium tracking-tight text-neutral-900">
+						<h1 className="mb-4 text-center text-2xl font-medium tracking-tight text-neutral-900 sm:text-justify sm:text-3xl">
 							{displayName}
 						</h1>
-						<p className="mb-8 text-sm " data-testid="ProductElement_Price">
-							{price}
-						</p>
+
+						<div className="mb-6 flex items-center justify-between pb-3 text-base font-medium text-neutral-900 sm:text-lg">
+							<span className="text-neutral-600">{t2("price")}</span>
+							<span className="font-price text-lg font-semibold text-amber-700 transition-colors duration-200 hover:text-amber-800 sm:text-xl">
+								{price}
+							</span>
+						</div>
 
 						{variants && (
 							<VariantSelector
@@ -250,26 +249,18 @@ export default async function Page(props: {
 							/>
 						)}
 						<AvailabilityMessage isAvailable={isAvailable} />
-						{/* <div className="mt-8">
-							<AddButton disabled={!selectedVariantID || !selectedVariant?.quantityAvailable} />
-						</div> */}
-
-						{/* <div className="mt-8 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-center text-base font-semibold text-amber-800 shadow-sm transition hover:border-amber-400 hover:bg-amber-100 hover:shadow-md">
-							{t("contact_for_price")}
-						</div> */}
-
 						<a
 							href="tel:+989011443374"
-							className="mt-8 flex items-center justify-center gap-3 rounded-lg border border-amber-300 bg-amber-50 px-6 py-3 text-lg font-semibold text-amber-800 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-400 hover:bg-amber-100 hover:shadow-md"
+							className="mt-6 flex items-center justify-center gap-2 rounded-md border border-amber-300 bg-amber-50 px-4 py-2.5 text-base font-semibold text-amber-800 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-400 hover:bg-amber-100 hover:shadow-md sm:mt-8 sm:gap-3 sm:px-6 sm:py-3 sm:text-lg"
 						>
 							<Image
 								src="/icons/phone-solid-full.svg"
 								alt="Contact phone"
-								width={22}
-								height={22}
-								className="animate-wiggle group-hover:animate-wiggle transition-transform duration-300"
+								width={20}
+								height={20}
+								className="animate-wiggle"
 							/>
-							<span className="block text-justify">{t("contact_for_price")}</span>
+							<span>{t("contact_for_price")}</span>
 						</a>
 
 						{product.attributes?.length ? (

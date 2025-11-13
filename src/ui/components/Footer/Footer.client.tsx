@@ -44,7 +44,11 @@ export const FooterClient = ({ footerLinks, dir, locale }: FooterClientProps) =>
 	return (
 		<footer className="border-t border-neutral-200 bg-neutral-50 text-neutral-700">
 			<div className="mx-auto max-w-7xl px-4 lg:px-8">
-				<div className={`grid grid-cols-1 gap-8 py-16 sm:grid-cols-3 ${isRTL ? "text-right" : "text-left"}`}>
+				<div
+					className={`grid grid-cols-2 gap-8 py-16 md:grid-cols-2 lg:grid-cols-3 ${
+						isRTL ? "text-right" : "text-left"
+					}`}
+				>
 					{footerLinks.menu?.items?.map((item) => {
 						// انتخاب ترجمه عنوان اصلی منو
 						const displayTitle = isNotEn && item.translation?.name ? item.translation.name : item.name;
@@ -63,7 +67,12 @@ export const FooterClient = ({ footerLinks, dir, locale }: FooterClientProps) =>
 
 											return (
 												<li key={child.id} className="text-sm">
-													<LinkWithChannel href={`/pages`}>{displayPageTitle}</LinkWithChannel>
+													<LinkWithChannel
+														href={`/pages`}
+														className="transition-colors duration-200 hover:text-neutral-900"
+													>
+														{displayPageTitle}
+													</LinkWithChannel>
 												</li>
 											);
 										} else if (child.page) {
@@ -74,7 +83,10 @@ export const FooterClient = ({ footerLinks, dir, locale }: FooterClientProps) =>
 
 											return (
 												<li key={child.id} className="text-sm">
-													<LinkWithChannel href={`/pages/${child.page.slug}`}>
+													<LinkWithChannel
+														href={`/pages/${child.page.slug}`}
+														className="transition-colors duration-200 hover:text-neutral-900"
+													>
 														{displayPageTitle}
 													</LinkWithChannel>
 												</li>
@@ -90,7 +102,10 @@ export const FooterClient = ({ footerLinks, dir, locale }: FooterClientProps) =>
 
 											return (
 												<li key={child.id} className="text-sm">
-													<LinkWithChannel href={`/collections/${child.collection.slug}`}>
+													<LinkWithChannel
+														href={`/collections/${child.collection.slug}`}
+														className="transition-colors duration-200 hover:text-neutral-900"
+													>
 														{displayCollectionName}
 													</LinkWithChannel>
 												</li>
@@ -106,7 +121,10 @@ export const FooterClient = ({ footerLinks, dir, locale }: FooterClientProps) =>
 
 											return (
 												<li key={child.id} className="text-sm">
-													<LinkWithChannel href={`/categories/${child.category.slug}`}>
+													<LinkWithChannel
+														href={`/categories/${child.category.slug}`}
+														className="transition-colors duration-200 hover:text-neutral-900"
+													>
 														{displayCategoryName}
 													</LinkWithChannel>
 												</li>
@@ -120,7 +138,12 @@ export const FooterClient = ({ footerLinks, dir, locale }: FooterClientProps) =>
 
 											return (
 												<li key={child.id} className="text-sm">
-													<LinkWithChannel href={child.url}>{displayName}</LinkWithChannel>
+													<LinkWithChannel
+														href={child.url}
+														className="transition-colors duration-200 hover:text-neutral-900"
+													>
+														{displayName}
+													</LinkWithChannel>
 												</li>
 											);
 										}
@@ -132,7 +155,10 @@ export const FooterClient = ({ footerLinks, dir, locale }: FooterClientProps) =>
 						);
 					})}
 
-					<FooterMap />
+					{/* Footer Map */}
+					<div className="col-span-2 lg:col-span-1">
+						<FooterMap />
+					</div>
 				</div>
 
 				{/* {channels?.length > 0 && (

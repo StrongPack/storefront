@@ -29,15 +29,24 @@ export const FooterSocial = () => (
 				target={href.startsWith("http") ? "_blank" : undefined}
 				rel="noopener noreferrer"
 				aria-label={alt}
-				className="transition-all duration-300 hover:-translate-y-1 hover:scale-110"
+				// className="transition-all duration-300 hover:-translate-y-1 hover:scale-110"
+				className="group transition-all duration-300 hover:-translate-y-1 hover:scale-110"
 			>
-				<Image
+				{/* <Image
 					src={icon}
 					alt={alt}
 					width={28}
 					height={28}
-					className={`transition duration-200 hover:brightness-0 hover:drop-shadow-[0_0_6px_${glow}] hover:invert`}
-				/>
+					// className={`transition duration-200 hover:brightness-0 hover:drop-shadow-[0_0_6px_${glow}] hover:invert`}
+					className={`transition duration-200 group-hover:brightness-0 group-hover:drop-shadow-[0_0_6px_${glow}] group-hover:invert`}
+				/> */}
+
+				<div
+					className="transition duration-300 group-hover:brightness-0 group-hover:drop-shadow-[0_0_6px_var(--glow)] group-hover:invert"
+					style={{ "--glow": glow } as React.CSSProperties}
+				>
+					<Image src={icon} alt={alt} width={28} height={28} />
+				</div>
 			</a>
 		))}
 	</div>

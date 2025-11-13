@@ -4,11 +4,18 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 // import { createInstance, type Resource } from "i18next";
 // import resourcesToBackend from "i18next-resources-to-backend";
+import localFont from "next/font/local";
 import { DraftModeNotification } from "@/ui/components/DraftModeNotification";
 // import { ClientI18nProvider } from "@/ui/components/ClientI18nProvider";
 // import { i18nInstance } from "@/lib/i18nSingleton";
 // import { DirContext } from "@/ui/context/DirContext";
 // import ClientDirProvider from "@/ui/components/ClientDirProvider"; // Adjust path as needed
+
+const vazirmatn = localFont({
+	src: [{ path: "../../public/fonts/Vazirmatn[wght].woff2", style: "normal" }],
+	variable: "--font-vazirmatn",
+	display: "swap",
+});
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -66,7 +73,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 	// const resources = i18nInstance.services.resourceStore.data;
 
 	return (
-		<html className="min-h-dvh">
+		<html className={`${vazirmatn.variable} min-h-dvh`}>
 			<body className={`${inter.className} min-h-dvh`}>
 				{/* <ClientDirProvider dir={dir}> */}
 				{/* <ClientI18nProvider initialResources={resources} lng={locale} defaultLocale={defaultLocale}> */}

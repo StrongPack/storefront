@@ -2,8 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	font-family: var(--font-vazirmatn), sans-serif;
+}
+
+h1,
+h2,
+h3 {
+	font-weight: 600;
+}
+
+p,
+a,
+span,
+button {
+	font-family: var(--font-vazirmatn), sans-serif;
+}
 body {
+	font-family: var(--font-Vazirmatn), sans-serif;
 	overflow-x: hidden;
+}
+
+/* جلوگیری از برعکس شدن دکمه‌های ناوبری در حالت RTL */
+.swiper-button-prev,
+.swiper-button-next {
+	transform: none !important;
+}
+
+.swiper-pagination-bullets {
+	direction: ltr !important;
+}
+
+@font-face {
+	font-family: "BTitrBd";
+	src: url("/fonts/BTitrBd.ttf") format("truetype");
+}
+
+/* کلاس کاربردی برای قیمت */
+.font-price {
+	font-weight: bold;
+	letter-spacing: 0.03em;
 }
 
 @keyframes scroll-ltr {

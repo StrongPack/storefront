@@ -91,7 +91,7 @@ export default function NavClient({
 			<div className={`flex items-center gap-4`}>{NavLinks}</div>
 
 			{/* <div className={`flex items-center gap-4 whitespace-nowrap lg:gap-8`}> */}
-			<div className="hidden items-center gap-4 whitespace-nowrap lg:flex lg:gap-8">
+			<div className="hidden items-center gap-4 whitespace-nowrap md:flex lg:gap-8">
 				<div className="hidden lg:flex">{/* <SearchBar channel={channel} locale={locale} /> */}</div>
 				{/* <LanguageSwitcherSPA /> */}
 				{channels?.length > 0 && <ChannelSelect channels={channels} variant="navbar" />}
