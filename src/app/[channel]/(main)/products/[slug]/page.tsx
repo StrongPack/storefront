@@ -1,4 +1,3 @@
-import edjsHTML from "editorjs-html";
 import Image from "next/image"; // جایگزین برای <img>
 import { revalidatePath } from "next/cache";
 import { notFound } from "next/navigation";
@@ -21,19 +20,19 @@ import {
 } from "@/gql/graphql";
 import * as Checkout from "@/lib/checkout";
 import { AvailabilityMessage } from "@/ui/components/AvailabilityMessage";
+import { getProductDisplayData } from "@/lib/productDisplayData";
 
 export async function generateMetadata(
 	props: {
 		params: Promise<{ slug: string; channel: string }>;
 		searchParams: Promise<{ variant?: string }>;
 	},
-	parent: ResolvingMetadata,
+	_parent: ResolvingMetadata,
 ): Promise<Metadata> {
 	const [searchParams, params] = await Promise.all([props.searchParams, props.params]);
 
 	const { channel } = params;
-	const { languageCode } = await getChannelConfig(channel);
-
+	const { languageCode, locale } = await getChannelConfig(channel);
 	const { product } = await executeGraphQL(ProductDetailsDocument, {
 		variables: {
 			slug: decodeURIComponent(params.slug),
@@ -47,28 +46,47 @@ export async function generateMetadata(
 		notFound();
 	}
 
-	const productName = product.seoTitle || product.name;
-	const variantName = product.variants?.find(({ id }) => id === searchParams.variant)?.name;
-	const productNameAndVariant = variantName ? `${productName} - ${variantName}` : productName;
+	const isNotEn = locale !== "en";
+	const productTyped = product as ProductListItemFragment;
+
+	const displayData = getProductDisplayData(productTyped, isNotEn);
+	const { name, seoTitle, seoDescription, categoryName, keyWords } = displayData;
+
+	const variants = product.variants;
+	const selectedVariantID = searchParams.variant;
+	const selectedVariant = variants?.find(({ id }) => id === selectedVariantID);
+	const selectedVariantName = (isNotEn && selectedVariant?.translation?.name) || selectedVariant?.name;
+	const nameWithVariant = selectedVariantName ? `${name} - ${selectedVariantName}` : name;
 
 	return {
-		title: `${product.name} | ${product.seoTitle || (await parent).title?.absolute}`,
-		description: product.seoDescription || productNameAndVariant,
+		title: `${name} | ${seoTitle}`,
+		description: seoDescription || nameWithVariant,
 		alternates: {
 			canonical: process.env.NEXT_PUBLIC_STOREFRONT_URL
 				? process.env.NEXT_PUBLIC_STOREFRONT_URL + `/products/${encodeURIComponent(params.slug)}`
 				: undefined,
 		},
+		// openGraph: product.thumbnail
+		// 	? {
+		// 			images: [
+		// 				{
+		// 					url: product.thumbnail.url,
+		// 					alt: name,
+		// 				},
+		// 			],
+		// 		}
+		// 	: null,
 		openGraph: product.thumbnail
 			? {
-					images: [
-						{
-							url: product.thumbnail.url,
-							alt: product.name,
-						},
-					],
+					title: `${name} | ${seoTitle}`,
+					description: seoDescription || nameWithVariant,
+					type: "website",
+					images: [{ url: product.thumbnail?.url, alt: name }],
 				}
 			: null,
+		// keywords: [productCategoryName, productName, productKeyWords].join(", "),
+		keywords: [categoryName, name, keyWords].filter(Boolean).join(", "),
+		robots: { index: true, follow: true },
 	};
 }
 
@@ -85,8 +103,6 @@ export async function generateStaticParams({ params }: { params: { channel: stri
 	const paths = products?.edges.map(({ node: { slug } }) => ({ slug })) || [];
 	return paths;
 }
-
-const parser = edjsHTML();
 
 export default async function Page(props: {
 	params: Promise<{ slug: string; channel: string }>;
@@ -115,21 +131,20 @@ export default async function Page(props: {
 	// const hasImages = Array.isArray(product.media) && product.media.length > 0;
 
 	const isNotEn = locale !== "en";
-
 	const productTyped = product as ProductListItemFragment;
-	const productTranslation = productTyped.translation;
 
-	const displayName = (isNotEn && productTranslation?.name) || productTyped.name || product.name;
-	const displaySeoDescription =
-		(isNotEn && productTranslation?.seoDescription) || productTyped.seoDescription || product.seoDescription;
-
-	const descriptionJson =
-		(isNotEn && productTranslation?.description) || productTyped.description || product.description;
-	const description = descriptionJson ? parser.parse(JSON.parse(descriptionJson)) : null;
+	const displayData = getProductDisplayData(productTyped, isNotEn);
+	const {
+		name: displayName,
+		seoDescription: displaySeoDescription,
+		categoryName: displayCategoryName,
+		descriptionHtml: description,
+	} = displayData;
 
 	const variants = product.variants;
 	const selectedVariantID = searchParams.variant;
 	const selectedVariant = variants?.find(({ id }) => id === selectedVariantID);
+	const selectedVariantName = (isNotEn && selectedVariant?.translation?.name) || selectedVariant?.name;
 
 	async function addItem() {
 		"use server";
@@ -161,7 +176,6 @@ export default async function Page(props: {
 
 	const isAvailable = variants?.some((variant) => variant.quantityAvailable) ?? false;
 
-	// console.log(selectedVariant?.pricing?.price?.gross);
 	const price = selectedVariant?.pricing?.price?.gross
 		? formatMoney(
 				selectedVariant.pricing.price.gross.amount,
@@ -182,10 +196,16 @@ export default async function Page(props: {
 		"@context": "https://schema.org",
 		"@type": "Product",
 		image: product.thumbnail?.url,
+		category: displayCategoryName,
+		brand: {
+			"@type": "Brand",
+			name: "20Pack",
+		},
+		sku: product.variants?.[0]?.id,
 		...(selectedVariant
 			? {
-					name: `${displayName} - ${selectedVariant.name}`,
-					description: displaySeoDescription || `${displayName} - ${selectedVariant.name}`,
+					name: `${displayName} - ${selectedVariantName}`,
+					description: displaySeoDescription || description || `${displayName} - ${selectedVariantName}`,
 					offers: {
 						"@type": "Offer",
 						availability: selectedVariant.quantityAvailable
@@ -193,11 +213,12 @@ export default async function Page(props: {
 							: "https://schema.org/OutOfStock",
 						priceCurrency: selectedVariant.pricing?.price?.gross.currency,
 						price: selectedVariant.pricing?.price?.gross.amount,
+						url: process.env.NEXT_PUBLIC_STOREFRONT_URL + `/products/${encodeURIComponent(params.slug)}`,
 					},
 				}
 			: {
 					name: displayName,
-					description: displaySeoDescription || displayName,
+					description: displaySeoDescription || description || displayName,
 					offers: {
 						"@type": "AggregateOffer",
 						availability: product.variants?.some((variant) => variant.quantityAvailable)
@@ -206,9 +227,55 @@ export default async function Page(props: {
 						priceCurrency: product.pricing?.priceRange?.start?.gross.currency,
 						lowPrice: product.pricing?.priceRange?.start?.gross.amount,
 						highPrice: product.pricing?.priceRange?.stop?.gross.amount,
+						url: process.env.NEXT_PUBLIC_STOREFRONT_URL + `/products/${encodeURIComponent(params.slug)}`,
 					},
 				}),
+		// aggregateRating: {
+		// 	"@type": "AggregateRating",
+		// 	ratingValue: product.rating || 5,
+		// 	reviewCount: 1,
+		// },
+		// review: [
+		// 	{
+		// 		"@type": "Review",
+		// 		author: { "@type": "Person", name: "Admin" },
+		// 		datePublished: "2025-01-14",
+		// 		reviewBody: "Excellent industrial packaging quality, premium nylon sheets.",
+		// 		name: displayName,
+		// 		reviewRating: {
+		// 			"@type": "Rating",
+		// 			ratingValue: product.rating || 5,
+		// 			bestRating: 5,
+		// 			worstRating: 1,
+		// 		},
+		// 	},
+		// ],
 	};
+
+	// const productJsonLd = {
+	// 	offers: {
+	// 		"@type": "Offer",
+	// 		priceCurrency: product.variants?.[0]?.pricing?.price?.gross?.currency,
+	// 		price: product.variants?.[0]?.pricing?.price?.gross?.amount,
+	// 		availability:
+	// 			product.variants?.[0]?.quantityAvailable > 0
+	// 				? "https://schema.org/InStock"
+	// 				: "https://schema.org/OutOfStock",
+	// 		url: `${process.env.NEXT_PUBLIC_STOREFRONT_URL}/products/${product.slug}`,
+	// 	},
+	// 	aggregateRating: {
+	// 		"@type": "AggregateRating",
+	// 		ratingValue: product.rating || 5,
+	// 		reviewCount: 1,
+	// 	},
+	// };
+
+	// shippingDetails
+	// hasMerchantReturnPolicy
+
+	// aggregateRating
+	// review
+	// priceValidUntil
 
 	return (
 		<section className="mx-auto grid max-w-7xl p-4 sm:p-6 md:p-8 lg:p-8">

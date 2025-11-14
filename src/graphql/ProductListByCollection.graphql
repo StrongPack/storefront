@@ -10,6 +10,10 @@ query ProductListByCollection($languageCode: LanguageCodeEnum!, $slug: String!, 
 			seoTitle
 			seoDescription
 		}
+		metadata {
+			key
+			value
+		}
 		products(first: 100) {
 			edges {
 				node {

@@ -10,13 +10,17 @@ fragment MenuItem on MenuItem {
 		id
 		slug
 		name
+		translation(languageCode: $languageCode) {
+			id
+			name
+		}
 		backgroundImage {
 			url
 			alt
 		}
-		translation(languageCode: $languageCode) {
-			id
-			name
+		metadata {
+			key
+			value
 		}
 		children(first: 10, last: 10) {
 			totalCount
@@ -25,13 +29,17 @@ fragment MenuItem on MenuItem {
 					name
 					id
 					slug
+					translation(languageCode: $languageCode) {
+						id
+						name
+					}
 					backgroundImage {
 						url
 						alt
 					}
-					translation(languageCode: $languageCode) {
-						id
-						name
+					metadata {
+						key
+						value
 					}
 				}
 			}
@@ -48,6 +56,10 @@ fragment MenuItem on MenuItem {
 		translation(languageCode: $languageCode) {
 			id
 			name
+		}
+		metadata {
+			key
+			value
 		}
 	}
 	page {

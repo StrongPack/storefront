@@ -8,21 +8,26 @@ import { getChannelConfig } from "@/lib/channelConfig";
 
 export const generateMetadata = async (
 	props: { params: Promise<{ slug: string; channel: string }> },
-	parent: ResolvingMetadata,
+	_parent: ResolvingMetadata,
 ): Promise<Metadata> => {
 	const params = await props.params;
 	const { channel, slug } = params;
-	const { languageCode } = await getChannelConfig(channel);
+	const { languageCode, locale } = await getChannelConfig(channel);
+	const isNotEn = locale !== "en";
 
 	const { collection } = await executeGraphQL(ProductListByCollectionDocument, {
 		variables: { slug: slug, channel: channel, languageCode: languageCode },
 		revalidate: 60,
 	});
 
+	const seoTitle = (isNotEn && collection?.translation?.seoTitle) || collection?.seoTitle;
+	const Name = (isNotEn && collection?.translation?.name) || collection?.name;
+	const Description = (isNotEn && collection?.translation?.description) || collection?.description;
+	const seoDescription = (isNotEn && collection?.translation?.seoDescription) || collection?.seoDescription;
+
 	return {
-		title: `${collection?.name || "Collection"} | ${collection?.seoTitle || (await parent).title?.absolute}`,
-		description:
-			collection?.seoDescription || collection?.description || collection?.seoTitle || collection?.name,
+		title: `${Name} | ${seoTitle}`,
+		description: `${seoDescription} | ${Description} | ${seoTitle} | ${Name}`,
 	};
 };
 

@@ -6,6 +6,7 @@ query ProductDetails($languageCode: LanguageCodeEnum!, $slug: String!, $channel:
 		description
 		seoTitle
 		seoDescription
+		rating
 		translation(languageCode: $languageCode) {
 			id
 			name
@@ -26,6 +27,14 @@ query ProductDetails($languageCode: LanguageCodeEnum!, $slug: String!, $channel:
 		category {
 			id
 			name
+			translation(languageCode: $languageCode) {
+				id
+				name
+			}
+			metadata {
+				key
+				value
+			}
 		}
 		variants {
 			...VariantDetails
@@ -58,7 +67,15 @@ query ProductDetails($languageCode: LanguageCodeEnum!, $slug: String!, $channel:
 				translation(languageCode: $languageCode) {
 					name
 				}
+				metadata {
+					key
+					value
+				}
 			}
+		}
+		metadata {
+			key
+			value
 		}
 	}
 }

@@ -26,12 +26,20 @@ fragment OrderDetails on Order {
 					url
 					alt
 				}
+				metadata {
+					key
+					value
+				}
 				category {
 					id
 					name
 					translation(languageCode: $languageCode) {
 						id
 						name
+					}
+					metadata {
+						key
+						value
 					}
 				}
 			}

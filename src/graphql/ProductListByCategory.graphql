@@ -10,6 +10,10 @@ query ProductListByCategory($languageCode: LanguageCodeEnum!, $slug: String!, $c
 			seoTitle
 			seoDescription
 		}
+		metadata {
+			key
+			value
+		}
 		products(first: 100, channel: $channel) {
 			edges {
 				node {

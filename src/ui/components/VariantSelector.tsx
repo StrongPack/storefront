@@ -22,6 +22,7 @@ export async function VariantSelector({
 	if (!selectedVariant && variants.length === 1 && variants[0]?.quantityAvailable) {
 		redirect("/" + channel + getHrefForVariant({ productSlug: product.slug, variantId: variants[0].id }));
 	}
+	const isNotEn = locale !== "en";
 
 	return (
 		variants.length > 1 && (
@@ -51,7 +52,7 @@ export async function VariantSelector({
 								aria-checked={isCurrentVariant}
 								aria-disabled={isDisabled}
 							>
-								{variant.name}
+								{(isNotEn && variant?.translation?.name) || variant.name}
 							</LinkWithChannel>
 						);
 					})}

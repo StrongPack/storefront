@@ -17,16 +17,20 @@ export const generateMetadata = async (props: {
 }): Promise<Metadata> => {
 	const params = await props.params;
 	const { channel } = params;
-	const { languageCode } = await getChannelConfig(channel);
-
+	const { languageCode, locale } = await getChannelConfig(channel);
+	const isNotEn = locale !== "en";
 	const { page } = await executeGraphQL(PageGetBySlugDocument, {
 		variables: { slug: params.slug, languageCode: languageCode },
 		revalidate: 60,
 	});
 
+	const seoTitle = (isNotEn && page?.translation?.seoTitle) || page?.seoTitle;
+	const Title = (isNotEn && page?.translation?.title) || page?.title;
+	const seoDescription = (isNotEn && page?.translation?.seoDescription) || page?.seoDescription;
+
 	return {
-		title: `${page?.seoTitle || page?.title || "Page"} · Saleor Storefront example`,
-		description: page?.seoDescription || page?.seoTitle || page?.title,
+		title: `${seoTitle} | ${Title}`,
+		description: `${seoDescription} | ${seoTitle} | ${Title}`,
 	};
 };
 

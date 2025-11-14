@@ -2,6 +2,10 @@ fragment VariantDetails on ProductVariant {
 	id
 	name
 	quantityAvailable
+	sku
+	translation(languageCode: $languageCode) {
+		name
+	}
 	pricing {
 		price {
 			gross {
@@ -9,5 +13,9 @@ fragment VariantDetails on ProductVariant {
 				amount
 			}
 		}
+	}
+	metadata {
+		key
+		value
 	}
 }

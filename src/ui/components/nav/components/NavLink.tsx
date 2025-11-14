@@ -13,6 +13,9 @@ export function NavLink({ href, children }: { href: string; children: ReactEleme
 	// اگر بخوای مسیر فعال در همه‌ی زیردامنه‌ها هم فعال بشه:
 	const isActive = pathname === href || pathname.startsWith(href + "/");
 
+	// const isBlog = href === "/pages";
+	// const isActive = pathname === href || (isBlog && pathname.startsWith("/pages/") && pathname !== "/pages");
+
 	return (
 		<li className="inline-flex">
 			<LinkWithChannel

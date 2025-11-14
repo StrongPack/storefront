@@ -12,6 +12,10 @@ fragment ProductListItem on Product {
 		seoTitle
 		seoDescription
 	}
+	metadata {
+		key
+		value
+	}
 	pricing {
 		priceRange {
 			start {
@@ -34,6 +38,10 @@ fragment ProductListItem on Product {
 		translation(languageCode: $languageCode) {
 			id
 			name
+		}
+		metadata {
+			key
+			value
 		}
 	}
 	thumbnail(size: 1024, format: WEBP) {
