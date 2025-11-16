@@ -20,7 +20,7 @@ query ProductDetails($languageCode: LanguageCodeEnum!, $slug: String!, $channel:
 		}
 		media {
 			id
-			url
+			url(format: WEBP, size: 1024)
 			alt
 			sortOrder
 		}

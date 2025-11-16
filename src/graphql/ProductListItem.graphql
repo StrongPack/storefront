@@ -50,7 +50,7 @@ fragment ProductListItem on Product {
 	}
 	media {
 		id
-		url
+		url(format: WEBP, size: 1024)
 		alt
 		sortOrder
 	}
