@@ -330,7 +330,39 @@ export default async function Page(props: {
 							<span>{t("contact_for_price")}</span>
 						</a>
 
-						{product.attributes?.length ? (
+						{(() => {
+							const filledAttributes = product.attributes?.filter(
+								({ values }) => Array.isArray(values) && values.length > 0,
+							);
+
+							if (!filledAttributes?.length) return null;
+
+							return (
+								<div className="mt-8 space-y-2 text-sm text-neutral-700">
+									<h3 className="mb-2 font-semibold text-neutral-800">{t("product_attributes_title")}</h3>
+									<ul className="list-inside list-disc space-y-1">
+										{filledAttributes.map(({ attribute, values }) => {
+											const attrName = attribute.translation?.name || attribute.name;
+
+											// فقط نام‌هایی که واقعاً وجود دارند
+											const valueNames = values
+												.map((v) => v.translation?.name || v.name)
+												.filter(Boolean)
+												.join(", ");
+
+											return (
+												<li key={attribute.name}>
+													<span className="font-medium">{attrName}: </span>
+													<span>{valueNames}</span>
+												</li>
+											);
+										})}
+									</ul>
+								</div>
+							);
+						})()}
+
+						{/* {product.attributes?.length ? (
 							<div className="mt-8 space-y-2 text-sm text-neutral-700">
 								<h3 className="mb-2 font-semibold text-neutral-800">{t("product_attributes_title")}</h3>
 								<ul className="list-inside list-disc space-y-1">
@@ -351,7 +383,7 @@ export default async function Page(props: {
 									})}
 								</ul>
 							</div>
-						) : null}
+						) : null} */}
 
 						{description && (
 							<div className="mt-8 space-y-6 text-sm text-neutral-500">
