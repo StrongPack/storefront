@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { useTranslations } from "next-intl";
 import { SelectBox, type SelectBoxProps } from "@/checkout/components/SelectBox";
 import { Button } from "@/checkout/components/Button";

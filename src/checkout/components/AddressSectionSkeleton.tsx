@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { AddressSkeleton } from "./AddressSkeleton";
 import { Skeleton } from "@/checkout/components";
 

@@ -56,13 +56,45 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 /** @type {import('next').NextConfig} */
 const config = {
+	// reactStrictMode: true,
+	// swcMinify: true,
+
 	images: {
 		unoptimized: true,
-		domains: ["media.20pack.ir"],
+		// domains: ["media.20pack.ir"],
+		// Use remotePatterns instead of domains
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "media.20pack.ir",
+				pathname: "/**",
+			},
+		],
 	},
-	experimental: {
-		typedRoutes: false,
-	},
+	// experimental: {
+	// 	typedRoutes: false,
+	// },
+
+	// TypedRoutes moved from experimental to root level
+	typedRoutes: false,
+
+	// // 🧩 Enable static export safety
+	// compiler: {
+	// 	removeConsole: process.env.NODE_ENV === "production",
+	// },
+
+	// // Optional: Add headers for font loading
+	// async headers() {
+	// 	return [
+	// 		{
+	// 			source: "/:path*",
+	// 			headers: [
+	// 				{ key: "Access-Control-Allow-Origin", value: "*" },
+	// 				{ key: "Access-Control-Allow-Headers", value: "Origin, X-Requested-With, Content-Type, Accept" },
+	// 			],
+	// 		},
+	// 	];
+	// },
 };
 
 export default withNextIntl(config);

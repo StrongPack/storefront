@@ -16,6 +16,12 @@ export const FooterSocial = () => (
 				alt: "Instagram",
 				glow: "#E1306C",
 			},
+			{
+				href: "https://www.linkedin.com/company/jupin-co",
+				icon: "/icons/square-linkedin-brands-solid-full.svg",
+				alt: "LinkedIn",
+				glow: "#0A66C2",
+			},
 			// {
 			// 	href: "https://t.me/yourchannel",
 			// 	icon: "/icons/telegram-brands-solid-full.svg",

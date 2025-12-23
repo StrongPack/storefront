@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import React from "react";
+// import React from "react";
 import { Title } from "@/checkout/components";
 import { LinkAsButton } from "@/checkout/components/LinkAsButton";
 import { ErrorContentWrapper } from "@/checkout/components/ErrorContentWrapper";

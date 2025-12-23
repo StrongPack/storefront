@@ -17,7 +17,15 @@ const vazirmatn = localFont({
 	display: "swap",
 });
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
+
+// Load Inter font with fallback to system fonts
+const inter = Inter({
+	subsets: ["latin"],
+	display: "swap",
+	fallback: ["system-ui", "arial"],
+	adjustFontFallback: true,
+});
 
 export const metadata: Metadata = {
 	title: "20Pack",
