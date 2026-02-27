@@ -43,7 +43,7 @@ jobs:
             ghcr.io/${{ env.REPO_OWNER_LC }}/storefront:${{ github.sha }}
             ghcr.io/${{ env.REPO_OWNER_LC }}/storefront:latest
           build-args: |
-            NEXT_PUBLIC_SALEOR_API_URL=http://saleor.20pack.ir/graphql/
+            NEXT_PUBLIC_SALEOR_API_URL=https://saleor.20pack.ir/graphql/
 
   deploy:
     name: Deploy to Server

@@ -65,7 +65,7 @@ const config = {
 		// Use remotePatterns instead of domains
 		remotePatterns: [
 			{
-				protocol: "http",
+				protocol: "https",
 				hostname: "media.20pack.ir",
 				pathname: "/**",
 			},

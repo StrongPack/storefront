@@ -57,9 +57,9 @@ services:
       - ./.env
     restart: unless-stopped
     environment:
-      - SALEOR_API_INTERNAL=http://saleor.20pack.ir/graphql/
-      - NEXT_PUBLIC_SALEOR_API_URL=http://saleor.20pack.ir/graphql/
-      - NEXT_PUBLIC_STOREFRONT_URL=http://20pack.ir:3000
+      - SALEOR_API_INTERNAL=https://saleor.20pack.ir/graphql/
+      - NEXT_PUBLIC_SALEOR_API_URL=https://saleor.20pack.ir/graphql/
+      - NEXT_PUBLIC_STOREFRONT_URL=https://20pack.ir:3000
 
 networks:
   strongpack-network:
